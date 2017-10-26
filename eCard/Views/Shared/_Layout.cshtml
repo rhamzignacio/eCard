@@ -1,44 +1,415 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en" ng-app="app">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
+    <title>e-Card</title>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet"/>
+    <link href="~/Content/agency.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/angular-growl.min.css" />
+
+    <!--Custom fonts-->
+    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css">
+ 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+<body id="page-top" ng-controller="mainController as vm" ng-init="Init()">
+    <div growl class="fading"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">e-Card</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" ng-show="vm.CurrentUser.Type == 'USR'">
+                        <a class="nav-link js-scroll-trigger" href="#services">Request</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#portfolio">For Approval</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#declined">Declined</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#contact">Approved</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" ng-click="Logout()">Logout</a>
+                    </li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">
+                    Welcome! <span style="color:#fed136">{{vm.CurrentUser.Firstname}}</span>
+                    <br />To Credit Card Approval Monitoring
+                </div>
+
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MOTO REQUEST -->
+    <section id="services" ng-show="vm.CurrentUser.Type == 'USR'">
+        <div class="container" ng-init="InitMotoRequest()">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Request Form</h2>
+                    <h3 class="section-subheading text-muted">Credit Card Moto</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label>Client Name</label>
+                        <select class="select2_single form-control" ng-model="vm.Form.ClientCode" style="width:100%"
+                                ng-options="item.ID as item.Value for item in vm.ClientDropDown"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Company (HPI/HMDC)</label>
+                        <input class="form-control" type="text" ng-model="vm.Form.Company">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Passenger Name</label>
+                        <input class="form-control" type="text" ng-model="vm.Form.PaxName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Record Locator</label>
+                        <input class="form-control" type="text" ng-model="vm.Form.RecordLocator">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <select class="form-control" ng-model="vm.Form.Currency" ng-options="item.value as item.label
+                                for item in CurrencyDropDown"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Option Time</label>
+                        <input class="form-control" type="text" ng-model="vm.Form.OptionTime">
+                    </div>
+                </div><!--col-md-6-->
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input class="form-control" type="number" ng-model="vm.Form.Amount">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Other Fees</label>
+                        <input class="form-control" type="number" ng-model="vm.Form.Others">
+                    </div>
+
+                    <div class="form-group">
+                        <label>BCD Fee</label>
+                        <input class="form-control" type="number" ng-model="vm.Form.BCDFee">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Admin Fee</label>
+                        <input class="form-control" type="number" ng-model="vm.Form.AdminFee">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total</label>
+                        <input class="form-control" type="number" ng-model="vm.Form.Total" 
+                               value="{{vm.Form.Amount + vm.Form.Others + vm.Form.BCDFee + vm.Form.AdminFee}}" disabled="disabled">
+                    </div>
+                </div><!--col-md-6-->
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea class="form-control" rows="5" ng-model="vm.Form.Remarks"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" ng-click="SaveMotoRequest(vm.Form)">Submit</button>
+                        <button class="btn btn-default" ng-click="ClearMotoForm()">Clear</button>
+                    </div>
+                </div><!--col-md-12-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="bg-light" id="portfolio">
+        <div class="container" ng-init="InitPendingMoto()">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">For Approval</h2>
+                    <h3 class="section-subheading text-muted">Pending Credit Card Moto Request</h3>
+                </div>
+            </div>
+            <div class="row">
+                <table style="width:100%">
+                    <tr>
+                        <th></th>
+                        <th>Date</th>
+                        <th>Client Name</th>
+                        <th>Passenger Name</th>
+                        <th>Record Locator</th>
+                        <th>Amount</th>
+                    </tr>
+
+                    <tr ng-repeat="req in vm.Request">
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#CancelMoto"
+                                    ng-click="AssignToDelete(req)" ng-show="vm.CurrentUser.Type == 'USR'">Cancel</button>
+                            <button class="btn btn-default" data-toggle="" data-target="" ng-click=""
+                                    ng-show="vm.CurrentUser.Type == 'APV'">View</button>
+                        </td>
+                        <td>{{req.ShowDate}}</td>
+                        <td>{{req.ClientName}}</td>
+                        <td>{{req.PaxName}}</td>
+                        <td>{{req.RecordLocator}}</td>
+                        <td>{{req.Total}}</td>
+                    </tr>
+
+                </table>
+            </div><!--row-->
+        </div>
+    </section>
+
+    <section id="declined">
+        <div class="container" ng-init="InitDeclined()">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading" style="color:red">Declined</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <table style="width:100%">
+                    <tr>
+                        <th>Date</th>
+                        <th>Client Name</th>
+                        <th>Passenger Name</th>
+                        <th>Record Locator</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                    </tr>
+
+                    <tr ng-repeat="dec in vm.Declined">
+                        <td>{{dec.ShowDate}}</td>
+                        <td>{{dec.ClientName}}</td>
+                        <td>{{dec.PaxName}}</td>
+                        <td>{{dec.RecordLocator}}</td>
+                        <td>{{dec.Amount}}</td>
+                        <td>{{dec.Reason}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container" ng-init="InitApproved()">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading" style="color:lime">Approved</h2>
+                    <h3 class="section-subheading text-muted">Approved Credit Card Moto Request</h3>
+                </div>
+            </div>
+            <div class="row">
+                <table style="width:100%; color:white;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Client Name</th>
+                        <th>Passenger Name</th>
+                        <th>Record Locator</th>
+                        <th>Amount</th>
+                        <th>Approval Code</th>
+                    </tr>
+
+                    <tr ng-repeat="app in vm.Approved">
+                        <td>{{app.ShowDate}}</td>
+                        <td>{{app.ClientName}}</td>
+                        <td>{{app.PaxName}}</td>
+                        <td>{{app.RecordLocator}}</td>
+                        <td>{{app.Amount}}</td>
+                        <th>{{app.ApprovalCode}}</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="copyright">Copyright &copy; e-Card 2017</span>
+                </div>
+                <div class="col-md-3">
+                    <a href="#">
+                        <img class="img-fluid d-block mx-auto" src="~/img/logos/PhilscanLogo.png" alt="Philscan Logo">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#">
+                        <img class="img-fluid d-block mx-auto" src="~/img/logos/BCDLogo.gif" alt="BCD Logo">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-inline quicklinks">
+                        <li class="list-inline-item">
+                            <a href="#">version 1.0 BETA</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
+                </div>
+
+                <div class="container" style="text-align: left;">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h5>Are you sure you want to cancel?</h5>
+
+                                <button class="btn btn-danger">Yes</button>
+                                <button class="btn btn-default" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
+
+    <div class="portfolio-modal modal fade" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
+                </div>
+
+                <div class="container" style="text-align: left;">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2>Moto Request</h2>
+
+                                <label>Requested By: </label> <span class="modalRequest">Mitzi Miel</span><br />
+
+                                <label>Client Name: </label> <span class="modalRequest">Holcim</span><br />
+
+                                <label>Date: </label> <span class="modalRequest">10/12/2017</span><br />
+
+                                <label>Company (HPI/HMDC): </label> <span class="modalRequest">HPHI</span><br />
+
+                                <label>Pax Name: </label> <span class="modalRequest">Bernardo/Maria Paz Eleanor</span><br />
+
+                                <label>Record Locator: </label> <span class="modalRequest">QVPWQSR</span><br />
+
+                                <label>Currency: </label> <span class="modalRequest">PHP</span><br />
+
+                                <label>Amount: </label> <span class="modalRequest">2,178.00</span><br />
+
+                                <label>Others: </label> <span class="modalRequest"></span><br />
+
+                                <label>BCD Fee: </label> <span class="modalRequest">268.00</span><br />
+
+                                <label>Admin Fee: </label> <span class="modalRequest">70.48</span><br />
+
+                                <label>Total: </label> <span class="modalRequest">2,517.28</span><br />
+
+                                <label>Option Time: </label> <span class="modalRequest"></span><br />
+
+                                <label>Approval Code: </label> <input class="form-control" type="text"><br />
+
+                                <label>Remarks: </label> <span class="modalRequest"></span><br />
+
+                                <label>Decline Reason: </label> <input class="form-control" type="text"><br />
+
+                                <button class="btn btn-primary">Approve</button>
+                                <button class="btn btn-danger">Decline</button>
+                            </div><!--modal-body-->
+                        </div>
+                    </div>
+                </div><!--container-->
+
+            </div><!--modal-content-->
+        </div><!--modal-dialog-->
+    </div><!--modal fade-->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script src="~/Scripts/popper/popper.js"></script>
+    <script src="~/Scripts/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/Scripts/jquery-easing/jquery.easing.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="~/Scripts/js/jqBootstrapValidation.js"></script>
+    <script src="~/Scripts/js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/Scripts/js/agency.js"></script>
+
+    @Scripts.Render("~/bundles/angular")
+    @RenderBody()
+
+    <!--CANCEL MODAL-->
+    <div class="modal fade" id="CancelMoto" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Are you sure you want to cancel this Moto?</h6>
+                </div>
+
+                <div class="modal-body">
+                    <button class="btn btn-warning" ng-click="CancelMotoRequest()">Yes</button>
+                    <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $(".select2_single").select2({
+                placeholder: "Please Select",
+                allowClear: true,
+            });
+        });
+    </script>
 </body>
 </html>

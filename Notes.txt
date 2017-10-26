@@ -1,0 +1,10 @@
+===MOTO REQUEST STATUS===
+P = Pending
+X = Canceled
+A = Approved
+D = Denied
+
+===USER TYPE===
+ADM = Admin
+USR = User
+APV = Approver
