@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="eCardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="eCardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="EmailSender">
           <Key>
             <PropertyRef Name="Email" />
@@ -34,6 +34,7 @@
           <Property Name="Remarks" Type="varchar(max)" />
           <Property Name="Invoice" Type="varchar" MaxLength="300" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -57,8 +58,7 @@
           <EntitySet Name="MotoRequest" EntityType="Self.MotoRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="eCardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -91,6 +91,7 @@
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -131,6 +132,7 @@
           <EntitySetMapping Name="MotoRequest">
             <EntityTypeMapping TypeName="eCardModel.MotoRequest">
               <MappingFragment StoreEntitySet="MotoRequest">
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />

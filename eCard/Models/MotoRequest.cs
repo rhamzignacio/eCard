@@ -32,5 +32,6 @@ namespace eCard.Models
         public string Remarks { get; set; }
         public string Invoice { get; set; }
         public string Status { get; set; }
+        public string DeclinedReason { get; set; }
     }
 }

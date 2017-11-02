@@ -119,9 +119,11 @@
         }
 
         if (error === "") {
+            value.Status = "P";
+
             $http({
                 method: "POST",
-                url: "/Home/RequestMoto",
+                url: "/Home/SaveMoto",
                 data: { moto: value }
             }).then(function (data) {
                 if (data.data != "") {
@@ -143,9 +145,11 @@
     }
 
     $scope.CancelMotoRequest = function () {
+        vm.CancelMoto.Status = "X";
+
         $http({
             method: "POST",
-            url: "/Home/CancelMoto",
+            url: "/Home/SaveMoto",
             data: { moto: vm.CancelMoto }
         }).then(function (data) {
             if (data.data !== "") {
@@ -176,7 +180,73 @@
         });
     }
 
-    setInterval($scope.InitPendingMoto, 5000);
+    setInterval($scope.InitPendingMoto, 2000);
+
+    $scope.ViewMoto = function (value) {
+        vm.ViewModal = value;
+    }
+
+    $scope.ApproveMoto = function (value) {
+        var error = "";
+
+        if (value.ApprovalCode === "" || value.ApprovalCode === null) {
+            ErrorMessage("Approval Code is required");
+
+            error = "Y";
+        }
+
+        if (error === "") {
+            value.Status = "A";
+
+            $http({
+                method: "POST",
+                url: "/Home/SaveMoto",
+                data: { moto: value}
+            }).then(function (data) {
+                if (data.data != "") {
+                    ErrorMessage(data.data);
+                }
+                else {
+                    SuccessMessage("Moto Request Approved - " + value.RecordLocator);
+
+                    $("#viewModal").modal('hide');
+
+                    value = {};
+                }
+            })
+        }
+    }
+
+    $scope.DeclineMoto = function (value) {
+        var error = "";
+
+        if (value.DeclinedReason === "" || value.DeclinedReason === null) {
+            ErrorMessage("Declined Reason is required");
+
+            error = "Y";
+        }
+
+        if (error === "") {
+            value.Status = "D";
+
+            $http({
+                method: "POST",
+                url: "/Home/SaveMoto",
+                data: { moto: value }
+            }).then(function (data) {
+                if (data.data != "") {
+                    ErrorMessage(data.data);
+                }
+                else {
+                    SuccessMessage("Moto Request Declined - " + value.RecordLocator);
+
+                    $("#viewModal").modal('hide');
+
+                    value = {};
+                }
+            });
+        }
+    }
     //=========END OF PENDING MOTO REQUEST==========
 
     //=========DECLINED MOTO===============
@@ -195,7 +265,7 @@
         });
     }
 
-    setInterval($scope.InitDeclined, 5000);
+    setInterval($scope.InitDeclined, 2000);
     //=========END OF DECLINED MOTO==========
 
     //=========APPROVED MOTO===============
@@ -214,6 +284,6 @@
         });
     }
 
-    setInterval($scope.InitApproved, 5000);
+    setInterval($scope.InitApproved, 2000);
     //=========END OF APPROVED MOTO==========
 }]);

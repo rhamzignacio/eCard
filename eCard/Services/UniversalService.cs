@@ -10,6 +10,27 @@ namespace eCard
 {
     public class UniversalService
     {
+        public static string GetRequestor (Guid? _ID, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new eCardEntities())
+                {
+                    var user = db.UserAccount.FirstOrDefault(r => r.ID == _ID);
+
+                    return user.FirstName + " " + user.LastName;
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
        public static UserAccountModel CurrentUser
         {
             get

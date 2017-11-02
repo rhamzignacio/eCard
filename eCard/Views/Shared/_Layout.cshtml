@@ -175,8 +175,8 @@
                     <tr ng-repeat="req in vm.Request">
                         <td><button class="btn btn-danger" data-toggle="modal" data-target="#CancelMoto"
                                     ng-click="AssignToDelete(req)" ng-show="vm.CurrentUser.Type == 'USR'">Cancel</button>
-                            <button class="btn btn-default" data-toggle="" data-target="" ng-click=""
-                                    ng-show="vm.CurrentUser.Type == 'APV'">View</button>
+                            <button class="btn btn-default" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(req)"
+                                    ng-show="vm.CurrentUser.Type == 'APR'">View</button>
                         </td>
                         <td>{{req.ShowDate}}</td>
                         <td>{{req.ClientName}}</td>
@@ -311,7 +311,7 @@
     </div>
 
 
-    <div class="portfolio-modal modal fade" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="viewModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-dismiss="modal">
@@ -326,40 +326,40 @@
                             <div class="modal-body">
                                 <h2>Moto Request</h2>
 
-                                <label>Requested By: </label> <span class="modalRequest">Mitzi Miel</span><br />
+                                <label>Requested By: </label> <span class="modalRequest">{{vm.ViewModal.ShowRequestedBy}}</span><br />
 
-                                <label>Client Name: </label> <span class="modalRequest">Holcim</span><br />
+                                <label>Client Name: </label> <span class="modalRequest">{{vm.ViewModal.ClientName}}</span><br />
 
-                                <label>Date: </label> <span class="modalRequest">10/12/2017</span><br />
+                                <label>Date: </label> <span class="modalRequest">{{vm.ViewModal.ShowDate}}</span><br />
 
-                                <label>Company (HPI/HMDC): </label> <span class="modalRequest">HPHI</span><br />
+                                <label>Company (HPI/HMDC): </label> <span class="modalRequest">{{vm.ViewModal.Company}}</span><br />
 
-                                <label>Pax Name: </label> <span class="modalRequest">Bernardo/Maria Paz Eleanor</span><br />
+                                <label>Pax Name: </label> <span class="modalRequest">{{vm.ViewModal.PaxName}}</span><br />
 
-                                <label>Record Locator: </label> <span class="modalRequest">QVPWQSR</span><br />
+                                <label>Record Locator: </label> <span class="modalRequest">{{vm.ViewModal.RecordLocator}}</span><br />
 
-                                <label>Currency: </label> <span class="modalRequest">PHP</span><br />
+                                <label>Currency: </label> <span class="modalRequest">{{vm.ViewModal.Currency}}</span><br />
 
-                                <label>Amount: </label> <span class="modalRequest">2,178.00</span><br />
+                                <label>Amount: </label> <span class="modalRequest">{{vm.ViewModal.Amount}}</span><br />
 
-                                <label>Others: </label> <span class="modalRequest"></span><br />
+                                <label>Others: </label> <span class="modalRequest">{{vm.ViewModal.Others}}</span><br />
 
-                                <label>BCD Fee: </label> <span class="modalRequest">268.00</span><br />
+                                <label>BCD Fee: </label> <span class="modalRequest">{{vm.ViewModal.BCDFee}}</span><br />
 
-                                <label>Admin Fee: </label> <span class="modalRequest">70.48</span><br />
+                                <label>Admin Fee: </label> <span class="modalRequest">{{vm.ViewModal.AdminFee}}</span><br />
 
-                                <label>Total: </label> <span class="modalRequest">2,517.28</span><br />
+                                <label>Total: </label> <span class="modalRequest">{{vm.ViewModal.Total}}</span><br />
 
-                                <label>Option Time: </label> <span class="modalRequest"></span><br />
+                                <label>Option Time: </label> <span class="modalRequest">{{vm.ViewModal.OptionTime}}</span><br />
 
-                                <label>Approval Code: </label> <input class="form-control" type="text"><br />
+                                <label>Approval Code: </label> <input class="form-control" type="text" ng-model="vm.ViewModal.ApprovalCode"><br />
 
-                                <label>Remarks: </label> <span class="modalRequest"></span><br />
+                                <label>Remarks: </label> <span class="modalRequest">{{vm.ViewModal.Remarks}}</span><br />
 
-                                <label>Decline Reason: </label> <input class="form-control" type="text"><br />
+                                <label>Decline Reason: </label> <input class="form-control" type="text" ng-model="vm.ViewModal.DeclinedReason"><br />
 
-                                <button class="btn btn-primary">Approve</button>
-                                <button class="btn btn-danger">Decline</button>
+                                <button class="btn btn-primary" ng-click="ApproveMoto(vm.ViewModal)">Approve</button>
+                                <button class="btn btn-danger" ng-click="DeclineMoto(vm.ViewModal)">Decline</button>
                             </div><!--modal-body-->
                         </div>
                     </div>

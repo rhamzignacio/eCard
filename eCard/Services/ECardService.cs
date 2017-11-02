@@ -50,7 +50,8 @@ namespace eCard.Services
                                        Status = m.Status,
                                        Total = m.Total,
                                        RequestedBy = m.RequestedBy,
-                                       ShowRequestedBy = u.FirstName + " " + u.LastName
+                                       ShowRequestedBy = u.FirstName + " " + u.LastName,
+                                       DeclinedReason = m.DeclinedReason
                                    };
 
                         return join.ToList();
@@ -106,7 +107,8 @@ namespace eCard.Services
                                    Status = m.Status,
                                    Total = m.Total,
                                    RequestedBy = m.RequestedBy,
-                                   ShowRequestedBy = u.FirstName + " " + u.LastName
+                                   ShowRequestedBy = u.FirstName + " " + u.LastName,
+                                   DeclinedReason = m.DeclinedReason
                                };
 
                     return join.ToList();
@@ -145,15 +147,33 @@ namespace eCard.Services
                             Others = _request.Others,
                             BCDFee = _request.BCDFee,
                             AdminFee = _request.AdminFee,
-                            Total = _request.Total,
+                            Total = _request.Amount + _request.BCDFee + _request.Others + _request.AdminFee,
                             OptionTime = _request.OptionTime,
                             ApprovalCode = _request.ApprovalCode,
                             Remarks = _request.Remarks,
                             Invoice = _request.Invoice,
-                            Status = _request.Status
+                            Status = _request.Status,
+                            DeclinedReason = _request.DeclinedReason
                         };
 
                         db.Entry(newMoto).State = EntityState.Added;
+
+                        db.SaveChanges();
+
+                        if (_request.Status == "P")
+                        {
+                            string text = "\n Credit Card Moto Request" +
+                                "\n\n Record Locator :" + _request.RecordLocator +
+                                "\n Total Amount: " + _request.Currency + " " + string.Format("{0:0.00}", newMoto.Total) +
+                                "\n Requested By: " + UniversalService.CurrentUser.Firstname + " " + UniversalService.CurrentUser.LastName;
+
+                            var approverEmail = db.UserAccount.Where(r => r.Type == "APR").ToList();
+
+                            approverEmail.ForEach(item =>
+                            {
+                                EmailService.SendEmail("eCard // Moto Request // " +_request.RecordLocator, text, item.Email);
+                            });
+                        }
                     }
                     else
                     {
@@ -173,7 +193,7 @@ namespace eCard.Services
 
                             moto.AdminFee = _request.AdminFee;
 
-                            moto.Total = _request.Total;
+                            moto.Total = _request.Amount + _request.Others + _request.BCDFee + _request.AdminFee;
 
                             moto.OptionTime = _request.OptionTime;
 
@@ -185,11 +205,58 @@ namespace eCard.Services
 
                             moto.Status = _request.Status;
 
+                            moto.DeclinedReason = _request.DeclinedReason;
+
                             db.Entry(moto).State = EntityState.Modified;
+
+                            db.SaveChanges();
+
+                            if(_request.Status == "X")
+                            {
+                                string text = "\n Credit Card Moto Request - Has been Canceled" +
+                                "\n\n Record Locator :" + _request.RecordLocator +
+                                "\n Total Amount: " + _request.Currency + " " + string.Format("{0:0.00}", _request.Total) +
+                                "\n Requested By: " + UniversalService.CurrentUser.Firstname + " " + UniversalService.CurrentUser.LastName;
+
+                                var approverEmail = db.UserAccount.Where(r => r.Type == "APR").ToList();
+
+                                approverEmail.ForEach(item =>
+                                {
+                                    EmailService.SendEmail("eCard // Moto Request // " + _request.RecordLocator + "\\ Canceled", text, item.Email);
+                                });
+                            }
+                            else if(_request.Status == "A")
+                            {
+                                string text = "\n Credit Card Moto Request - Has been Approved" +
+                                "\n\n Record Locator :" + _request.RecordLocator +
+                                "\n Total Amount: " + _request.Currency + " " + string.Format("{0:0.00}", _request.Total) +
+                                "\n Requested By: " + UniversalService.GetRequestor(_request.RequestedBy, out message) +
+                                "\n Approval Code: " + _request.ApprovalCode;
+
+                                var approverEmail = db.UserAccount.Where(r => r.Type == "APR").ToList();
+
+                                approverEmail.ForEach(item =>
+                                {
+                                    EmailService.SendEmail("eCard // Moto Request //" + _request.RecordLocator + "\\ Approved", text, item.Email);
+                                });
+                            }
+                            else if(_request.Status == "D")
+                            {
+                                string text = "\n Credit Card Moto Request - Has been Declined" +
+                                "\n\n Record Locator :" + _request.RecordLocator +
+                                "\n Total Amount: " + _request.Currency + " " + string.Format("{0:0.00}", _request.Total) +
+                                "\n Requested By: " + UniversalService.GetRequestor(_request.RequestedBy, out message)
+                                + "\n Declined Reason: " + _request.DeclinedReason;
+
+                                var approverEmail = db.UserAccount.Where(r => r.Type == "APR").ToList();
+
+                                approverEmail.ForEach(item =>
+                                {
+                                    EmailService.SendEmail("eCard // Moto Request // " + _request.RecordLocator + "\\ Declined", text, item.Email);
+                                });
+                            }
                         }
                     }
-
-                    db.SaveChanges();
                 }
             }
             catch(Exception error)

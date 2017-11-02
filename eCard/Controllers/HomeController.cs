@@ -66,31 +66,14 @@ namespace eCard.Controllers
             return Json(new { error = serverResponse, request = request });
         }
 
-        [HttpPost]
-        public JsonResult CancelMoto(MotoRequestModel moto)
-        {
-            string serverResponse = "";
-
-            if (moto != null)
-            {
-                moto.Status = "X"; //Cancel Status
-
-                ECardService.SaveMotoRequest(moto, out serverResponse);
-            }
-
-            return Json(serverResponse);
-        }
-
         //===========MOTO REQUEST==============
         [HttpPost]
-        public JsonResult RequestMoto(MotoRequestModel moto)
+        public JsonResult SaveMoto(MotoRequestModel moto)
         {
             string serverResponse = "";
 
             if (moto != null)
             {
-                moto.Status = "P"; //Pending Status
-
                 ECardService.SaveMotoRequest(moto, out serverResponse);
             }
 
