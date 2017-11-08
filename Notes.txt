@@ -3,8 +3,25 @@ P = Pending
 X = Canceled
 A = Approved
 D = Denied
+F = For Void
+V = Voided
 
 ===USER TYPE===
 ADM = Admin
 USR = User
 APV = Approver
+
+
+version 1.1
+- Error in loading data (aging not working) fixed
+- No data approved shown in approver's view fixed
+- Approved request void
+- Added currency before amount
+- Name format (lastname/firstname)
+- Replace company to (card holder name)
+- Refilling of declined request
+- Remove email notification
+- Decimal views for amount
+- Added table gridlines
+- Added view button
+- User change password function

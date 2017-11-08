@@ -34,7 +34,12 @@ namespace eCard.Controllers
         {
             string serverResponse = "";
 
-            var approved = ECardService.GetAllMotoPerUser("A", out serverResponse);
+            List<MotoRequestModel> approved = new List<MotoRequestModel>();
+
+            if (UniversalService.CurrentUser.Type == "USR")
+                approved = ECardService.GetAllMotoPerUser("A", out serverResponse);
+            else
+                approved = ECardService.GetAllMoto("A", out serverResponse);
 
             return Json(new { error = serverResponse, approved = approved });
         }
@@ -45,9 +50,30 @@ namespace eCard.Controllers
         {
             string serverResponse = "";
 
-            var declined = ECardService.GetAllMotoPerUser("D", out serverResponse);
+            List<MotoRequestModel> declined = new List<MotoRequestModel>();
+
+            if (UniversalService.CurrentUser.Type == "USR")
+                declined = ECardService.GetAllMotoPerUser("D", out serverResponse);
+            else
+                declined = ECardService.GetAllMoto("D", out serverResponse);
 
             return Json(new { error = serverResponse, declined = declined });
+        }
+
+        //===========VOIDED MOTO===========
+        [HttpPost]
+        public JsonResult GetVoidedPerUser()
+        {
+            string serverResponse = "";
+
+            List<MotoRequestModel> voided = new List<MotoRequestModel>();
+
+            if (UniversalService.CurrentUser.Type == "USR")
+                voided = ECardService.GetAllMotoPerUser("V", out serverResponse);
+            else
+                voided = ECardService.GetAllMoto("V", out serverResponse);
+
+            return Json(new { error = serverResponse, voided = voided });
         }
 
         //===========PENDING MOTO============
@@ -112,6 +138,17 @@ namespace eCard.Controllers
             string serverResponse = "";
 
             LoginService.LogoutFromSession(out serverResponse);
+
+            return Json(serverResponse);
+        }
+
+        //============USER==============
+        [HttpPost]
+        public JsonResult ChangePassword(ChangePassModel user)
+        {
+            string serverResponse = "";
+
+            UserService.ChangePassword(user, out serverResponse);
 
             return Json(serverResponse);
         }

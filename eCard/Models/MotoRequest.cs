@@ -15,7 +15,7 @@ namespace eCard.Models
     public partial class MotoRequest
     {
         public System.Guid ID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public System.DateTime Date { get; set; }
         public Nullable<System.Guid> RequestedBy { get; set; }
         public string ClientCode { get; set; }
         public string Company { get; set; }
@@ -33,5 +33,6 @@ namespace eCard.Models
         public string Invoice { get; set; }
         public string Status { get; set; }
         public string DeclinedReason { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
     }
 }

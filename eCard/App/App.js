@@ -3,7 +3,10 @@
 .controller("mainController", ["$scope", "$location", "$http", "growl", function ($scope, $location, $http, growl) {
     var vm = this;
 
+    var Duplicate = "N";
+
     vm.CancelMoto = {};
+    vm.VoidMoto = {};
 
     ErrorMessage = function (message) {
         growl.error(message, { title: "Error!", ttl: 4000 });
@@ -49,6 +52,8 @@
         vm.Form = {};
         vm.Form.ClientCode = "";
         vm.Form.PaxName = "";
+        vm.Form.PaxFirstName = "";
+        vm.Form.PaxLastName = "";
         vm.Form.RecordLocator = "";
         vm.Form.Curreny = "";
         vm.Form.Amount = "";
@@ -119,22 +124,29 @@
         }
 
         if (error === "") {
-            value.Status = "P";
-
+            Duplicate = "Y";
             $http({
                 method: "POST",
-                url: "/Home/SaveMoto",
-                data: { moto: value }
-            }).then(function (data) {
-                if (data.data != "") {
-                    ErrorMessage(data.data);
-                }
-                else {
-                    SuccessMessage("Moto Request Sent");
+            })
 
-                    $scope.ClearMotoForm();
-                }
-            });
+            if (Duplicate === "N") {
+                value.Status = "P";
+
+                $http({
+                    method: "POST",
+                    url: "/Home/SaveMoto",
+                    data: { moto: value }
+                }).then(function (data) {
+                    if (data.data != "") {
+                        ErrorMessage(data.data);
+                    }
+                    else {
+                        SuccessMessage("Moto Request Sent");
+
+                        $scope.ClearMotoForm();
+                    }
+                });
+            }
         }
     }
     //=========END OF REQUEST============
@@ -182,8 +194,64 @@
 
     setInterval($scope.InitPendingMoto, 2000);
 
+    $scope.ReFile = function (value) {
+        vm.Form = value;
+
+        vm.Form.ID = {};
+
+        vm.Form.Status = "P";
+
+        $("#RequestMenu").click();
+    }
+
     $scope.ViewMoto = function (value) {
         vm.ViewModal = value;
+    }
+
+    $scope.ApproveVoid = function (value) {
+        value.Status = "V";
+
+        $http({
+            method: "POST",
+            url: "/Home/SaveMoto",
+            data: { moto: value }
+        }).then(function (data) {
+            if (data.data != "") {
+                ErrorMessage(data.data);
+            }
+            else {
+                SuccessMessage("Moto Request Voided - " + value.RecordLocator);
+
+                $("#viewModal").modal('hide');
+
+                value = {};
+            }
+        });
+    }
+
+    $scope.VoidMoto = function () {
+        vm.VoidMoto.Status = "F";
+
+        $http({
+            method: "POST",
+            url: "/Home/SaveMoto",
+            data: { moto: vm.VoidMoto }
+        }).then(function (data) {
+            if (data.data != "") {
+                ErrorMessage(data.data);
+            }
+            else {
+                SuccessMessage("Moto Void Request Sent");
+
+                $("#VoidMoto").modal('hide');
+
+                vm.VoidMoto = {};
+            }
+        });
+    }
+
+    $scope.AsignToVoide = function (value) {
+        vm.VoidMoto = value;
     }
 
     $scope.ApproveMoto = function (value) {
@@ -286,4 +354,50 @@
 
     setInterval($scope.InitApproved, 2000);
     //=========END OF APPROVED MOTO==========
+
+    //=========VOID MOTO=========
+    $scope.initVoid = function () {
+        $http({
+            method: "POST",
+            url: "/Home/GetVoidedPerUser",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.error) {
+                ErrorMessage(data.data.error);
+            }
+            else {
+                vm.Voided = data.data.voided;
+            }
+        });
+    }
+
+    setInterval($scope.initVoid, 2000);
+    //=========END VOID==========
+
+    //========CHANGE PASSWORD========
+    $scope.ChangePass = function (value) {
+        if (value.NewPass != value.ConfirmPass) {
+            ErrorMessage("Password Not Match!");
+
+            value.NewPass = value.ConfirmPass = "";
+        }
+        else {
+            $http({
+                method: "POST",
+                url: "/Home/ChangePassword",
+                data: { user: value }
+            }).then(function (data) {
+                if (data.data != "") {
+                    ErrorMessage(data.data);
+                }
+                else {
+                    SuccessMessage("Password sucessfully changed");
+
+                    $("#ChangePassModal").modal('hide');
+
+                    vm.Pass = {};
+                }
+            });
+        }
+    }
 }]);

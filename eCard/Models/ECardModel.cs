@@ -12,7 +12,7 @@ namespace eCard.Models
     public class MotoRequestModel
     {
         public Guid ID { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
         public string ShowDate
         {
             get
@@ -100,6 +100,26 @@ namespace eCard.Models
         public string Remarks { get; set; }
         public string Invoice { get; set; }
         public string Status { get; set; }
+        public DateTime? ApprovedDate { get; set; }
+        public string CanVoid
+        {
+            get
+            {
+                if (ApprovedDate != null)
+                {
+                    if (DateTime.Now <= DateTime.Parse(ApprovedDate.ToString()).Date.AddDays(1).AddHours(9))
+                    {
+                        return "Y";
+                    }
+                    else
+                    {
+                        return "N";
+                    }
+                }
+                else
+                    return "N";
+            }
+        }
         public string DeclinedReason { get; set; }
 
         public Guid? RequestedBy { get; set; }

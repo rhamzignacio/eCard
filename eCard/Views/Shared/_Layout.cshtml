@@ -12,9 +12,7 @@
     <link href="~/Content/agency.css" rel="stylesheet" />
     <link href="~/Content/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/angular-growl.min.css" />
-
-    <!--Custom fonts-->
-    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
  
 </head>
 
@@ -31,13 +29,16 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" ng-show="vm.CurrentUser.Type == 'USR'">
-                        <a class="nav-link js-scroll-trigger" href="#services">Request</a>
+                        <a class="nav-link js-scroll-trigger" href="#services" id="RequestMenu">Request</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#portfolio">For Approval</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#declined">Declined</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#voided">Voided</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#contact">Approved</a>
@@ -57,6 +58,9 @@
                 <div class="intro-lead-in">
                     Welcome! <span style="color:#fed136">{{vm.CurrentUser.Firstname}}</span>
                     <br />To Credit Card Approval Monitoring
+                    <br />
+
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#ChangePassModal">Change Password</button>
                 </div>
 
 
@@ -69,8 +73,8 @@
         <div class="container" ng-init="InitMotoRequest()">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Request Form</h2>
-                    <h3 class="section-subheading text-muted">Credit Card Moto</h3>
+                    <h3 class="section-heading">Request Form</h3>
+                    <h3 class="section-subheading text-muted">DO NOT INPUT CREDIT CARD NO</h3>
                 </div>
             </div>
             <div class="row">
@@ -78,17 +82,17 @@
 
                     <div class="form-group">
                         <label>Client Name</label>
-                        <select class="select2_single form-control" ng-model="vm.Form.ClientCode" style="width:100%"
+                        <select class="form-control select2_single" ng-model="vm.Form.ClientCode" style="width:100%"
                                 ng-options="item.ID as item.Value for item in vm.ClientDropDown"></select>
                     </div>
 
                     <div class="form-group">
-                        <label>Company (HPI/HMDC)</label>
+                        <label>Card Holder Name <span style="font-size:8pt">(Optional)</span></label>
                         <input class="form-control" type="text" ng-model="vm.Form.Company">
                     </div>
 
                     <div class="form-group">
-                        <label>Passenger Name</label>
+                        <label>Passenger Name <span style="font-size:8pt">(LastName\FirstName)</span></label>
                         <input class="form-control" type="text" ng-model="vm.Form.PaxName">
                     </div>
 
@@ -98,18 +102,25 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Currency</label><br />
+                        <input type="radio" value="PHP" ng-model="vm.Form.Currency" />PHP
+                        <input type="radio" value="USD" ng-model="vm.Form.Currency" />USD
+                    </div>
+
+                    @*<div class="form-group">
                         <label>Currency</label>
                         <select class="form-control" ng-model="vm.Form.Currency" ng-options="item.value as item.label
                                 for item in CurrencyDropDown"></select>
-                    </div>
+                    </div>*@
 
-                    <div class="form-group">
-                        <label>Option Time</label>
-                        <input class="form-control" type="text" ng-model="vm.Form.OptionTime">
-                    </div>
                 </div><!--col-md-6-->
 
                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Option Time <span style="font-size:8pt">(Optional)</span></label>
+                        <input class="form-control" type="text" ng-model="vm.Form.OptionTime">
+                    </div>
+
                     <div class="form-group">
                         <label>Amount</label>
                         <input class="form-control" type="number" ng-model="vm.Form.Amount">
@@ -139,7 +150,7 @@
 
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Remarks</label>
+                        <label>Remarks <span style="font-size:8pt">(Optional)</span></label>
                         <textarea class="form-control" rows="5" ng-model="vm.Form.Remarks"></textarea>
                     </div>
 
@@ -157,12 +168,12 @@
         <div class="container" ng-init="InitPendingMoto()">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">For Approval</h2>
+                    <h3 class="section-heading">For Approval</h3>
                     <h3 class="section-subheading text-muted">Pending Credit Card Moto Request</h3>
                 </div>
             </div>
             <div class="row">
-                <table style="width:100%">
+                <table style="width:100%; font-size: 12px;">
                     <tr>
                         <th></th>
                         <th>Date</th>
@@ -172,17 +183,24 @@
                         <th>Amount</th>
                     </tr>
 
-                    <tr ng-repeat="req in vm.Request">
-                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#CancelMoto"
-                                    ng-click="AssignToDelete(req)" ng-show="vm.CurrentUser.Type == 'USR'">Cancel</button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(req)"
-                                    ng-show="vm.CurrentUser.Type == 'APR'">View</button>
+                    <tr ng-repeat="req in vm.Request" style="border-bottom:1px solid #000000">
+                        <td>
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(req)"
+                                    style="font-size:12px; height:25px">
+                                <i class="fa fa-eye"></i>
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#CancelMoto"
+                                    ng-click="AssignToDelete(req)" ng-show="vm.CurrentUser.Type == 'USR'"
+                                    style="font-size:12px; height:25px;">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </td>
                         <td>{{req.ShowDate}}</td>
                         <td>{{req.ClientName}}</td>
                         <td>{{req.PaxName}}</td>
                         <td>{{req.RecordLocator}}</td>
-                        <td>{{req.Total}}</td>
+                        <td>{{req.Currency}} {{req.Total | number: 2}} <span ng-show="req.Status == 'F'"> VOID</span></td>
                     </tr>
 
                 </table>
@@ -194,13 +212,14 @@
         <div class="container" ng-init="InitDeclined()">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading" style="color:red">Declined</h2>
+                    <h3 class="section-heading" style="color:red">Declined</h3>
                 </div>
             </div>
 
             <div class="row">
-                <table style="width:100%">
+                <table style="width:100%; font-size: 12px;">
                     <tr>
+                        <th></th>
                         <th>Date</th>
                         <th>Client Name</th>
                         <th>Passenger Name</th>
@@ -209,13 +228,54 @@
                         <th>Reason</th>
                     </tr>
 
-                    <tr ng-repeat="dec in vm.Declined">
+                    <tr ng-repeat="dec in vm.Declined" style="border-bottom: 1px solid red">
+                        <td>
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(dec)">
+                                <i class="fa fa-eye"></i></button>
+
+                            <button class="btn btn-success btn-sm" ng-show="vm.CurrentUser.Type == 'USR'" ng-click="ReFile(dec)">
+                                <i class="fa fa-recycle"></i>
+                            </button>
+                        </td>
                         <td>{{dec.ShowDate}}</td>
                         <td>{{dec.ClientName}}</td>
                         <td>{{dec.PaxName}}</td>
                         <td>{{dec.RecordLocator}}</td>
-                        <td>{{dec.Amount}}</td>
+                        <td>{{dec.Currency}} {{dec.Amount | number: 2}}</td>
                         <td>{{dec.Reason}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light" id="voided" ng-init="initVoid()">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3 class="section-heading" style="color:orangered">Voided</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <table style="width:100%; font-size:12px;">
+                    <tr>
+                        <th></th>
+                        <th>Date</th>
+                        <th>Client Name</th>
+                        <th>Passenger Name</th>
+                        <th>Record Locator</th>
+                        <th>Amount</th>
+                    </tr>
+
+                    <tr ng-repeat="void in vm.Voided" style="border-bottom: 1px solid orangered">
+                        <td><button class="btn btn-info btn-sm" data-target="#viewModal" data-toggle="modal"
+                                    ng-click="ViewMoto(void)"><i class="fa fa-eye"></i></button></td>
+                        <td>{{void.ShowDate}}</td>
+                        <th>{{void.ClientName}}</th>
+                        <th>{{void.PaxName}}</th>
+                        <th>{{void.RecordLocator}}</th>
+                        <th>{{void.Currency}} {{void.Amount | number: 2}}</th>
                     </tr>
                 </table>
             </div>
@@ -228,13 +288,14 @@
         <div class="container" ng-init="InitApproved()">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading" style="color:lime">Approved</h2>
+                    <h3 class="section-heading" style="color:lime">Approved</h3>
                     <h3 class="section-subheading text-muted">Approved Credit Card Moto Request</h3>
                 </div>
             </div>
             <div class="row">
-                <table style="width:100%; color:white;">
+                <table style="width:100%; color:white; font-size: 12px;">
                     <tr>
+                        <th></th>
                         <th>Date</th>
                         <th>Client Name</th>
                         <th>Passenger Name</th>
@@ -243,12 +304,21 @@
                         <th>Approval Code</th>
                     </tr>
 
-                    <tr ng-repeat="app in vm.Approved">
+                    <tr ng-repeat="app in vm.Approved" style="border-bottom: 1px solid lime">
+                        <td>
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(app)">
+                                <i class="fa fa-eye"></i></button>
+
+                            <button class="btn btn-danger btn-sm" ng-show="app.CanVoid == 'Y' && vm.CurrentUser.Type == 'USR'"
+                                    ng-click="AsignToVoide(app)" data-toggle="modal" data-target="#VoidMoto">
+                                <i class="fa fa-ban"></i>
+                            </button>
+                        </td>
                         <td>{{app.ShowDate}}</td>
                         <td>{{app.ClientName}}</td>
                         <td>{{app.PaxName}}</td>
                         <td>{{app.RecordLocator}}</td>
-                        <td>{{app.Amount}}</td>
+                        <td>{{app.Currency}} {{app.Amount | number: 2}}</td>
                         <th>{{app.ApprovalCode}}</th>
                     </tr>
                 </table>
@@ -276,40 +346,13 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.0 BETA</a>
+                            <a href="#">version 1.1 BETA</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-
-                <div class="container" style="text-align: left;">
-                    <div class="row">
-                        <div class="col-lg-8 mx-auto">
-                            <div class="modal-body">
-                                <h5>Are you sure you want to cancel?</h5>
-
-                                <button class="btn btn-danger">Yes</button>
-                                <button class="btn btn-default" data-dismiss="modal">No</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 
     <div class="portfolio-modal modal fade" id="viewModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -332,7 +375,7 @@
 
                                 <label>Date: </label> <span class="modalRequest">{{vm.ViewModal.ShowDate}}</span><br />
 
-                                <label>Company (HPI/HMDC): </label> <span class="modalRequest">{{vm.ViewModal.Company}}</span><br />
+                                <label>Card Holder Name: </label> <span class="modalRequest">{{vm.ViewModal.Company}}</span><br />
 
                                 <label>Pax Name: </label> <span class="modalRequest">{{vm.ViewModal.PaxName}}</span><br />
 
@@ -340,26 +383,38 @@
 
                                 <label>Currency: </label> <span class="modalRequest">{{vm.ViewModal.Currency}}</span><br />
 
-                                <label>Amount: </label> <span class="modalRequest">{{vm.ViewModal.Amount}}</span><br />
+                                <label>Amount: </label> <span class="modalRequest">{{vm.ViewModal.Amount | number: 2}}</span><br />
 
-                                <label>Others: </label> <span class="modalRequest">{{vm.ViewModal.Others}}</span><br />
+                                <label>Others: </label> <span class="modalRequest">{{vm.ViewModal.Others | number: 2}}</span><br />
 
-                                <label>BCD Fee: </label> <span class="modalRequest">{{vm.ViewModal.BCDFee}}</span><br />
+                                <label>BCD Fee: </label> <span class="modalRequest">{{vm.ViewModal.BCDFee | number: 2}}</span><br />
 
-                                <label>Admin Fee: </label> <span class="modalRequest">{{vm.ViewModal.AdminFee}}</span><br />
+                                <label>Admin Fee: </label> <span class="modalRequest">{{vm.ViewModal.AdminFee | number: 2}}</span><br />
 
-                                <label>Total: </label> <span class="modalRequest">{{vm.ViewModal.Total}}</span><br />
+                                <label>Total: </label> <span class="modalRequest">{{vm.ViewModal.Total | number: 2}}</span><br />
 
                                 <label>Option Time: </label> <span class="modalRequest">{{vm.ViewModal.OptionTime}}</span><br />
 
-                                <label>Approval Code: </label> <input class="form-control" type="text" ng-model="vm.ViewModal.ApprovalCode"><br />
+                                <label>Remarks: </label> <span class="modalRequest">{{vm.ViewModal.Remarks}}</span>
+                                <br />
+                                
+                                <div ng-show="vm.ViewModal.Status == 'P'">
+                                    <label>Approval Code: </label>
+                                    <input class="form-control" type="text" ng-model="vm.ViewModal.ApprovalCode" ng-show="vm.CurrentUser.Type == 'APR'">
+                                    <span class="modalRequest" ng-show="vm.CurrentUser.Type == 'USR'">{{vm.ViewModal.ApprovalCode}}</span><br />
 
-                                <label>Remarks: </label> <span class="modalRequest">{{vm.ViewModal.Remarks}}</span><br />
+                                    <label>Decline Reason: </label>
+                                    <input class="form-control" type="text" ng-model="vm.ViewModal.DeclinedReason" ng-show="vm.CurrentUser.Type == 'APR'">
+                                    <span class="modalRequest" ng-show="vm.CurrentUser.Type == 'USR'">{{vm.ViewModal.DeclineReason}}</span>
+                                    <br />
 
-                                <label>Decline Reason: </label> <input class="form-control" type="text" ng-model="vm.ViewModal.DeclinedReason"><br />
+                                    <button class="btn btn-primary" ng-show="vm.CurrentUser.Type == 'APR'" ng-click="ApproveMoto(vm.ViewModal)">Approve</button>
+                                    <button class="btn btn-danger" ng-show="vm.CurrentUser.Type == 'APR'" ng-click="DeclineMoto(vm.ViewModal)">Decline</button>
+                                </div>
 
-                                <button class="btn btn-primary" ng-click="ApproveMoto(vm.ViewModal)">Approve</button>
-                                <button class="btn btn-danger" ng-click="DeclineMoto(vm.ViewModal)">Decline</button>
+                                <div ng-show="vm.ViewModal.Status == 'F'">
+                                    <button class="btn btn-danger" ng-show="vm.CurrentUser.Type == 'APR'" ng-click="ApproveVoid(vm.ViewModal)">Void</button>
+                                </div>
                             </div><!--modal-body-->
                         </div>
                     </div>
@@ -398,6 +453,57 @@
                 <div class="modal-body">
                     <button class="btn btn-warning" ng-click="CancelMotoRequest()">Yes</button>
                     <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--VOID MODAL-->
+    <div class="modal fade" id="VoidMoto" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Are you sure you want to cancel this Moto?</h6>
+                </div>
+
+                <div class="modal-body">
+                    <button class="btn btn-warning" ng-click="VoidMoto()">Yes</button>
+                    <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CHANGE PASSWORD MODAL-->
+    <div class="modal fade" id="ChangePassModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Change Password</h6>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input class="form-control" type="password" ng-model="vm.Pass.CurrentPass" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input class="form-control" type="password" ng-model="vm.Pass.NewPass" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input class="form-control" type="password" ng-model="vm.Pass.ConfirmPass" />
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-info btn-sm" ng-click="ChangePass(vm.Pass)">Change</button>
+                        <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>

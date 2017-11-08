@@ -17,7 +17,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="RequestedBy" Type="uniqueidentifier" />
           <Property Name="ClientCode" Type="varchar" MaxLength="20" />
           <Property Name="Company" Type="varchar" MaxLength="50" />
@@ -35,6 +35,7 @@
           <Property Name="Invoice" Type="varchar" MaxLength="300" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
           <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -62,11 +63,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="eCardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="eCardEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmailSender" EntityType="eCardModel.EmailSender" />
+          <EntitySet Name="MotoRequest" EntityType="eCardModel.MotoRequest" />
+          <EntitySet Name="UserAccount" EntityType="eCardModel.UserAccount" />
+        </EntityContainer>
         <EntityType Name="EmailSender">
           <Key>
             <PropertyRef Name="Email" />
           </Key>
-          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MotoRequest">
@@ -74,7 +80,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RequestedBy" Type="Guid" />
           <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -92,6 +98,7 @@
           <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -110,11 +117,6 @@
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="eCardEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="EmailSender" EntityType="Self.EmailSender" />
-          <EntitySet Name="MotoRequest" EntityType="Self.MotoRequest" />
-          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -124,51 +126,52 @@
           <EntitySetMapping Name="EmailSender">
             <EntityTypeMapping TypeName="eCardModel.EmailSender">
               <MappingFragment StoreEntitySet="EmailSender">
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MotoRequest">
             <EntityTypeMapping TypeName="eCardModel.MotoRequest">
               <MappingFragment StoreEntitySet="MotoRequest">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
-                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
-                <ScalarProperty Name="Company" ColumnName="Company" />
-                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
-                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Others" ColumnName="Others" />
-                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
-                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
-                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="eCardModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

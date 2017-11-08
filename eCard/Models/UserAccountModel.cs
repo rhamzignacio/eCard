@@ -5,6 +5,12 @@ using System.Web;
 
 namespace eCard.Models
 {
+    public class ChangePassModel
+    {
+        public string CurrentPass { get; set; }
+        public string NewPass { get; set; }
+    }
+
     public class UserAccountModel
     {
         public Guid ID { get; set; }
