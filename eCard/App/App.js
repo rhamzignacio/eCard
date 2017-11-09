@@ -1,9 +1,7 @@
-﻿var app = angular.module("app", ["angular-growl", "login"])
+﻿var app = angular.module("app", ["angular-growl", "login", "user"])
 
 .controller("mainController", ["$scope", "$location", "$http", "growl", function ($scope, $location, $http, growl) {
     var vm = this;
-
-    var Duplicate = "N";
 
     vm.CancelMoto = {};
     vm.VoidMoto = {};
@@ -55,7 +53,7 @@
         vm.Form.PaxFirstName = "";
         vm.Form.PaxLastName = "";
         vm.Form.RecordLocator = "";
-        vm.Form.Curreny = "";
+        vm.Form.Currency = "";
         vm.Form.Amount = "";
         vm.Form.BCDFee = "";
         vm.Form.AdminFee = "";
@@ -123,31 +121,49 @@
             error = "Y";
         }
 
-        if (error === "") {
-            Duplicate = "Y";
+        if (error === "") {1
             $http({
                 method: "POST",
-            })
-
-            if (Duplicate === "N") {
-                value.Status = "P";
-
-                $http({
-                    method: "POST",
-                    url: "/Home/SaveMoto",
-                    data: { moto: value }
-                }).then(function (data) {
-                    if (data.data != "") {
-                        ErrorMessage(data.data);
+                url: "/Home/GetDuplicate",
+                data: { moto: value }
+            }).then(function (data) {
+                if (data.data.error != "") {
+                    ErrorMessage(data.data.error);
+                }
+                else {
+                    if (data.data.duplicate == null) {
+                        $scope.SaveMoto(value);
                     }
                     else {
-                        SuccessMessage("Moto Request Sent");
+                        vm.Duplicate = data.data.duplicate;
 
-                        $scope.ClearMotoForm();
+                        $("#DuplicateModal").modal('show');
                     }
-                });
-            }
+                }
+            });
+            
         }
+    }
+
+    $scope.SaveMoto = function (value) {
+        value.Status = "P";
+
+        $http({
+            method: "POST",
+            url: "/Home/SaveMoto",
+            data: { moto: value }
+        }).then(function (data) {
+            if (data.data != "") {
+                ErrorMessage(data.data);
+            }
+            else {
+                SuccessMessage("Moto Request Sent");
+
+                $scope.ClearMotoForm();
+
+                $("#DuplicateModal").modal('hide');
+            }
+        });
     }
     //=========END OF REQUEST============
 

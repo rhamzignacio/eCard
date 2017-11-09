@@ -116,6 +116,21 @@ namespace eCard.Controllers
             return Json(new { error = serverResponse, clientDropDown = clientDropDown });
         }
 
+        [HttpPost]
+        public JsonResult GetDuplicate(MotoRequestModel moto)
+        {
+            string serverResponse = "";
+
+            if(moto != null)
+            {
+                var duplicate = ECardService.GetDuplicate(moto.RecordLocator, out serverResponse);
+
+                return Json(new { error = serverResponse, duplicate = duplicate });
+            }
+
+            return Json(serverResponse);
+        }
+
         //==========LOGIN=============
         [HttpPost]
         public JsonResult TryLogin(string _username, string _password)

@@ -100,6 +100,27 @@ namespace eCard.Models
         public string Remarks { get; set; }
         public string Invoice { get; set; }
         public string Status { get; set; }
+        public string ShowStatus
+        {
+            get
+            {
+                if (Status == "P")
+                    return "Pending";
+                else if (Status == "X")
+                    return "Canceled";
+                else if (Status == "A")
+                    return "Approved";
+                else if (Status == "D")
+                    return "Declined";
+                else if (Status == "F")
+                    return "For Void";
+                else if (Status == "V")
+                    return "Voided";
+                else
+                    return "";
+
+            }
+        }
         public DateTime? ApprovedDate { get; set; }
         public string CanVoid
         {

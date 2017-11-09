@@ -41,6 +41,41 @@ namespace eCard.Services
             }
         }
 
+        public static List<UserAccountModel> GetAll(out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new eCardEntities())
+                {
+                    var query = from u in db.UserAccount
+                                select new UserAccountModel
+                                {
+                                    ID = u.ID,
+                                    Department = u.Department,
+                                    CreatedBy = u.CreatedBy,
+                                    CreatedDate = u.CreatedDate,
+                                    Email = u.Email,
+                                    Firstname = u.FirstName,
+                                    LastName = u.LastName,
+                                    MiddleInitial = u.MiddleInitial,
+                                    Status = u.Status,
+                                    Type = u.Type,
+                                    Username = u.Username,
+                                };
+
+                    return query.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static void Save(UserAccountModel _user, out string message)
         {
             try

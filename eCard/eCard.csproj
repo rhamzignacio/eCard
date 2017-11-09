@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Principal.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +259,7 @@
   <ItemGroup>
     <Content Include="App\App.js" />
     <Content Include="App\Controller\Login.js" />
+    <Content Include="App\Controller\User.js" />
     <Content Include="Content\agency.css" />
     <Content Include="Content\angular-growl.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -471,6 +473,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

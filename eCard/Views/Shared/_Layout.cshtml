@@ -107,6 +107,11 @@
                         <input type="radio" value="USD" ng-model="vm.Form.Currency" />USD
                     </div>
 
+                    <div class="form-group">
+                        <label>Option Time <span style="font-size:8pt">(Optional)</span></label>
+                        <input class="form-control" type="text" ng-model="vm.Form.OptionTime">
+                    </div>
+
                     @*<div class="form-group">
                         <label>Currency</label>
                         <select class="form-control" ng-model="vm.Form.Currency" ng-options="item.value as item.label
@@ -116,10 +121,6 @@
                 </div><!--col-md-6-->
 
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Option Time <span style="font-size:8pt">(Optional)</span></label>
-                        <input class="form-control" type="text" ng-model="vm.Form.OptionTime">
-                    </div>
 
                     <div class="form-group">
                         <label>Amount</label>
@@ -423,6 +424,53 @@
             </div><!--modal-content-->
         </div><!--modal-dialog-->
     </div><!--modal fade-->
+
+    <!--Duplicate Modal-->
+    <div class="portfolio-modal modal fade" id="DuplicateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
+                </div>
+
+                <div class="container" style="text-align:left">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h3>Duplicate Record</h3>
+                                <br /><br />
+
+                                <table id="duplicateTable" style="width:100%; font-size:12px;">
+                                    <tr>
+                                        <th>Client Name</th>
+                                        <th>Passenger Name</th>
+                                        <th>Amount</th>
+                                        <th>Requested By</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                    <tr ng-repeat="dup in vm.Duplicate">
+                                        <td>{{dup.ClientName}}</td>
+                                        <td>{{dup.PaxName}}</td>
+                                        <td>{{dup.Currency}} {{dup.Amount | number: 2}}</td>
+                                        <td>{{dup.ShowRequestedBy}}</td>
+                                        <td>{{dup.ShowStatus}}</td>
+                                    </tr>
+                                </table>
+
+                                <button type="button" class="btn btn-primary" ng-click="SaveMoto(vm.Form)">Proceed Request</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Duplicate Modal-->
+
     <!-- Bootstrap core JavaScript -->
     <script src="~/Scripts/jquery/jquery.js"></script>
     <script src="~/Scripts/popper/popper.js"></script>

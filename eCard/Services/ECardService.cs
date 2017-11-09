@@ -9,6 +9,63 @@ namespace eCard.Services
 {
     public class ECardService
     {
+        public static List<MotoRequestModel> GetDuplicate(string _reloc, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new eCardEntities())
+                {
+                    var qDB = new QuickipediaEntities();
+
+                    var moto = db.MotoRequest.Where(r => r.RecordLocator == _reloc).ToList();
+
+                    var motoClientCode = moto.Select(r => r.ClientCode);
+
+                    var quicki = qDB.ClientProfile.Where(r => motoClientCode.Contains(r.ClientCode)).ToList();
+
+                    var join = from m in moto
+                               join c in quicki on m.ClientCode equals c.ClientCode
+                               join u in db.UserAccount on m.RequestedBy equals u.ID
+                               orderby m.Date ascending
+                               select new MotoRequestModel
+                               {
+                                   ClientCode = m.ClientCode,
+                                   ClientName = c.ClientName,
+                                   AdminFee = m.AdminFee,
+                                   Amount = m.Amount,
+                                   ApprovalCode = m.ApprovalCode,
+                                   BCDFee = m.BCDFee,
+                                   Company = m.Company,
+                                   Currency = m.Currency,
+                                   Date = m.Date,
+                                   ID = m.ID,
+                                   Invoice = m.Invoice,
+                                   OptionTime = m.OptionTime,
+                                   Others = m.Others,
+                                   PaxName = m.PaxName.ToUpper(),
+                                   RecordLocator = m.RecordLocator,
+                                   Remarks = m.Remarks,
+                                   Status = m.Status,
+                                   Total = m.Total,
+                                   RequestedBy = m.RequestedBy,
+                                   ShowRequestedBy = u.FirstName + " " + u.LastName,
+                                   DeclinedReason = m.DeclinedReason,
+                                   ApprovedDate = m.ApprovedDate
+                               };
+
+                    return join.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static List<MotoRequestModel> GetAllMoto(string _status, out string message)
         {
             try

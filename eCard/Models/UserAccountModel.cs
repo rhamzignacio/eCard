@@ -22,6 +22,18 @@ namespace eCard.Models
         public string Department { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
+        public string ShowStatus
+        {
+            get
+            {
+                if (Status == "Y")
+                    return "Active";
+                else if (Status == "N")
+                    return "Locked";
+                else
+                    return "";
+            }
+        }
         public DateTime? CreatedDate { get; set; }
         public Guid? CreatedBy { get; set; }
         public string ShowCreatedBy { get; set; }
