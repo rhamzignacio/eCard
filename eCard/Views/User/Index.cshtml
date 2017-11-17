@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
-
+@{
+    Layout = null;
+}
 <html lang="en" ng-app="app">
 <head>
     <meta charset="utf-8" />
@@ -16,27 +18,63 @@
     <link rel="stylesheet" href="~/Content/angular-growl.min.css" />
     <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </head>
-<body id="page-top" ng-controller="">
+<body id="page-top" ng-controller="userController as vm">
     <div growl class="fading"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">e-Card</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" ng-show="vm.CurrentUser.Type == 'USR'">
+                        <a class="nav-link js-scroll-trigger" href="#" id="RequestMenu">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#user">User List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="masthead">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">
+                    Welcome! <span style="color:#fed136">{{vm.CurrentUser.Firstname}}</span>
+                    <br />To eCard Admin
+                    <br />
+
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#ChangePassModal">Change Password</button>
+                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#LogoutModal">Logout</button>
+                </div>
+
+
+            </div>
+        </div>
+    </header>
+
 
     <section id="user" ng-init="init()">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h3 class="section-heading">User Accounts</h3>
-                    <h3 class="section-subheading text-muted">All user accounts</h3>
+                    <h3 class="section-subheading text-muted">
+                        <button class="btn btn-success btn-sm" data-target="#UserModal" data-toggle="modal">New User</button>
+                    </h3>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <table id="userTable" style="width:100%; font-size:10pt">
                         <tr>
-                            <th>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </th>
+                            <th></th>
                             <th>Name</th>
                             <th>Username</th>
                             <th>Department</th>
@@ -44,12 +82,16 @@
                             <th>Status</th>
                         </tr>
 
-                        <tr ng-repeat="u in vm.Users">
+                        <tr ng-repeat="u in vm.Users" style="border-bottom:1px solid #808080">
                             <td>
-                                <button class="btn btn-info btn-sm">
-                                    <i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-info btn-sm" ng-click="AssignEdit(u)" data-target="#UserModal" data-toggle="modal">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
 
-                                <button class="btn btn-danger btn-sm">
+                                <button class="btn btn-primary btn-sm" ng-click="AssignReset(u)" data-target="#ResetModal" data-toggle="modal">
+                                    <i class="fa fa-key"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" ng-click="AssignLock(u)" data-target="#LockModal" data-toggle="modal">
                                     <i class="fa fa-lock" ng-show="u.Status === 'Y'"></i>
                                     <i class="fa fa-unlock" ng-show="u.Status === 'N'"></i>
                                 </button>
@@ -65,5 +107,171 @@
             </div>
         </div>
     </section>
+
+    <!--Lock Modal-->
+    <div class="modal fade" id="LockModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6>Are you sure you want to Lock/Unclock User?</h6>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <button class="btn btn-info" ng-click="LockUnlock()">Yes</button>
+                        <button class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Reset Password Modal-->
+    <div class="modal fade" id="ResetModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Reset Password</h6>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input class="form-control" type="password" ng-model="vm.Reset.Password" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input class="form-control" type="password" ng-model="vm.Reset.ConfirmPassword" />
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-info btn-lg" ng-click="ResetPassword()"><i class="fa fa-save"></i></button>
+                        <button class="btn btn-danger btn-lg" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--User Modal-->
+    <div class="portfolio-modal modal fade" id="UserModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
+                </div>
+
+                <div class="container" style="text-align:left">
+                    <div class="modal-body">
+                        <h3>User Account</h3>
+                        <br /><br />
+
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control" ng-model="vm.Modal.Username" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" ng-model="vm.Modal.Password" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" ng-model="vm.Modal.ConfirmPassword" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" ng-model="vm.Modal.Firstname" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Middle Initial</label> <span style="font-size:8pt">(optional)</span>
+                            <input type="text" class="form-control" ng-model="vm.Modal.MiddleInitial" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" ng-model="vm.Modal.LastName" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department</label>
+                            <input type="text" class="form-control" ng-model="vm.Modal.Department" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control" ng-model="vm.Modal.Type" ng-options="item.value as item.label for item in TypeDropDown"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-info btn-lg" ng-click="SaveUser()"><i class="fa fa-save"></i></button>
+                            <button class="btn btn-danger btn-lg" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script src="~/Scripts/popper/popper.js"></script>
+    <script src="~/Scripts/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/Scripts/jquery-easing/jquery.easing.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="~/Scripts/js/jqBootstrapValidation.js"></script>
+    <script src="~/Scripts/js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/Scripts/js/agency.js"></script>
+
+    @Scripts.Render("~/bundles/angular")
+
+    <script>
+        $(document).ready(function () {
+            $(".select2_single").select2({
+                placeholder: "Please Select",
+                allowClear: true,
+            });
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="copyright">Copyright &copy; e-Card 2017</span>
+                </div>
+                <div class="col-md-3">
+                    <a href="#">
+                        <img class="img-fluid d-block mx-auto" src="~/img/logos/PhilscanLogo.png" alt="Philscan Logo">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#">
+                        <img class="img-fluid d-block mx-auto" src="~/img/logos/BCDLogo.gif" alt="BCD Logo">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-inline quicklinks">
+                        <li class="list-inline-item">
+                            <a href="#">version 1.1 BETA</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

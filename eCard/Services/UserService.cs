@@ -112,7 +112,8 @@ namespace eCard.Services
                         {
                             user.Username = _user.Username;
 
-                            user.Password = _user.Password;
+                            if (_user.Password != "" && _user.Password != null)
+                                user.Password = _user.Password;
 
                             user.Department = _user.Department;
 

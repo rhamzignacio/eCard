@@ -14,7 +14,8 @@ namespace eCard
                 "~/Scripts/select2.full.min.js",
 
                 "~/App/App.js",
-                "~/App/Controller/Login.js"
+                "~/App/Controller/Login.js",
+                "~/App/Controller/User.js"
                 ));
         }
     }

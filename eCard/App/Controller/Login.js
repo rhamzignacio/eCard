@@ -18,8 +18,25 @@
                 growl.error(data.data, { ttl: 3000 });
             }
             else {
-                window.location.href = "/Home/Index";
+                GetUser();
             }
         });
     }
+
+
+    GetUser = function () {
+        $http({
+            method: "POST",
+            url: "/Home/GetCurrentUser",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.Type === "ADM") {
+                window.location.href = "/User/Index";
+            }
+            else {
+                window.location.href = "/Home/Index";
+            }
+        })
+    };
+
 }]);
