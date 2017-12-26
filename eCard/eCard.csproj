@@ -243,11 +243,18 @@
       <DependentUpon>QuickipediaEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\QuickipediaModel.cs" />
+    <Compile Include="Models\ServiceFeeFormula.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserAccount.cs">
       <DependentUpon>eCardEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserAccountModel.cs" />
+    <Compile Include="Models\v_MotoRequest.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdminFeeFormula.cs" />
     <Compile Include="Services\ECardService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\LoginService.cs" />
@@ -382,10 +389,7 @@
     <Content Include="Content\font-awesome\.bower.json" />
     <Content Include="Content\font-awesome\.npmignore" />
     <Content Include="Content\font-awesome\bower.json" />
-    <Content Include="Content\font-awesome\css\desktop.ini" />
     <Content Include="Content\font-awesome\css\font-awesome.css.map" />
-    <Content Include="Content\font-awesome\desktop.ini" />
-    <Content Include="Content\font-awesome\fonts\desktop.ini" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -394,7 +398,6 @@
     <Content Include="Content\font-awesome\less\animated.less" />
     <Content Include="Content\font-awesome\less\bordered-pulled.less" />
     <Content Include="Content\font-awesome\less\core.less" />
-    <Content Include="Content\font-awesome\less\desktop.ini" />
     <Content Include="Content\font-awesome\less\fixed-width.less" />
     <Content Include="Content\font-awesome\less\font-awesome.less" />
     <Content Include="Content\font-awesome\less\icons.less" />
@@ -406,7 +409,6 @@
     <Content Include="Content\font-awesome\less\screen-reader.less" />
     <Content Include="Content\font-awesome\less\stacked.less" />
     <Content Include="Content\font-awesome\less\variables.less" />
-    <Content Include="Content\font-awesome\scss\desktop.ini" />
     <Content Include="Content\font-awesome\scss\font-awesome.scss" />
     <Content Include="Content\font-awesome\scss\_animated.scss" />
     <Content Include="Content\font-awesome\scss\_bordered-pulled.scss" />
@@ -485,6 +487,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\AllMotoRequest.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

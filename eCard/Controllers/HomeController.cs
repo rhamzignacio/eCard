@@ -94,6 +94,28 @@ namespace eCard.Controllers
 
         //===========MOTO REQUEST==============
         [HttpPost]
+        public JsonResult ComputeAdminFee(string _clientCode, double? _airFare, double? _serviceFee, double? _otherFee)
+        {
+            string serverResponse = "";
+
+            double adminFee = AdminFeeFormula.GetAdminFee(_clientCode, _airFare, _serviceFee, _otherFee, out serverResponse);
+
+            if (_airFare == null)
+                _airFare = 0;
+
+            if (_serviceFee == null)
+                _serviceFee = 0;
+
+            if (_otherFee == null)
+                _otherFee = 0;
+
+            double? total = adminFee + _airFare + _serviceFee + _otherFee;
+
+            return Json(new { total = String.Format("{0:0.00}", total), adminFee = String.Format("{0:0.00}",adminFee),
+                error = serverResponse});
+        }
+
+        [HttpPost]
         public JsonResult SaveMoto(MotoRequestModel moto)
         {
             string serverResponse = "";

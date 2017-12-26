@@ -81,7 +81,7 @@
                     <div class="form-group">
                         <label>Client Name</label>
                         <select class="form-control select2_single" ng-model="vm.Form.ClientCode" style="width:100%"
-                                ng-options="item.ID as item.Value for item in vm.ClientDropDown"></select>
+                                ng-options="item.ID as item.Value for item in vm.ClientDropDown" ng-change="ComputeAdminFee()"></select>
                     </div>
 
                     <div class="form-group">
@@ -110,40 +110,34 @@
                         <input class="form-control" type="text" ng-model="vm.Form.OptionTime">
                     </div>
 
-                    @*<div class="form-group">
-                        <label>Currency</label>
-                        <select class="form-control" ng-model="vm.Form.Currency" ng-options="item.value as item.label
-                                for item in CurrencyDropDown"></select>
-                    </div>*@
-
                 </div><!--col-md-6-->
 
                 <div class="col-md-6">
 
                     <div class="form-group">
                         <label>Amount</label>
-                        <input class="form-control" type="number" ng-model="vm.Form.Amount">
+                        <input class="form-control" type="number" ng-model="vm.Form.Amount" ng-change="ComputeAdminFee()">
                     </div>
 
                     <div class="form-group">
                         <label>Other Fees</label>
-                        <input class="form-control" type="number" ng-model="vm.Form.Others">
+                        <input class="form-control" type="number" ng-model="vm.Form.Others" ng-change="ComputeAdminFee()">
                     </div>
 
                     <div class="form-group">
                         <label>BCD Fee</label>
-                        <input class="form-control" type="number" ng-model="vm.Form.BCDFee">
+                        <input class="form-control" type="number" ng-model="vm.Form.BCDFee" ng-change="ComputeAdminFee()">
                     </div>
 
                     <div class="form-group">
                         <label>Admin Fee</label>
-                        <input class="form-control" type="number" ng-model="vm.Form.AdminFee">
+                        <input class="form-control" type="number" value="{{vm.Form.AdminFee}}">
                     </div>
 
                     <div class="form-group">
                         <label>Total</label>
-                        <input class="form-control" type="number" ng-model="vm.Form.Total" 
-                               value="{{vm.Form.Amount + vm.Form.Others + vm.Form.BCDFee + vm.Form.AdminFee}}" disabled="disabled">
+                        <input class="form-control" type="number"
+                               value="{{vm.totalAmount}}" disabled="disabled">
                     </div>
                 </div><!--col-md-6-->
 
@@ -345,7 +339,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.1 BETA</a>
+                            <a href="#">version 1.3 BETA</a>
                         </li>
                     </ul>
                 </div>
@@ -388,7 +382,7 @@
 
                                 <label>BCD Fee: </label> <span class="modalRequest">{{vm.ViewModal.BCDFee | number: 2}}</span><br />
 
-                                <label>Admin Fee: </label> <span class="modalRequest">{{vm.ViewModal.AdminFee | number: 2}}</span><br />
+                                <label>Admin Fee: </label> <span class="modalRequest">{{vm.ViewModal.AdminFee}}</span><br />
 
                                 <label>Total: </label> <span class="modalRequest">{{vm.ViewModal.Total | number: 2}}</span><br />
 
@@ -510,7 +504,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">Are you sure you want to cancel this Moto?</h6>
+                    <h6 class="modal-title">Are you sure you want to void this Moto?</h6>
                 </div>
 
                 <div class="modal-body">

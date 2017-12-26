@@ -54,9 +54,6 @@
         vm.Form.PaxLastName = "";
         vm.Form.RecordLocator = "";
         vm.Form.Currency = "";
-        vm.Form.Amount = "";
-        vm.Form.BCDFee = "";
-        vm.Form.AdminFee = "";
     }
 
     $scope.InitMotoRequest = function () {
@@ -72,6 +69,29 @@
             }
             else {
                 vm.ClientDropDown = data.data.clientDropDown;
+            }
+        });
+    }
+
+    $scope.ComputeAdminFee = function () {
+        vm.totalAmount = 0;
+
+        $http({
+            method: "POST",
+            url: "/Home/ComputeAdminFee",
+            data: {
+                _clientCode: vm.Form.ClientCode,
+                _airFare: vm.Form.Amount,
+                _serviceFee: vm.Form.BCDFee,
+                _otherFee: vm.Form.Others
+            }
+        }).then(function (data) {
+            vm.Form.AdminFee = data.data.adminFee;
+
+            vm.totalAmount = data.data.total;
+
+            if (data.data.error != "") {
+                ErrorMessage(data.data.error);
             }
         });
     }
@@ -93,7 +113,6 @@
 
         if (value.RecordLocator === "" || value.RecordLocator === null) {
             ErrorMessage("Record Locator is required");
-
             error = "Y";
         }
 
