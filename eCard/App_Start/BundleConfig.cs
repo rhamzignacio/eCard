@@ -12,6 +12,7 @@ namespace eCard
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-growl.min.js",
                 "~/Scripts/select2.full.min.js",
+                "~/Scripts/bootstrap.min.js",
 
                 "~/App/App.js",
                 "~/App/Controller/Login.js",

@@ -179,13 +179,12 @@
                     <tr ng-repeat="req in vm.Request" style="border-bottom:1px solid #000000">
                         <td>
                             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(req)"
-                                    style="font-size:12px; height:25px">
+                                    title="View Moto Request">
                                 <i class="fa fa-eye"></i>
                             </button>
 
                             <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#CancelMoto"
-                                    ng-click="AssignToDelete(req)" ng-show="vm.CurrentUser.Type == 'USR'"
-                                    style="font-size:12px; height:25px;">
+                                    ng-click="AssignToDelete(req)" ng-show="vm.CurrentUser.Type == 'USR'" title="Cancel Moto Request">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>
@@ -223,10 +222,12 @@
 
                     <tr ng-repeat="dec in vm.Declined" style="border-bottom: 1px solid red">
                         <td>
-                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(dec)">
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(dec)"
+                                    title="View Moto Request">
                                 <i class="fa fa-eye"></i></button>
 
-                            <button class="btn btn-success btn-sm" ng-show="vm.CurrentUser.Type == 'USR'" ng-click="ReFile(dec)">
+                            <button class="btn btn-success btn-sm" ng-show="vm.CurrentUser.Type == 'USR'" ng-click="ReFile(dec)"
+                                    title="Re-File Moto Request">
                                 <i class="fa fa-recycle"></i>
                             </button>
                         </td>
@@ -263,7 +264,7 @@
 
                     <tr ng-repeat="void in vm.Voided" style="border-bottom: 1px solid orangered">
                         <td><button class="btn btn-info btn-sm" data-target="#viewModal" data-toggle="modal"
-                                    ng-click="ViewMoto(void)"><i class="fa fa-eye"></i></button></td>
+                                    ng-click="ViewMoto(void)" title="View Moto Request"><i class="fa fa-eye"></i></button></td>
                         <td>{{void.ShowDate}}</td>
                         <th>{{void.ClientName}}</th>
                         <th>{{void.PaxName}}</th>
@@ -299,11 +300,12 @@
 
                     <tr ng-repeat="app in vm.Approved" style="border-bottom: 1px solid lime">
                         <td>
-                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(app)">
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(app)"
+                                    title="View Moto Request">
                                 <i class="fa fa-eye"></i></button>
 
                             <button class="btn btn-danger btn-sm" ng-show="app.CanVoid == 'Y'"
-                                    ng-click="AsignToVoide(app)" data-toggle="modal" data-target="#VoidMoto">
+                                    ng-click="AsignToVoide(app)" data-toggle="modal" data-target="#VoidMoto" title="Void Moto Request">
                                 <i class="fa fa-ban"></i>
                             </button>
                         </td>
@@ -339,7 +341,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.4</a>
+                            <a href="#">version 1.5</a>
                         </li>
                     </ul>
                 </div>
@@ -574,6 +576,7 @@
                 placeholder: "Please Select",
                 allowClear: true,
             });
+
         });
     </script>
 </body>
