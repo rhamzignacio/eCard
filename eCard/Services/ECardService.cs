@@ -82,8 +82,7 @@ namespace eCard.Services
 
                         if (_status == "P")
                         {
-                            moto = db.MotoRequest.Where(r => (r.Status == "P" || r.Status == "F")
-                                && r.Date > date).ToList();
+                            moto = db.MotoRequest.Where(r => (r.Status == "P" || r.Status == "F")).ToList();
                         }
                         else
                         {

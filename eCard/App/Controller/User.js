@@ -17,6 +17,15 @@
         { value: "ADM", label: "Admin" }
     ]
 
+    $scope.DepartmentDropDown = [
+    { value: "ACCTG", label: "Accounting" },
+    { value: "AM", label: "Account Management" },
+    { value: "BLD", label: "Business & Leissure" },
+    { value: "BSI", label: "Business Solutions & Innovation" },
+    { value: "DOCU", label: "Documentation" },
+    { value: "MICE", label: "Mice" },
+    ];
+
     $scope.init = function () {
         $http({
             method: "POST",
