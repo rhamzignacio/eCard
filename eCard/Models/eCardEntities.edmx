@@ -63,69 +63,11 @@
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="Email" Type="varchar" MaxLength="300" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="v_MotoRequest">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Date" />
-          </Key>
-          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="RequestedBy" Type="uniqueidentifier" />
-          <Property Name="FirstName" Type="varchar" MaxLength="60" />
-          <Property Name="LastName" Type="varchar" MaxLength="60" />
-          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
-          <Property Name="ClientName" Type="varchar" MaxLength="250" />
-          <Property Name="Company" Type="varchar" MaxLength="50" />
-          <Property Name="PaxName" Type="varchar" MaxLength="300" />
-          <Property Name="RecordLocator" Type="varchar" MaxLength="10" />
-          <Property Name="Currency" Type="varchar" MaxLength="3" />
-          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
-          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
-          <Property Name="Remarks" Type="varchar(max)" />
-          <Property Name="Invoice" Type="varchar" MaxLength="300" />
-          <Property Name="Status" Type="varchar" MaxLength="1" />
-          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
-          <Property Name="ApprovedDate" Type="datetime" />
-        </EntityType>
         <EntityContainer Name="eCardModelStoreContainer">
           <EntitySet Name="EmailSender" EntityType="Self.EmailSender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MotoRequest" EntityType="Self.MotoRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceFeeFormula" EntityType="Self.ServiceFeeFormula" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="v_MotoRequest" EntityType="Self.v_MotoRequest" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [v_MotoRequest].[ID] AS [ID], 
-    [v_MotoRequest].[Date] AS [Date], 
-    [v_MotoRequest].[RequestedBy] AS [RequestedBy], 
-    [v_MotoRequest].[FirstName] AS [FirstName], 
-    [v_MotoRequest].[LastName] AS [LastName], 
-    [v_MotoRequest].[ClientCode] AS [ClientCode], 
-    [v_MotoRequest].[ClientName] AS [ClientName], 
-    [v_MotoRequest].[Company] AS [Company], 
-    [v_MotoRequest].[PaxName] AS [PaxName], 
-    [v_MotoRequest].[RecordLocator] AS [RecordLocator], 
-    [v_MotoRequest].[Currency] AS [Currency], 
-    [v_MotoRequest].[Amount] AS [Amount], 
-    [v_MotoRequest].[Others] AS [Others], 
-    [v_MotoRequest].[BCDFee] AS [BCDFee], 
-    [v_MotoRequest].[AdminFee] AS [AdminFee], 
-    [v_MotoRequest].[Total] AS [Total], 
-    [v_MotoRequest].[OptionTime] AS [OptionTime], 
-    [v_MotoRequest].[ApprovalCode] AS [ApprovalCode], 
-    [v_MotoRequest].[Remarks] AS [Remarks], 
-    [v_MotoRequest].[Invoice] AS [Invoice], 
-    [v_MotoRequest].[Status] AS [Status], 
-    [v_MotoRequest].[DeclinedReason] AS [DeclinedReason], 
-    [v_MotoRequest].[ApprovedDate] AS [ApprovedDate]
-    FROM [dbo].[v_MotoRequest] AS [v_MotoRequest]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -134,9 +76,8 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
         <EntityContainer Name="eCardEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EmailSender" EntityType="eCardModel.EmailSender" />
           <EntitySet Name="MotoRequest" EntityType="eCardModel.MotoRequest" />
-          <EntitySet Name="UserAccount" EntityType="eCardModel.UserAccount" />
           <EntitySet Name="ServiceFeeFormula" EntityType="eCardModel.ServiceFeeFormula" />
-          <EntitySet Name="v_MotoRequest" EntityType="eCardModel.v_MotoRequest" />
+          <EntitySet Name="UserAccount" EntityType="eCardModel.UserAccount" />
         </EntityContainer>
         <EntityType Name="EmailSender">
           <Key>
@@ -170,6 +111,15 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
           <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ServiceFeeFormula">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Divide" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Multiply" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="UserAccount">
           <Key>
             <PropertyRef Name="ID" />
@@ -187,45 +137,7 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="ServiceFeeFormula">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Divide" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="Multiply" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="v_MotoRequest">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Date" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RequestedBy" Type="Guid" />
-          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="RecordLocator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -265,6 +177,16 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ServiceFeeFormula">
+            <EntityTypeMapping TypeName="eCardModel.ServiceFeeFormula">
+              <MappingFragment StoreEntitySet="ServiceFeeFormula">
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="Multiply" ColumnName="Multiply" />
+                <ScalarProperty Name="Divide" ColumnName="Divide" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="eCardModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
@@ -279,45 +201,6 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceFeeFormula">
-            <EntityTypeMapping TypeName="eCardModel.ServiceFeeFormula">
-              <MappingFragment StoreEntitySet="ServiceFeeFormula">
-                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
-                <ScalarProperty Name="Multiply" ColumnName="Multiply" />
-                <ScalarProperty Name="Divide" ColumnName="Divide" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="v_MotoRequest">
-            <EntityTypeMapping TypeName="eCardModel.v_MotoRequest">
-              <MappingFragment StoreEntitySet="v_MotoRequest">
-                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
-                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
-                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
-                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
-                <ScalarProperty Name="Others" ColumnName="Others" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
-                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
-                <ScalarProperty Name="Company" ColumnName="Company" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

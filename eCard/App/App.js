@@ -54,6 +54,8 @@
         vm.Form.PaxLastName = "";
         vm.Form.RecordLocator = "";
         vm.Form.Currency = "";
+        vm.Form.BCDFee = "";
+        vm.totalAmount = 0;
     }
 
     $scope.InitMotoRequest = function () {
@@ -71,6 +73,25 @@
                 vm.ClientDropDown = data.data.clientDropDown;
             }
         });
+    }
+
+    $scope.BCDFeeChange = function () {
+        $("#VATCheckBox").prop("checked", false);
+
+        vm.Form.IfVAT = false;
+
+        $scope.ComputeAdminFee();
+    }
+
+    $scope.ComputeVAT = function () {
+        if (vm.Form.IfVAT === true) {
+            vm.Form.BCDFee = Number((vm.Form.BCDFee * 1.12).toFixed(2));
+        }
+        else {
+            vm.Form.BCDFee = Number((vm.Form.BCDFee / 1.12).toFixed(2));
+        }
+
+        $scope.ComputeAdminFee();
     }
 
     $scope.ComputeAdminFee = function () {
@@ -111,10 +132,10 @@
             error = "Y";
         }
 
-        if (value.RecordLocator === "" || value.RecordLocator === null) {
-            ErrorMessage("Record Locator is required");
-            error = "Y";
-        }
+        //if (value.RecordLocator === "" || value.RecordLocator === null) {
+        //    ErrorMessage("Record Locator is required");
+        //    error = "Y";
+        //}
 
         if (value.Currency === "" || value.Currency === null) {
             ErrorMessage("Currency is required");
@@ -150,13 +171,13 @@
                     ErrorMessage(data.data.error);
                 }
                 else {
-                    if (data.data.duplicate == null) {
+                    if (data.data.duplicate.length === 0) {
                         $scope.SaveMoto(value);
                     }
                     else {
                         vm.Duplicate = data.data.duplicate;
 
-                        $("#DuplicateModal").modal('show');
+                        $("#dupbutton").click();
                     }
                 }
             });

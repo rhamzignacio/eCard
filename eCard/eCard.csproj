@@ -250,9 +250,6 @@
       <DependentUpon>eCardEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserAccountModel.cs" />
-    <Compile Include="Models\v_MotoRequest.cs">
-      <DependentUpon>eCardEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AdminFeeFormula.cs" />
     <Compile Include="Services\ECardService.cs" />

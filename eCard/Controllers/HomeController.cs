@@ -122,6 +122,9 @@ namespace eCard.Controllers
 
             if (moto != null)
             {
+                if (moto.Status == "F" && UniversalService.CurrentUser.Type == "APR")
+                    moto.Status = "V";
+
                 ECardService.SaveMotoRequest(moto, out serverResponse);
             }
 
@@ -145,7 +148,7 @@ namespace eCard.Controllers
 
             if(moto != null)
             {
-                var duplicate = ECardService.GetDuplicate(moto.RecordLocator, out serverResponse);
+                var duplicate = ECardService.GetDuplicate(moto, out serverResponse);
 
                 return Json(new { error = serverResponse, duplicate = duplicate });
             }

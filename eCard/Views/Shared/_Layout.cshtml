@@ -16,7 +16,10 @@
  
 </head>
 
+
 <body id="page-top" ng-controller="mainController as vm" ng-init="Init()">
+
+    <button id="dupbutton" hidden="hidden" data-target="#DuplicateModal" data-toggle="modal"></button>
     <div growl class="fading"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -95,7 +98,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Record Locator</label>
+                        <label>Record Locator / Reference</label>
                         <input class="form-control" type="text" ng-model="vm.Form.RecordLocator">
                     </div>
 
@@ -125,8 +128,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label>BCD Fee</label>
-                        <input class="form-control" type="number" ng-model="vm.Form.BCDFee" ng-change="ComputeAdminFee()">
+                        <label>BCD Fee <span style="right:0">
+                            <input type="checkbox" value="Y" ng-model="vm.Form.IfVAT" id="VATCheckBox" ng-change="ComputeVAT()"/> w/ VAT</span>
+                        </label>
+                        <input class="form-control" type="number" ng-model="vm.Form.BCDFee" ng-change="BCDFeeChange()">
                     </div>
 
                     <div class="form-group">
@@ -341,7 +346,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.5</a>
+                            <a href="#">version 1.7</a>
                         </li>
                     </ul>
                 </div>
@@ -420,7 +425,7 @@
     </div><!--modal fade-->
 
     <!--Duplicate Modal-->
-    <div class="portfolio-modal modal fade" id="DuplicateModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="DuplicateModal" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-dismiss="modal">

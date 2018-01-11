@@ -116,6 +116,10 @@
         }
     }
 
+    $scope.ClearModal = function () {
+        vm.Modal = {};
+    }
+
     $scope.SaveUser = function () {
         var error = "N";
 

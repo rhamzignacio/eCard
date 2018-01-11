@@ -27,8 +27,7 @@ namespace eCard.Models
     
         public virtual DbSet<EmailSender> EmailSender { get; set; }
         public virtual DbSet<MotoRequest> MotoRequest { get; set; }
-        public virtual DbSet<UserAccount> UserAccount { get; set; }
         public virtual DbSet<ServiceFeeFormula> ServiceFeeFormula { get; set; }
-        public virtual DbSet<v_MotoRequest> v_MotoRequest { get; set; }
+        public virtual DbSet<UserAccount> UserAccount { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace eCard.Services
 {
     public class ECardService
     {
-        public static List<MotoRequestModel> GetDuplicate(string _reloc, out string message)
+        public static List<MotoRequestModel> GetDuplicate(MotoRequestModel _model, out string message)
         {
             try
             {
@@ -19,7 +19,8 @@ namespace eCard.Services
                 {
                     var qDB = new QuickipediaEntities();
 
-                    var moto = db.MotoRequest.Where(r => r.RecordLocator == _reloc).ToList();
+                    var moto = db.MotoRequest.Where(r => r.RecordLocator.ToLower() == _model.RecordLocator.ToLower()
+                        && r.PaxName.ToLower() == _model.PaxName.ToLower()).ToList();
 
                     var motoClientCode = moto.Select(r => r.ClientCode);
 
@@ -226,7 +227,7 @@ namespace eCard.Services
                             ClientCode = _request.ClientCode,
                             Company = _request.Company,
                             PaxName = _request.PaxName.ToUpper(),
-                            RecordLocator = _request.RecordLocator,
+                            RecordLocator = _request.RecordLocator.ToUpper(),
                             Currency = _request.Currency,
                             Amount = _request.Amount,
                             Others = _request.Others,
@@ -273,7 +274,7 @@ namespace eCard.Services
 
                             moto.PaxName = _request.PaxName.ToUpper();
 
-                            moto.RecordLocator = _request.RecordLocator;
+                            moto.RecordLocator = _request.RecordLocator.ToUpper();
 
                             moto.Currency = _request.Currency;
 

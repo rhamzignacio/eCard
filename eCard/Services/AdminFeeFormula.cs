@@ -55,7 +55,7 @@ namespace eCard.Services
                 else if (_clientCode == "200CL00160") //Energizer
                     return (_airFare + _serviceFee + _others) / 0.972 * 0.028;
 
-                else if (_clientCode == "200CL00129" || _clientCode == "200CL00031") //Hitachi
+                else if (_clientCode == "200CL00129" || _clientCode == "200CL00031") //Hitafchi
                     return (_airFare + _serviceFee + _others) / 0.972 * 0.028;
 
                 else if (_clientCode == "200CL00135" || _clientCode == "200CL00131" || _clientCode == "200CL00133"
@@ -84,7 +84,7 @@ namespace eCard.Services
                     return (_airFare + _serviceFee + _others) / 0.97 * 0.03;
 
                 else if (_clientCode == "200CL00047" || _clientCode == "200CL00045" || _clientCode == "200CL00046")//PFIZER
-                    return (_airFare + _serviceFee + _others) / 0.97 * 0.03;
+                    return (_airFare + _serviceFee + _others) * 0.03;
 
                 else if (_clientCode == "200CL00174") //BNP Paribas
                     return (_airFare + _serviceFee + _others) / 0.965 * 0.035;
