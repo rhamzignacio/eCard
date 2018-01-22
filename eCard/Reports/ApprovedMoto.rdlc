@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.59156in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.27083in</Width>
@@ -15,10 +15,10 @@
               <Width>3.76042in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.03536in</Width>
+              <Width>2.89994in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.36934in</Width>
+              <Width>2.99434in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.76042in</Width>
@@ -40,9 +40,6 @@
             </TablixColumn>
             <TablixColumn>
               <Width>1.99023in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1.46296in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -445,39 +442,6 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox25">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Status</Value>
-                              <Style>
-                                <FontSize>11pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox25</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
@@ -865,50 +829,12 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Status">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>= Switch(
-	Fields!Status.Value = "P", "Pending",
-	Fields!Status.Value = "A", "Approved",
-	Fields!Status.Value = "X", "Canceled",
-	Fields!Status.Value = "D", "Denied",
-	Fields!Status.Value = "F", "For Void",
-	Fields!Status.Value = "V", "Voided"
-)</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Status</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
               </TablixCells>
             </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
-            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -934,23 +860,94 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.11111in</Top>
+        <Top>0.125in</Top>
         <Height>0.5in</Height>
-        <Width>19.7653in</Width>
+        <Width>20.38348in</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox43">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Total</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox43</rd:DefaultName>
+        <Top>0.69444in</Top>
+        <Left>16.39325in</Left>
+        <Height>0.25in</Height>
+        <Width>0.86458in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox44">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Total.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <Format>#,0.00;(#,0.00)</Format>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox43</rd:DefaultName>
+        <Top>0.69444in</Top>
+        <Left>17.2995in</Left>
+        <Height>0.25in</Height>
+        <Width>1.09375in</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>19.90676in</Width>
+  <Width>20.38348in</Width>
   <Page>
     <PageHeader>
-      <Height>0.86372in</Height>
+      <Height>0.77083in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -958,8 +955,7 @@
           <Source>Embedded</Source>
           <Value>bcdlog</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.27306in</Top>
-          <Left>0.21875in</Left>
+          <Top>0.32812in</Top>
           <Height>0.34375in</Height>
           <Width>1.55208in</Width>
           <Style>
@@ -975,7 +971,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>MOTO Request</Value>
+                  <Value>Approved - MOTO Request</Value>
                   <Style>
                     <FontSize>14pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -986,10 +982,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.33556in</Top>
-          <Left>1.93367in</Left>
+          <Top>0.39062in</Top>
+          <Left>1.69214in</Left>
           <Height>0.28125in</Height>
-          <Width>1.6875in</Width>
+          <Width>2.84375in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1021,13 +1017,20 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>08405561-575d-4b88-adb2-68800099c641</rd:DataSourceID>
+      <rd:DataSourceID>a795e3e3-9b60-4755-9081-f2623ebe06c5</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="eCardDataSets">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>589881dd-a607-4f04-8365-cff8b6089488</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>eCardDataSet</DataSourceName>
+        <DataSourceName>eCardDataSets</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -1125,12 +1128,12 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>eCardDataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\philscan\Documents\Repository\eCard\eCard\eCardDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>v_MotoRequest</rd:TableName>
+        <rd:DataSetName>eCardDataSets</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\philscan\Documents\Repository\eCard\eCard\eCardDataSets.xsd</rd:SchemaPath>
+        <rd:TableName>vw_Approved</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>v_MotoRequestTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>vw_ApprovedTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -1154,5 +1157,5 @@ l8YBCgcke9WPgF8ONTn1/wD4TXxFBJFGgdrIXC4eeR/vS4PIGCcHvk9q91tvCHhuzlWW00DS4JFOVeOz
     </EmbeddedImage>
   </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>65f2547b-4871-4c50-8287-18a2d9dc9426</rd:ReportID>
+  <rd:ReportID>684034d3-ad88-4ff5-93f0-b13055f0f4d0</rd:ReportID>
 </Report>

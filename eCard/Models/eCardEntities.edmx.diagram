@@ -9,6 +9,12 @@
         <EntityTypeShape EntityType="eCardModel.MotoRequest" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="eCardModel.ServiceFeeFormula" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="eCardModel.UserAccount" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="eCardModel.v_MotoRequest" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="eCardModel.vw_Approved" Width="1.5" PointX="6.875" PointY="0.75" />
+        <EntityTypeShape EntityType="eCardModel.vw_Canceled" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="eCardModel.vw_FORAPPROVAL" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="eCardModel.vw_Void" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="eCardModel.vw_Declined" Width="1.5" PointX="9.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

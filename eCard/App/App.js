@@ -456,4 +456,17 @@
             });
         }
     }
+
+    //===============REPORT================
+    $scope.OpenReport = function (value) {
+        if (value === 'all') {
+            window.open("/ReportView/AllMoto.aspx", "newtab");
+        }
+        else if (value === 'approved') {
+            window.open("/ReportView/ApprovedMoto.aspx", "newtab");
+        }
+        else if (value === 'declined') {
+            window.open("/ReportView/DeclinedMoto.aspx", "newtab");
+        }
+    }
 }]);

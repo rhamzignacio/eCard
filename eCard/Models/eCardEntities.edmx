@@ -22,7 +22,7 @@
           <Property Name="ClientCode" Type="varchar" MaxLength="20" />
           <Property Name="Company" Type="varchar" MaxLength="50" />
           <Property Name="PaxName" Type="varchar" MaxLength="300" />
-          <Property Name="RecordLocator" Type="varchar" MaxLength="10" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
           <Property Name="Currency" Type="varchar" MaxLength="3" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
@@ -63,11 +63,359 @@
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="Email" Type="varchar" MaxLength="300" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_MotoRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="RequestedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="60" />
+          <Property Name="LastName" Type="varchar" MaxLength="60" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientName" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="PaxName" Type="varchar" MaxLength="300" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="10" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
+          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'eCard.dbo.vw_Approved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Approved">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="RequestedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="60" />
+          <Property Name="LastName" Type="varchar" MaxLength="60" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientName" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="PaxName" Type="varchar" MaxLength="300" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
+          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'eCard.dbo.vw_Canceled' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Canceled">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="RequestedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="60" />
+          <Property Name="LastName" Type="varchar" MaxLength="60" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientName" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="PaxName" Type="varchar" MaxLength="300" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
+          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'eCard.dbo.vw_Declined' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Declined">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="RequestedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="60" />
+          <Property Name="LastName" Type="varchar" MaxLength="60" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientName" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="PaxName" Type="varchar" MaxLength="300" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
+          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'eCard.dbo.vw_FORAPPROVAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_FORAPPROVAL">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="RequestedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="60" />
+          <Property Name="LastName" Type="varchar" MaxLength="60" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientName" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="PaxName" Type="varchar" MaxLength="300" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
+          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Void">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="RequestedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="60" />
+          <Property Name="LastName" Type="varchar" MaxLength="60" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientName" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="PaxName" Type="varchar" MaxLength="300" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="varchar" MaxLength="200" />
+          <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
         <EntityContainer Name="eCardModelStoreContainer">
           <EntitySet Name="EmailSender" EntityType="Self.EmailSender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MotoRequest" EntityType="Self.MotoRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceFeeFormula" EntityType="Self.ServiceFeeFormula" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_MotoRequest" EntityType="Self.v_MotoRequest" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_MotoRequest].[ID] AS [ID], 
+    [v_MotoRequest].[Date] AS [Date], 
+    [v_MotoRequest].[RequestedBy] AS [RequestedBy], 
+    [v_MotoRequest].[FirstName] AS [FirstName], 
+    [v_MotoRequest].[LastName] AS [LastName], 
+    [v_MotoRequest].[ClientCode] AS [ClientCode], 
+    [v_MotoRequest].[ClientName] AS [ClientName], 
+    [v_MotoRequest].[Company] AS [Company], 
+    [v_MotoRequest].[PaxName] AS [PaxName], 
+    [v_MotoRequest].[RecordLocator] AS [RecordLocator], 
+    [v_MotoRequest].[Currency] AS [Currency], 
+    [v_MotoRequest].[Amount] AS [Amount], 
+    [v_MotoRequest].[Others] AS [Others], 
+    [v_MotoRequest].[BCDFee] AS [BCDFee], 
+    [v_MotoRequest].[AdminFee] AS [AdminFee], 
+    [v_MotoRequest].[Total] AS [Total], 
+    [v_MotoRequest].[OptionTime] AS [OptionTime], 
+    [v_MotoRequest].[ApprovalCode] AS [ApprovalCode], 
+    [v_MotoRequest].[Remarks] AS [Remarks], 
+    [v_MotoRequest].[Invoice] AS [Invoice], 
+    [v_MotoRequest].[Status] AS [Status], 
+    [v_MotoRequest].[DeclinedReason] AS [DeclinedReason], 
+    [v_MotoRequest].[ApprovedDate] AS [ApprovedDate]
+    FROM [dbo].[v_MotoRequest] AS [v_MotoRequest]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Approved" EntityType="Self.vw_Approved" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Approved].[ID] AS [ID], 
+    [vw_Approved].[Date] AS [Date], 
+    [vw_Approved].[RequestedBy] AS [RequestedBy], 
+    [vw_Approved].[FirstName] AS [FirstName], 
+    [vw_Approved].[LastName] AS [LastName], 
+    [vw_Approved].[ClientCode] AS [ClientCode], 
+    [vw_Approved].[ClientName] AS [ClientName], 
+    [vw_Approved].[Company] AS [Company], 
+    [vw_Approved].[PaxName] AS [PaxName], 
+    [vw_Approved].[RecordLocator] AS [RecordLocator], 
+    [vw_Approved].[Currency] AS [Currency], 
+    [vw_Approved].[Amount] AS [Amount], 
+    [vw_Approved].[Others] AS [Others], 
+    [vw_Approved].[BCDFee] AS [BCDFee], 
+    [vw_Approved].[AdminFee] AS [AdminFee], 
+    [vw_Approved].[Total] AS [Total], 
+    [vw_Approved].[OptionTime] AS [OptionTime], 
+    [vw_Approved].[ApprovalCode] AS [ApprovalCode], 
+    [vw_Approved].[Remarks] AS [Remarks], 
+    [vw_Approved].[Invoice] AS [Invoice], 
+    [vw_Approved].[Status] AS [Status], 
+    [vw_Approved].[DeclinedReason] AS [DeclinedReason], 
+    [vw_Approved].[ApprovedDate] AS [ApprovedDate]
+    FROM [dbo].[vw_Approved] AS [vw_Approved]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Canceled" EntityType="Self.vw_Canceled" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Canceled].[ID] AS [ID], 
+    [vw_Canceled].[Date] AS [Date], 
+    [vw_Canceled].[RequestedBy] AS [RequestedBy], 
+    [vw_Canceled].[FirstName] AS [FirstName], 
+    [vw_Canceled].[LastName] AS [LastName], 
+    [vw_Canceled].[ClientCode] AS [ClientCode], 
+    [vw_Canceled].[ClientName] AS [ClientName], 
+    [vw_Canceled].[Company] AS [Company], 
+    [vw_Canceled].[PaxName] AS [PaxName], 
+    [vw_Canceled].[RecordLocator] AS [RecordLocator], 
+    [vw_Canceled].[Currency] AS [Currency], 
+    [vw_Canceled].[Amount] AS [Amount], 
+    [vw_Canceled].[Others] AS [Others], 
+    [vw_Canceled].[BCDFee] AS [BCDFee], 
+    [vw_Canceled].[AdminFee] AS [AdminFee], 
+    [vw_Canceled].[Total] AS [Total], 
+    [vw_Canceled].[OptionTime] AS [OptionTime], 
+    [vw_Canceled].[ApprovalCode] AS [ApprovalCode], 
+    [vw_Canceled].[Remarks] AS [Remarks], 
+    [vw_Canceled].[Invoice] AS [Invoice], 
+    [vw_Canceled].[Status] AS [Status], 
+    [vw_Canceled].[DeclinedReason] AS [DeclinedReason], 
+    [vw_Canceled].[ApprovedDate] AS [ApprovedDate]
+    FROM [dbo].[vw_Canceled] AS [vw_Canceled]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Declined" EntityType="Self.vw_Declined" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Declined].[ID] AS [ID], 
+    [vw_Declined].[Date] AS [Date], 
+    [vw_Declined].[RequestedBy] AS [RequestedBy], 
+    [vw_Declined].[FirstName] AS [FirstName], 
+    [vw_Declined].[LastName] AS [LastName], 
+    [vw_Declined].[ClientCode] AS [ClientCode], 
+    [vw_Declined].[ClientName] AS [ClientName], 
+    [vw_Declined].[Company] AS [Company], 
+    [vw_Declined].[PaxName] AS [PaxName], 
+    [vw_Declined].[RecordLocator] AS [RecordLocator], 
+    [vw_Declined].[Currency] AS [Currency], 
+    [vw_Declined].[Amount] AS [Amount], 
+    [vw_Declined].[Others] AS [Others], 
+    [vw_Declined].[BCDFee] AS [BCDFee], 
+    [vw_Declined].[AdminFee] AS [AdminFee], 
+    [vw_Declined].[Total] AS [Total], 
+    [vw_Declined].[OptionTime] AS [OptionTime], 
+    [vw_Declined].[ApprovalCode] AS [ApprovalCode], 
+    [vw_Declined].[Remarks] AS [Remarks], 
+    [vw_Declined].[Invoice] AS [Invoice], 
+    [vw_Declined].[Status] AS [Status], 
+    [vw_Declined].[DeclinedReason] AS [DeclinedReason], 
+    [vw_Declined].[ApprovedDate] AS [ApprovedDate]
+    FROM [dbo].[vw_Declined] AS [vw_Declined]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_FORAPPROVAL" EntityType="Self.vw_FORAPPROVAL" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_FORAPPROVAL].[ID] AS [ID], 
+    [vw_FORAPPROVAL].[Date] AS [Date], 
+    [vw_FORAPPROVAL].[RequestedBy] AS [RequestedBy], 
+    [vw_FORAPPROVAL].[FirstName] AS [FirstName], 
+    [vw_FORAPPROVAL].[LastName] AS [LastName], 
+    [vw_FORAPPROVAL].[ClientCode] AS [ClientCode], 
+    [vw_FORAPPROVAL].[ClientName] AS [ClientName], 
+    [vw_FORAPPROVAL].[Company] AS [Company], 
+    [vw_FORAPPROVAL].[PaxName] AS [PaxName], 
+    [vw_FORAPPROVAL].[RecordLocator] AS [RecordLocator], 
+    [vw_FORAPPROVAL].[Currency] AS [Currency], 
+    [vw_FORAPPROVAL].[Amount] AS [Amount], 
+    [vw_FORAPPROVAL].[Others] AS [Others], 
+    [vw_FORAPPROVAL].[BCDFee] AS [BCDFee], 
+    [vw_FORAPPROVAL].[AdminFee] AS [AdminFee], 
+    [vw_FORAPPROVAL].[Total] AS [Total], 
+    [vw_FORAPPROVAL].[OptionTime] AS [OptionTime], 
+    [vw_FORAPPROVAL].[ApprovalCode] AS [ApprovalCode], 
+    [vw_FORAPPROVAL].[Remarks] AS [Remarks], 
+    [vw_FORAPPROVAL].[Invoice] AS [Invoice], 
+    [vw_FORAPPROVAL].[Status] AS [Status], 
+    [vw_FORAPPROVAL].[DeclinedReason] AS [DeclinedReason], 
+    [vw_FORAPPROVAL].[ApprovedDate] AS [ApprovedDate]
+    FROM [dbo].[vw_FORAPPROVAL] AS [vw_FORAPPROVAL]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Void" EntityType="Self.vw_Void" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Void].[ID] AS [ID], 
+    [vw_Void].[Date] AS [Date], 
+    [vw_Void].[RequestedBy] AS [RequestedBy], 
+    [vw_Void].[FirstName] AS [FirstName], 
+    [vw_Void].[LastName] AS [LastName], 
+    [vw_Void].[ClientCode] AS [ClientCode], 
+    [vw_Void].[ClientName] AS [ClientName], 
+    [vw_Void].[Company] AS [Company], 
+    [vw_Void].[PaxName] AS [PaxName], 
+    [vw_Void].[RecordLocator] AS [RecordLocator], 
+    [vw_Void].[Currency] AS [Currency], 
+    [vw_Void].[Amount] AS [Amount], 
+    [vw_Void].[Others] AS [Others], 
+    [vw_Void].[BCDFee] AS [BCDFee], 
+    [vw_Void].[AdminFee] AS [AdminFee], 
+    [vw_Void].[Total] AS [Total], 
+    [vw_Void].[OptionTime] AS [OptionTime], 
+    [vw_Void].[ApprovalCode] AS [ApprovalCode], 
+    [vw_Void].[Remarks] AS [Remarks], 
+    [vw_Void].[Invoice] AS [Invoice], 
+    [vw_Void].[Status] AS [Status], 
+    [vw_Void].[DeclinedReason] AS [DeclinedReason], 
+    [vw_Void].[ApprovedDate] AS [ApprovedDate]
+    FROM [dbo].[vw_Void] AS [vw_Void]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -78,6 +426,12 @@
           <EntitySet Name="MotoRequest" EntityType="eCardModel.MotoRequest" />
           <EntitySet Name="ServiceFeeFormula" EntityType="eCardModel.ServiceFeeFormula" />
           <EntitySet Name="UserAccount" EntityType="eCardModel.UserAccount" />
+          <EntitySet Name="v_MotoRequest" EntityType="eCardModel.v_MotoRequest" />
+          <EntitySet Name="vw_Approved" EntityType="eCardModel.vw_Approved" />
+          <EntitySet Name="vw_Canceled" EntityType="eCardModel.vw_Canceled" />
+          <EntitySet Name="vw_FORAPPROVAL" EntityType="eCardModel.vw_FORAPPROVAL" />
+          <EntitySet Name="vw_Void" EntityType="eCardModel.vw_Void" />
+          <EntitySet Name="vw_Declined" EntityType="eCardModel.vw_Declined" />
         </EntityContainer>
         <EntityType Name="EmailSender">
           <Key>
@@ -96,7 +450,7 @@
           <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="RecordLocator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
@@ -136,6 +490,180 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="v_MotoRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_Approved">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_Canceled">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_FORAPPROVAL">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_Void">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_Declined">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BCDFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdminFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OptionTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -201,6 +729,180 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_MotoRequest">
+            <EntityTypeMapping TypeName="eCardModel.v_MotoRequest">
+              <MappingFragment StoreEntitySet="v_MotoRequest">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Approved">
+            <EntityTypeMapping TypeName="eCardModel.vw_Approved">
+              <MappingFragment StoreEntitySet="vw_Approved">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Canceled">
+            <EntityTypeMapping TypeName="eCardModel.vw_Canceled">
+              <MappingFragment StoreEntitySet="vw_Canceled">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_FORAPPROVAL">
+            <EntityTypeMapping TypeName="eCardModel.vw_FORAPPROVAL">
+              <MappingFragment StoreEntitySet="vw_FORAPPROVAL">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Void">
+            <EntityTypeMapping TypeName="eCardModel.vw_Void">
+              <MappingFragment StoreEntitySet="vw_Void">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Declined">
+            <EntityTypeMapping TypeName="eCardModel.vw_Declined">
+              <MappingFragment StoreEntitySet="vw_Declined">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+                <ScalarProperty Name="OptionTime" ColumnName="OptionTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AdminFee" ColumnName="AdminFee" />
+                <ScalarProperty Name="BCDFee" ColumnName="BCDFee" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

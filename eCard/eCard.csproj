@@ -77,6 +77,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -197,7 +198,23 @@
     <Compile Include="App_Start\Principal.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="eCardDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>eCardDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="eCardDataSet11.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>eCardDataSet11.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="eCardDataSets.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>eCardDataSets.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -250,7 +267,46 @@
       <DependentUpon>eCardEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserAccountModel.cs" />
+    <Compile Include="Models\vw_Approved.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Canceled.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Declined.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_FORAPPROVAL.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Void.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_MotoRequest.cs">
+      <DependentUpon>eCardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportView\AllMoto.aspx.cs">
+      <DependentUpon>AllMoto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportView\AllMoto.aspx.designer.cs">
+      <DependentUpon>AllMoto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportView\ApprovedMoto.aspx.cs">
+      <DependentUpon>ApprovedMoto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportView\ApprovedMoto.aspx.designer.cs">
+      <DependentUpon>ApprovedMoto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportView\DeclinedMoto.aspx.cs">
+      <DependentUpon>DeclinedMoto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportView\DeclinedMoto.aspx.designer.cs">
+      <DependentUpon>DeclinedMoto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Services\AdminFeeFormula.cs" />
     <Compile Include="Services\ECardService.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -334,6 +390,9 @@
       <DependentUpon>QuickipediaEntities.edmx</DependentUpon>
       <LastGenOutput>QuickipediaEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="ReportView\AllMoto.aspx" />
+    <Content Include="ReportView\ApprovedMoto.aspx" />
+    <Content Include="ReportView\DeclinedMoto.aspx" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -421,6 +480,39 @@
     <Content Include="Content\font-awesome\scss\_screen-reader.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="eCardDataSet1.xsc">
+      <DependentUpon>eCardDataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="eCardDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>eCardDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="eCardDataSet1.xss">
+      <DependentUpon>eCardDataSet1.xsd</DependentUpon>
+    </Content>
+    <Content Include="eCardDataSets.xsc">
+      <DependentUpon>eCardDataSets.xsd</DependentUpon>
+    </Content>
+    <Content Include="eCardDataSet11.xsc">
+      <DependentUpon>eCardDataSet11.xsd</DependentUpon>
+    </Content>
+    <None Include="eCardDataSet11.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>eCardDataSet11.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="eCardDataSet11.xss">
+      <DependentUpon>eCardDataSet11.xsd</DependentUpon>
+    </Content>
+    <None Include="eCardDataSets.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>eCardDataSets.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="eCardDataSets.xss">
+      <DependentUpon>eCardDataSets.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\css\bootstrap-grid.css" />
@@ -474,6 +566,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Report\AllMoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -488,6 +581,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\AllMotoRequest.rdlc" />
+    <EmbeddedResource Include="Reports\ApprovedMoto.rdlc" />
+    <EmbeddedResource Include="Reports\Declined.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

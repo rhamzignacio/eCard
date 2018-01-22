@@ -160,6 +160,54 @@
             </div>
         </div>
     </section>
+    <!--Report Grid-->
+    
+    <section id="ReportGrid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3 class="section-heading" style="color:black">Report Extraction</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <table style="width:100%; font-size:12px;">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+
+                    <tr>
+                        <td>All Moto Request</td>
+                        <td>Extracts all Moto Request by date range</td>
+                        <td>
+                            <a class="btn btn-default btn-sm" ng-click="OpenReport('all')"><i class="fa fa-download"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Approved Moto Request</td>
+                        <td>Extracts all Approved Moto Request by date range</td>
+                        <td>
+                            <a class="btn btn-default btn-sm" ng-click="OpenReport('approved')"><i class="fa fa-download"></i></a>
+                        </td>
+                    </tr>
+
+                    @*<tr>
+                        <td>Declined Moto Request</td>
+                        <td>Extracts all Declined Moto Request by date range</td>
+                        <td>
+                            <a class="btn btn-default btn-sm" ng-click="OpenReport('declined')"><i class="fa fa-download"></i></a>
+                        </td>
+                    </tr>*@
+                </table>
+            </div>
+        </div>
+    </section>
+    <!--/Report Grid-->
+
+
 
     <!-- Portfolio Grid -->
     <section class="bg-light" id="portfolio">
@@ -346,13 +394,14 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.7</a>
+                            <a href="#">version 1.8</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
+    <!--/FOOTER-->
 
     <div class="portfolio-modal modal fade" id="viewModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

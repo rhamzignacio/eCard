@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="eCardDataSet" targetNamespace="http://tempuri.org/eCardDataSet1.xsd" xmlns:mstns="http://tempuri.org/eCardDataSet1.xsd" xmlns="http://tempuri.org/eCardDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="eCardConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="eCardConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.eCardConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vw_ApprovedTableAdapter" GeneratorDataComponentClassName="vw_ApprovedTableAdapter" Name="vw_Approved" UserDataComponentName="vw_ApprovedTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="eCardConnectionString (Web.config)" DbObjectName="eCard.dbo.vw_Approved" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT ID, Date, RequestedBy, ClientCode, Company, PaxName, RecordLocator, Currency, Amount, Others, BCDFee, AdminFee, Total, OptionTime, ApprovalCode, Remarks, Invoice, Status, DeclinedReason, ApprovedDate FROM dbo.vw_Approved</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="Date" DataSetColumn="Date" />
+              <Mapping SourceColumn="RequestedBy" DataSetColumn="RequestedBy" />
+              <Mapping SourceColumn="ClientCode" DataSetColumn="ClientCode" />
+              <Mapping SourceColumn="Company" DataSetColumn="Company" />
+              <Mapping SourceColumn="PaxName" DataSetColumn="PaxName" />
+              <Mapping SourceColumn="RecordLocator" DataSetColumn="RecordLocator" />
+              <Mapping SourceColumn="Currency" DataSetColumn="Currency" />
+              <Mapping SourceColumn="Amount" DataSetColumn="Amount" />
+              <Mapping SourceColumn="Others" DataSetColumn="Others" />
+              <Mapping SourceColumn="BCDFee" DataSetColumn="BCDFee" />
+              <Mapping SourceColumn="AdminFee" DataSetColumn="AdminFee" />
+              <Mapping SourceColumn="Total" DataSetColumn="Total" />
+              <Mapping SourceColumn="OptionTime" DataSetColumn="OptionTime" />
+              <Mapping SourceColumn="ApprovalCode" DataSetColumn="ApprovalCode" />
+              <Mapping SourceColumn="Remarks" DataSetColumn="Remarks" />
+              <Mapping SourceColumn="Invoice" DataSetColumn="Invoice" />
+              <Mapping SourceColumn="Status" DataSetColumn="Status" />
+              <Mapping SourceColumn="DeclinedReason" DataSetColumn="DeclinedReason" />
+              <Mapping SourceColumn="ApprovedDate" DataSetColumn="ApprovedDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="eCardDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="eCardDataSet" msprop:Generator_UserDSName="eCardDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vw_Approved" msprop:Generator_TableClassName="vw_ApprovedDataTable" msprop:Generator_TableVarName="tablevw_Approved" msprop:Generator_TablePropName="vw_Approved" msprop:Generator_RowDeletingName="vw_ApprovedRowDeleting" msprop:Generator_RowChangingName="vw_ApprovedRowChanging" msprop:Generator_RowEvHandlerName="vw_ApprovedRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ApprovedRowDeleted" msprop:Generator_UserTableName="vw_Approved" msprop:Generator_RowChangedName="vw_ApprovedRowChanged" msprop:Generator_RowEvArgName="vw_ApprovedRowChangeEvent" msprop:Generator_RowClassName="vw_ApprovedRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:string" />
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:dateTime" />
+              <xs:element name="RequestedBy" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnRequestedBy" msprop:Generator_ColumnPropNameInRow="RequestedBy" msprop:Generator_ColumnPropNameInTable="RequestedByColumn" msprop:Generator_UserColumnName="RequestedBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ClientCode" msprop:Generator_ColumnVarNameInTable="columnClientCode" msprop:Generator_ColumnPropNameInRow="ClientCode" msprop:Generator_ColumnPropNameInTable="ClientCodeColumn" msprop:Generator_UserColumnName="ClientCode" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Company" msprop:Generator_ColumnVarNameInTable="columnCompany" msprop:Generator_ColumnPropNameInRow="Company" msprop:Generator_ColumnPropNameInTable="CompanyColumn" msprop:Generator_UserColumnName="Company" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PaxName" msprop:Generator_ColumnVarNameInTable="columnPaxName" msprop:Generator_ColumnPropNameInRow="PaxName" msprop:Generator_ColumnPropNameInTable="PaxNameColumn" msprop:Generator_UserColumnName="PaxName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="300" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RecordLocator" msprop:Generator_ColumnVarNameInTable="columnRecordLocator" msprop:Generator_ColumnPropNameInRow="RecordLocator" msprop:Generator_ColumnPropNameInTable="RecordLocatorColumn" msprop:Generator_UserColumnName="RecordLocator" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="300" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Others" msprop:Generator_ColumnVarNameInTable="columnOthers" msprop:Generator_ColumnPropNameInRow="Others" msprop:Generator_ColumnPropNameInTable="OthersColumn" msprop:Generator_UserColumnName="Others" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BCDFee" msprop:Generator_ColumnVarNameInTable="columnBCDFee" msprop:Generator_ColumnPropNameInRow="BCDFee" msprop:Generator_ColumnPropNameInTable="BCDFeeColumn" msprop:Generator_UserColumnName="BCDFee" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AdminFee" msprop:Generator_ColumnVarNameInTable="columnAdminFee" msprop:Generator_ColumnPropNameInRow="AdminFee" msprop:Generator_ColumnPropNameInTable="AdminFeeColumn" msprop:Generator_UserColumnName="AdminFee" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OptionTime" msprop:Generator_ColumnVarNameInTable="columnOptionTime" msprop:Generator_ColumnPropNameInRow="OptionTime" msprop:Generator_ColumnPropNameInTable="OptionTimeColumn" msprop:Generator_UserColumnName="OptionTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ApprovalCode" msprop:Generator_ColumnVarNameInTable="columnApprovalCode" msprop:Generator_ColumnPropNameInRow="ApprovalCode" msprop:Generator_ColumnPropNameInTable="ApprovalCodeColumn" msprop:Generator_UserColumnName="ApprovalCode" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="300" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" msprop:Generator_UserColumnName="Remarks" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Invoice" msprop:Generator_ColumnVarNameInTable="columnInvoice" msprop:Generator_ColumnPropNameInRow="Invoice" msprop:Generator_ColumnPropNameInTable="InvoiceColumn" msprop:Generator_UserColumnName="Invoice" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="300" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DeclinedReason" msprop:Generator_ColumnVarNameInTable="columnDeclinedReason" msprop:Generator_ColumnPropNameInRow="DeclinedReason" msprop:Generator_ColumnPropNameInTable="DeclinedReasonColumn" msprop:Generator_UserColumnName="DeclinedReason" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ApprovedDate" msprop:Generator_ColumnVarNameInTable="columnApprovedDate" msprop:Generator_ColumnPropNameInRow="ApprovedDate" msprop:Generator_ColumnPropNameInTable="ApprovedDateColumn" msprop:Generator_UserColumnName="ApprovedDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vw_Approved" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
