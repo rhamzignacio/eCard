@@ -77,7 +77,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -300,13 +311,6 @@
     <Compile Include="ReportView\ApprovedMoto.aspx.designer.cs">
       <DependentUpon>ApprovedMoto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ReportView\DeclinedMoto.aspx.cs">
-      <DependentUpon>DeclinedMoto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ReportView\DeclinedMoto.aspx.designer.cs">
-      <DependentUpon>DeclinedMoto.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Services\AdminFeeFormula.cs" />
     <Compile Include="Services\ECardService.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -392,7 +396,6 @@
     </Content>
     <Content Include="ReportView\AllMoto.aspx" />
     <Content Include="ReportView\ApprovedMoto.aspx" />
-    <Content Include="ReportView\DeclinedMoto.aspx" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
