@@ -41,7 +41,7 @@ namespace eCard.Controllers
             else
                 approved = ECardService.GetAllMoto("A", out serverResponse);
 
-            return Json(new { error = serverResponse, approved = approved });
+            return Json(new { error = serverResponse, approved });
         }
 
         //===========DECLINED MOTO===========
@@ -57,7 +57,7 @@ namespace eCard.Controllers
             else
                 declined = ECardService.GetAllMoto("D", out serverResponse);
 
-            return Json(new { error = serverResponse, declined = declined });
+            return Json(new { error = serverResponse, declined });
         }
 
         //===========VOIDED MOTO===========
@@ -73,7 +73,7 @@ namespace eCard.Controllers
             else
                 voided = ECardService.GetAllMoto("V", out serverResponse);
 
-            return Json(new { error = serverResponse, voided = voided });
+            return Json(new { error = serverResponse, voided });
         }
 
         //===========PENDING MOTO============
@@ -89,16 +89,14 @@ namespace eCard.Controllers
             else if (UniversalService.CurrentUser.Type == "APR")
                 request = ECardService.GetAllMoto("P", out serverResponse);
 
-            return Json(new { error = serverResponse, request = request });
+            return Json(new { error = serverResponse, request });
         }
 
         //===========MOTO REQUEST==============
         [HttpPost]
         public JsonResult ComputeAdminFee(string _clientCode, double? _airFare, double? _serviceFee, double? _otherFee)
         {
-            string serverResponse = "";
-
-            double adminFee = AdminFeeFormula.GetAdminFee(_clientCode, _airFare, _serviceFee, _otherFee, out serverResponse);
+            double adminFee = AdminFeeFormula.GetAdminFee(_clientCode, _airFare, _serviceFee, _otherFee, out string serverResponse);
 
             if (_airFare == null)
                 _airFare = 0;
@@ -138,7 +136,7 @@ namespace eCard.Controllers
 
             var clientDropDown = QuickipediaService.GetClientDropDown(out serverResponse);
 
-            return Json(new { error = serverResponse, clientDropDown = clientDropDown });
+            return Json(new { error = serverResponse, clientDropDown });
         }
 
         [HttpPost]
@@ -150,7 +148,7 @@ namespace eCard.Controllers
             {
                 var duplicate = ECardService.GetDuplicate(moto, out serverResponse);
 
-                return Json(new { error = serverResponse, duplicate = duplicate });
+                return Json(new { error = serverResponse, duplicate });
             }
 
             return Json(serverResponse);
@@ -160,11 +158,10 @@ namespace eCard.Controllers
         [HttpPost]
         public JsonResult TryLogin(string _username, string _password)
         {
-            string serverResponse = "";
 
-            var user = LoginService.ValidateLogin(_username, _password, out serverResponse);
+            var user = LoginService.ValidateLogin(_username, _password, out string serverResponse);
 
-            if(user != null)
+            if (user != null)
             {
                 LoginService.LoginToSession(user);
             }
@@ -175,9 +172,8 @@ namespace eCard.Controllers
         [HttpPost]
         public JsonResult Logout()
         {
-            string serverResponse = "";
 
-            LoginService.LogoutFromSession(out serverResponse);
+            LoginService.LogoutFromSession(out string serverResponse);
 
             return Json(serverResponse);
         }

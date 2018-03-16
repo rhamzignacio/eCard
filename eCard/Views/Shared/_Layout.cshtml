@@ -128,8 +128,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label>BCD Fee <span style="right:0">
-                            <input type="checkbox" value="Y" ng-model="vm.Form.IfVAT" id="VATCheckBox" ng-change="ComputeVAT()"/> w/ VAT</span>
+                        <label>
+                            BCD Fee <span style="right:0">
+                                <input type="checkbox" value="Y" ng-model="vm.Form.IfVAT" id="VATCheckBox" ng-change="ComputeVAT()" /> w/ VAT
+                            </span>
                         </label>
                         <input class="form-control" type="number" ng-model="vm.Form.BCDFee" ng-change="BCDFeeChange()">
                     </div>
@@ -161,7 +163,7 @@
         </div>
     </section>
     <!--Report Grid-->
-    
+
     <section id="ReportGrid">
         <div class="container">
             <div class="row">
@@ -182,7 +184,9 @@
                         <td>All Moto Request</td>
                         <td>Extracts all Moto Request by date range</td>
                         <td>
-                            <a class="btn btn-default btn-sm" ng-click="OpenReport('all')"><i class="fa fa-download"></i></a>
+                            <button id="allMotoBtn" class="btn btn-default btn-sm" data-target="#allReportModal" data-toggle="modal">
+                                <i class="fa fa-download"></i>
+                            </button>
                         </td>
                     </tr>
 
@@ -190,25 +194,24 @@
                         <td>Approved Moto Request</td>
                         <td>Extracts all Approved Moto Request by date range</td>
                         <td>
-                            <a class="btn btn-default btn-sm" ng-click="OpenReport('approved')"><i class="fa fa-download"></i></a>
+                            <button id="approvedMotoBtn" class="btn btn-default btn-sm" data-target="#approvedReportModal" data-toggle="modal">
+                                <i class="fa fa-download"></i>
+                            </button>
                         </td>
                     </tr>
 
                     @*<tr>
-                        <td>Declined Moto Request</td>
-                        <td>Extracts all Declined Moto Request by date range</td>
-                        <td>
-                            <a class="btn btn-default btn-sm" ng-click="OpenReport('declined')"><i class="fa fa-download"></i></a>
-                        </td>
-                    </tr>*@
+                            <td>Declined Moto Request</td>
+                            <td>Extracts all Declined Moto Request by date range</td>
+                            <td>
+                                <a class="btn btn-default btn-sm" ng-click="OpenReport('declined')"><i class="fa fa-download"></i></a>
+                            </td>
+                        </tr>*@
                 </table>
             </div>
         </div>
     </section>
     <!--/Report Grid-->
-
-
-
     <!-- Portfolio Grid -->
     <section class="bg-light" id="portfolio">
         <div class="container" ng-init="InitPendingMoto()">
@@ -277,7 +280,8 @@
                         <td>
                             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(dec)"
                                     title="View Moto Request">
-                                <i class="fa fa-eye"></i></button>
+                                <i class="fa fa-eye"></i>
+                            </button>
 
                             <button class="btn btn-success btn-sm" ng-show="vm.CurrentUser.Type == 'USR'" ng-click="ReFile(dec)"
                                     title="Re-File Moto Request">
@@ -316,8 +320,12 @@
                     </tr>
 
                     <tr ng-repeat="void in vm.Voided" style="border-bottom: 1px solid orangered">
-                        <td><button class="btn btn-info btn-sm" data-target="#viewModal" data-toggle="modal"
-                                    ng-click="ViewMoto(void)" title="View Moto Request"><i class="fa fa-eye"></i></button></td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-target="#viewModal" data-toggle="modal"
+                                    ng-click="ViewMoto(void)" title="View Moto Request">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
                         <td>{{void.ShowDate}}</td>
                         <th>{{void.ClientName}}</th>
                         <th>{{void.PaxName}}</th>
@@ -331,6 +339,7 @@
 
 
     <!-- Contact -->
+
     <section id="contact">
         <div class="container" ng-init="InitApproved()">
             <div class="row">
@@ -340,6 +349,88 @@
                 </div>
             </div>
             <div class="row">
+
+                <table id="allMotoReportTable" style="display:none">
+                    <tr>
+                        <th>Date</th>
+                        <th>Client Code</th>
+                        <th>Client Name</th>
+                        <th>Company</th>
+                        <th>Passenger Name</th>
+                        <th>Record Locator</th>
+                        <th>Currency</th>
+                        <th>Amount</th>
+                        <th>Other Fee</th>
+                        <th>BCD Fee</th>
+                        <th>Admin Fee</th>
+                        <th>Total</th>
+                        <th>Option Time</th>
+                        <th>Approval Code</th>
+                        <th>Remarks</th>
+                        <th>Requested By</th>
+                    </tr>
+
+                    <tr ng-repeat="app in vm.AllMotoReport">
+                        <td>{{app.ShowDate}}</td>
+                        <td>{{app.ClientCode}}</td>
+                        <td>{{app.ClientName}}</td>
+                        <td>{{app.Company}}</td>
+                        <td>{{app.PaxName}}</td>
+                        <td>{{app.RecordLocator}}</td>
+                        <td>{{app.Currency}}</td>
+                        <td>{{app.Amount}}</td>
+                        <td>{{app.Other}}</td>
+                        <td>{{app.BCDFee}}</td>
+                        <td>{{app.AdminFee}}</td>
+                        <td>{{app.Total}}</td>
+                        <td>{{app.OptionTime}}</td>
+                        <td>{{app.ApprovalCode}}</td>
+                        <td>{{app.Remarks}}</td>
+                        <td>{{app.FirstName}} {{app.LastName}}</td>
+                    </tr>
+                </table>
+
+                <table id="approvedReportTable" style="display:none">
+                    <tr>
+                        <th>Date</th>
+                        <th>Client Code</th>
+                        <th>Client Name</th>
+                        <th>Company</th>
+                        <th>Passenger Name</th>
+                        <th>Record Locator</th>
+                        <th>Currency</th>
+                        <th>Amount</th>
+                        <th>Other Fee</th>
+                        <th>BCD Fee</th>
+                        <th>Admin Fee</th>
+                        <th>Total</th>
+                        <th>Option Time</th>
+                        <th>Approval Code</th>
+                        <th>Remarks</th>
+                        <th>Requested By</th>
+                    </tr>
+
+                    <tr ng-repeat="app in vm.ApprovedReport">
+                        <td>{{app.ShowDate}}</td>
+                        <td>{{app.ClientCode}}</td>
+                        <td>{{app.ClientName}}</td>
+                        <td>{{app.Company}}</td>
+                        <td>{{app.PaxName}}</td>
+                        <td>{{app.RecordLocator}}</td>
+                        <td>{{app.Currency}}</td>
+                        <td>{{app.Amount}}</td>
+                        <td>{{app.Other}}</td>
+                        <td>{{app.BCDFee}}</td>
+                        <td>{{app.AdminFee}}</td>
+                        <td>{{app.Total}}</td>
+                        <td>{{app.OptionTime}}</td>
+                        <td>{{app.ApprovalCode}}</td>
+                        <td>{{app.Remarks}}</td>
+                        <td>{{app.FirstName}} {{app.LastName}}</td>
+                    </tr>
+                </table>
+                <!--//APPROVED REPORT TABLE-->
+
                 <table style="width:100%; color:white; font-size: 12px;">
                     <tr>
                         <th></th>
@@ -355,7 +446,8 @@
                         <td>
                             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(app)"
                                     title="View Moto Request">
-                                <i class="fa fa-eye"></i></button>
+                                <i class="fa fa-eye"></i>
+                            </button>
 
                             <button class="btn btn-danger btn-sm" ng-show="app.CanVoid == 'Y'"
                                     ng-click="AsignToVoide(app)" data-toggle="modal" data-target="#VoidMoto" title="Void Moto Request">
@@ -394,7 +486,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.8</a>
+                            <a href="#">version 1.9</a>
                         </li>
                     </ul>
                 </div>
@@ -446,7 +538,7 @@
 
                                 <label>Remarks: </label> <span class="modalRequest">{{vm.ViewModal.Remarks}}</span>
                                 <br />
-                                
+
                                 <div ng-show="vm.ViewModal.Status == 'P'">
                                     <label>Approval Code: </label>
                                     <input class="form-control" type="text" ng-model="vm.ViewModal.ApprovalCode" ng-show="vm.CurrentUser.Type == 'APR'">
@@ -472,7 +564,6 @@
             </div><!--modal-content-->
         </div><!--modal-dialog-->
     </div><!--modal fade-->
-
     <!--Duplicate Modal-->
     <div class="portfolio-modal modal fade" id="DuplicateModal" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -518,7 +609,6 @@
         </div>
     </div>
     <!--/Duplicate Modal-->
-
     <!-- Bootstrap core JavaScript -->
     <script src="~/Scripts/jquery/jquery.js"></script>
     <script src="~/Scripts/popper/popper.js"></script>
@@ -616,13 +706,70 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <button class="btn btn-danger btn-sm" ng-click="Logout()">Yes</button> 
+                        <button class="btn btn-danger btn-sm" ng-click="Logout()">Yes</button>
                         <button class="btn btn-default btn-sm" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!--APPROVED REPORT TABLE-->
+    <div class="modal fade" id="approvedReportModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Date Range</h6>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input class="form-control" id="approvedStart" type="date" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input class="form-control" id="approvedEnd" type="date" />
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-default" ng-click="GetApprovedReport()">Export</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="allReportModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Date Range</h6>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input class="form-control" id="allStart" type="date" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input class="form-control" id="allEnd" type="date" />
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-default" ng-click="GetAllMotoReport()">Export</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         $(document).ready(function () {

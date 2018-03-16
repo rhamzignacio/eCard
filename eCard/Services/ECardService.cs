@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,103 @@ namespace eCard.Services
 {
     public class ECardService
     {
+        public static List<ApprovedReportModel> GetAllMotoReport(DateTime start, DateTime end, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new eCardEntities())
+                {
+                    var approved = from a in db.v_MotoRequest
+                                   where a.Date >= start && a.Date <= end
+                                   select new ApprovedReportModel
+                                   {
+                                       ID = a.ID,
+                                       Date = a.Date,
+                                       FirstName = a.FirstName,
+                                       LastName = a.LastName,
+                                       ClientCode = a.ClientCode,
+                                       Company = a.Company,
+                                       PaxName = a.PaxName,
+                                       RecordLocator = a.RecordLocator,
+                                       Currency = a.Currency,
+                                       Amount = a.Amount,
+                                       Others = a.Others,
+                                       BCDFee = a.BCDFee,
+                                       AdminFee = a.AdminFee,
+                                       Total = a.Total,
+                                       OptionTime = a.OptionTime,
+                                       ApprovalCode = a.ApprovalCode,
+                                       Remarks = a.Remarks,
+                                       ApprovedDate = a.ApprovedDate
+                                   };
+
+                    return approved.ToList();
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
+        public static List<ApprovedReportModel> GetAllApprovedReport(DateTime start, DateTime end, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new eCardEntities())
+                {
+                    var qDB = new QuickipediaEntities();
+
+                    var moto = db.vw_Approved.Where(r => r.Date >= start && r.Date <= end && r.Status == "A").ToList();
+
+                    var motoClientCode = moto.Select(r => r.ClientCode);
+
+                    var quicki = qDB.ClientProfile.Where(r => motoClientCode.Contains(r.ClientCode)).ToList();
+
+                    var join = from a in moto
+                               join c in quicki on a.ClientCode equals c.ClientCode
+                               join u in db.UserAccount on a.RequestedBy equals u.ID
+                               orderby a.Date ascending
+                               select new ApprovedReportModel
+                               {
+                                   ID = a.ID,
+                                   Date = a.Date,
+                                   FirstName = a.FirstName,
+                                   LastName = a.LastName,
+                                   ClientName = c.ClientName,
+                                   ClientCode = a.ClientCode,
+                                   Company = a.Company,
+                                   PaxName = a.PaxName,
+                                   RecordLocator = a.RecordLocator,
+                                   Currency = a.Currency,
+                                   Amount = a.Amount,
+                                   Others = a.Others,
+                                   BCDFee = a.BCDFee,
+                                   AdminFee = a.AdminFee,
+                                   Total = a.Total,
+                                   OptionTime = a.OptionTime,
+                                   ApprovalCode = a.ApprovalCode,
+                                   Remarks = a.Remarks,
+                                   ApprovedDate = a.ApprovedDate
+                               };
+
+                    return join.ToList();
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static List<MotoRequestModel> GetDuplicate(MotoRequestModel _model, out string message)
         {
             try

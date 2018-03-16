@@ -1,18 +1,79 @@
-﻿var app = angular.module("app", ["angular-growl", "login", "user"])
+﻿var app = angular.module("app", ["angular-growl", "login", "user"]);
 
-.controller("mainController", ["$scope", "$location", "$http", "growl", function ($scope, $location, $http, growl) {
+app.factory('Excel', function ($window) {
+    var uri = 'data:application/vnd.ms-excel;base64,',
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+        base64 = function (s) { return $window.btoa(unescape(encodeURIComponent(s))); },
+        format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+    return {
+        tableToExcel: function (tableId, worksheetName) {
+            var table = $(tableId),
+                ctx = { worksheet: worksheetName, table: table.html() },
+                href = uri + base64(format(template, ctx));
+            return href;
+        }
+    };
+})
+
+.controller("mainController", ["$scope", "$location", "$http", "growl", "Excel", "$timeout", function ($scope, $location, $http, growl, Excel, $timeout) {
     var vm = this;
 
     vm.CancelMoto = {};
     vm.VoidMoto = {};
 
+    //APPROVED REPORT
+    $scope.GetApprovedReport = function () {
+        $http({
+            method: "POST",
+            url: "/Report/GetApproved",
+            data: {
+                start: $("#approvedStart").val(),
+                end: $("#approvedEnd").val()
+            }
+        }).then(function (data) {
+            vm.ApprovedReport = data.data.approved;
+
+            $("#approvedReportModal").modal('hide');
+
+            setTimeout(function () {
+                $scope.exportToExcel('#approvedReportTable');
+            }, 2000);
+        });
+    };
+
+    $scope.GetAllMotoReport = function () {
+        $http({
+            method: "POST",
+            url: "/Report/GetAllMoto",
+            data: {
+                start: $("#allStart").val(),
+                end: $("#allEnd").val()
+            }
+        }).then(function (data) {
+            vm.AllMotoReport = data.data.moto;
+
+            $("#allReportModal").modal('hide');
+
+            setTimeout(function () {
+                $scope.exportToExcel('#allMotoReportTable');
+            }, 2000);
+        });
+    };
+
+    //==============
+
     ErrorMessage = function (message) {
         growl.error(message, { title: "Error!", ttl: 4000 });
-    }
+    };
 
     SuccessMessage = function (message) {
         growl.success(message, { ttl: 3000 });
-    }
+    };
+
+    $scope.exportToExcel = function (tableId) { // ex: '#my-table'
+        var exportHref = Excel.tableToExcel(tableId, 'sheet name');
+        $timeout(function () { location.href = exportHref; }, 100); // trigger download
+    };
 
     $scope.CurrencyDropDown = [
         { value: "PHP", label: "PHP" },
@@ -25,14 +86,14 @@
             url: "/Home/Logout",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data != "") {
+            if (data.data !== "") {
                 ErrorMessage(data.data);
             }
             else {
                 window.location.href = "/Home/Login";
             }
         });
-    }
+    };
 
     $scope.Init = function () {
         $http({
@@ -42,7 +103,7 @@
         }).then(function (data) {
             vm.CurrentUser = data.data;
         });
-    }
+    };
 
     //==========MOTO REQUEST===========
 
@@ -56,7 +117,7 @@
         vm.Form.Currency = "";
         vm.Form.BCDFee = "";
         vm.totalAmount = 0;
-    }
+    };
 
     $scope.InitMotoRequest = function () {
         $scope.ClearMotoForm();
@@ -66,14 +127,14 @@
             url: "/Home/GetDropDowns",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.error != "") {
+            if (data.data.error !== "") {
                 ErrorMessage(data.data);
             }
             else {
                 vm.ClientDropDown = data.data.clientDropDown;
             }
         });
-    }
+    };
 
     $scope.BCDFeeChange = function () {
         $("#VATCheckBox").prop("checked", false);
@@ -81,7 +142,7 @@
         vm.Form.IfVAT = false;
 
         $scope.ComputeAdminFee();
-    }
+    };
 
     $scope.ComputeVAT = function () {
         if (vm.Form.IfVAT === true) {
@@ -92,7 +153,7 @@
         }
 
         $scope.ComputeAdminFee();
-    }
+    };
 
     $scope.ComputeAdminFee = function () {
         vm.totalAmount = 0;
@@ -111,11 +172,11 @@
 
             vm.totalAmount = data.data.total;
 
-            if (data.data.error != "") {
+            if (data.data.error !== "") {
                 ErrorMessage(data.data.error);
             }
         });
-    }
+    };
 
     $scope.SaveMotoRequest = function (value) {
         var error = "";
@@ -161,13 +222,13 @@
             error = "Y";
         }
 
-        if (error === "") {1
+        if (error === "") {
             $http({
                 method: "POST",
                 url: "/Home/GetDuplicate",
                 data: { moto: value }
             }).then(function (data) {
-                if (data.data.error != "") {
+                if (data.data.error !== "") {
                     ErrorMessage(data.data.error);
                 }
                 else {
@@ -181,9 +242,9 @@
                     }
                 }
             });
-            
+
         }
-    }
+    };
 
     $scope.SaveMoto = function (value) {
         value.Status = "P";
@@ -193,7 +254,7 @@
             url: "/Home/SaveMoto",
             data: { moto: value }
         }).then(function (data) {
-            if (data.data != "") {
+            if (data.data !== "") {
                 ErrorMessage(data.data);
             }
             else {
@@ -204,13 +265,13 @@
                 $("#DuplicateModal").modal('hide');
             }
         });
-    }
+    };
     //=========END OF REQUEST============
 
     //=========PENDING MOTO REQUEST===========
     $scope.AssignToDelete = function (value) {
         vm.CancelMoto = value;
-    }
+    };
 
     $scope.CancelMotoRequest = function () {
         vm.CancelMoto.Status = "X";
@@ -231,7 +292,7 @@
                 SuccessMessage("Successfully Canceled Moto Request");
             }
         });
-    }
+    };
 
     $scope.InitPendingMoto = function () {
         $http({
@@ -239,15 +300,15 @@
             url: "/Home/GetPending",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.error != "") {
+            if (data.data.error !== "") {
                 ErrorMessage(data.data.error);
             }
             else {
                 vm.Request = data.data.request;
             }
         });
-    }
-
+    };
+        
     setInterval($scope.InitPendingMoto, 2000);
 
     $scope.ReFile = function (value) {
@@ -258,11 +319,11 @@
         vm.Form.Status = "P";
 
         $("#RequestMenu").click();
-    }
+    };
 
     $scope.ViewMoto = function (value) {
         vm.ViewModal = value;
-    }
+    };
 
     $scope.ApproveVoid = function (value) {
         value.Status = "V";
@@ -272,7 +333,7 @@
             url: "/Home/SaveMoto",
             data: { moto: value }
         }).then(function (data) {
-            if (data.data != "") {
+            if (data.data !== "") {
                 ErrorMessage(data.data);
             }
             else {
@@ -283,7 +344,7 @@
                 value = {};
             }
         });
-    }
+    };
 
     $scope.VoidMoto = function () {
         vm.VoidMoto.Status = "F";
@@ -293,7 +354,7 @@
             url: "/Home/SaveMoto",
             data: { moto: vm.VoidMoto }
         }).then(function (data) {
-            if (data.data != "") {
+            if (data.data !== "") {
                 ErrorMessage(data.data);
             }
             else {
@@ -304,11 +365,11 @@
                 vm.VoidMoto = {};
             }
         });
-    }
+    };
 
     $scope.AsignToVoide = function (value) {
         vm.VoidMoto = value;
-    }
+    };
 
     $scope.ApproveMoto = function (value) {
         var error = "";
@@ -325,9 +386,9 @@
             $http({
                 method: "POST",
                 url: "/Home/SaveMoto",
-                data: { moto: value}
+                data: { moto: value }
             }).then(function (data) {
-                if (data.data != "") {
+                if (data.data !== "") {
                     ErrorMessage(data.data);
                 }
                 else {
@@ -337,9 +398,9 @@
 
                     value = {};
                 }
-            })
+            });
         }
-    }
+    };
 
     $scope.DeclineMoto = function (value) {
         var error = "";
@@ -358,7 +419,7 @@
                 url: "/Home/SaveMoto",
                 data: { moto: value }
             }).then(function (data) {
-                if (data.data != "") {
+                if (data.data !== "") {
                     ErrorMessage(data.data);
                 }
                 else {
@@ -370,7 +431,7 @@
                 }
             });
         }
-    }
+    };
     //=========END OF PENDING MOTO REQUEST==========
 
     //=========DECLINED MOTO===============
@@ -387,7 +448,7 @@
                 vm.Declined = data.data.declined;
             }
         });
-    }
+    };
 
     setInterval($scope.InitDeclined, 2000);
     //=========END OF DECLINED MOTO==========
@@ -406,7 +467,7 @@
                 vm.Approved = data.data.approved;
             }
         });
-    }
+    };
 
     setInterval($scope.InitApproved, 2000);
     //=========END OF APPROVED MOTO==========
@@ -425,14 +486,14 @@
                 vm.Voided = data.data.voided;
             }
         });
-    }
+    };
 
     setInterval($scope.initVoid, 2000);
     //=========END VOID==========
 
     //========CHANGE PASSWORD========
     $scope.ChangePass = function (value) {
-        if (value.NewPass != value.ConfirmPass) {
+        if (value.NewPass !== value.ConfirmPass) {
             ErrorMessage("Password Not Match!");
 
             value.NewPass = value.ConfirmPass = "";
@@ -443,7 +504,7 @@
                 url: "/Home/ChangePassword",
                 data: { user: value }
             }).then(function (data) {
-                if (data.data != "") {
+                if (data.data !== "") {
                     ErrorMessage(data.data);
                 }
                 else {
@@ -455,18 +516,5 @@
                 }
             });
         }
-    }
-
-    //===============REPORT================
-    $scope.OpenReport = function (value) {
-        if (value === 'all') {
-            window.open("/ReportView/AllMoto.aspx", "newtab");
-        }
-        else if (value === 'approved') {
-            window.open("/ReportView/ApprovedMoto.aspx", "newtab");
-        }
-        else if (value === 'declined') {
-            window.open("/ReportView/DeclinedMoto.aspx", "newtab");
-        }
-    }
+    };
 }]);
