@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Passenger Name <span style="font-size:8pt">(LastName\FirstName)</span></label>
+                        <label>Passenger Name <span style="font-size:8pt">(LastName/FirstName)</span></label>
                         <input class="form-control" type="text" ng-model="vm.Form.PaxName">
                     </div>
 
@@ -118,18 +118,17 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label>Amount</label>
+                        <label>Amount <span style="font-size:8pt">(Fare + Taxes + IPP)</span></label>
                         <input class="form-control" type="number" ng-model="vm.Form.Amount" ng-change="ComputeAdminFee()">
                     </div>
 
                     <div class="form-group">
-                        <label>Other Fees</label>
+                        <label>Other Fees <span style="font-size:8pt">(Insurance/Ancillaries)</span></label>
                         <input class="form-control" type="number" ng-model="vm.Form.Others" ng-change="ComputeAdminFee()">
                     </div>
 
                     <div class="form-group">
-                        <label>
-                            BCD Fee <span style="right:0">
+                        <label>BCD Fee <span style="font-size:8pt">(Service Fee)</span><span style="right:0">
                                 <input type="checkbox" value="Y" ng-model="vm.Form.IfVAT" id="VATCheckBox" ng-change="ComputeVAT()" /> w/ VAT
                             </span>
                         </label>
@@ -164,7 +163,7 @@
     </section>
     <!--Report Grid-->
 
-    <section id="ReportGrid">
+    <section id="ReportGrid" ng-show="vm.CurrentUser.Type == 'APR'">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -449,8 +448,7 @@
                                 <i class="fa fa-eye"></i>
                             </button>
 
-                            <button class="btn btn-danger btn-sm" ng-show="app.CanVoid == 'Y'"
-                                    ng-click="AsignToVoide(app)" data-toggle="modal" data-target="#VoidMoto" title="Void Moto Request">
+                            <button class="btn btn-danger btn-sm" ng-click="AsignToVoide(app)" data-toggle="modal" data-target="#VoidMoto" title="Void Moto Request">
                                 <i class="fa fa-ban"></i>
                             </button>
                         </td>
@@ -486,7 +484,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 1.9</a>
+                            <a href="#">version 2.0</a>
                         </li>
                     </ul>
                 </div>
@@ -554,7 +552,10 @@
                                 </div>
 
                                 <div ng-show="vm.ViewModal.Status == 'F'">
+                                    <label>Declined Reason</label>
+                                    <input class="form-control" type="text" ng-model="vm.ViewModel.DeclinedVoidedReason"/>
                                     <button class="btn btn-danger" ng-show="vm.CurrentUser.Type == 'APR'" ng-click="ApproveVoid(vm.ViewModal)">Void</button>
+                                    <button class="btn btn-warning" ng-show="vm.CurrentUser.Type == 'APR'" ng-click="DeclinedVoid(vm.ViewModal)">Declined Void Request</button>
                                 </div>
                             </div><!--modal-body-->
                         </div>

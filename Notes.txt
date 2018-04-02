@@ -5,6 +5,7 @@ A = Approved
 D = Denied
 F = For Void
 V = Voided
+B = Denied Void
 
 ===USER TYPE===
 ADM = Admin

@@ -258,7 +258,7 @@ app.factory('Excel', function ($window) {
                 ErrorMessage(data.data);
             }
             else {
-                SuccessMessage("Moto Request Sent");
+                SuccessMessage("Moto Request Sent (Please expect action within 24-48 hours)");
 
                 $scope.ClearMotoForm();
 
@@ -323,6 +323,27 @@ app.factory('Excel', function ($window) {
 
     $scope.ViewMoto = function (value) {
         vm.ViewModal = value;
+    };
+
+    $scope.DeclinedVoid = function (value) {
+        value.Status = "D";
+
+        if (value.DeclinedVoidedReason === "") {
+            ErrorMessage("Declined Reason is required");
+        }
+        else {
+            $http({
+                method: "POST",
+                url: "/Home/SaveMoto",
+                data: { moto: value }
+            }).then(function (data) {
+                SuccessMessage("Moto Request Declined Successfully");
+
+                $("#viewModal").modal('hide');
+
+                value = {};
+            });
+        }
     };
 
     $scope.ApproveVoid = function (value) {
