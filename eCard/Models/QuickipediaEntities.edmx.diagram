@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="33ed2335abde4ba6b831869cfe8e70df" Name="Diagram1">
         <EntityTypeShape EntityType="QuickipediaModel.ClientProfile" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuickipediaModel.EcardAdminFee" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -35,5 +35,6 @@ namespace eCard.Models
         public string DeclinedReason { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public string DeclinedVoidedReason { get; set; }
+        public Nullable<System.Guid> ApprovedBy { get; set; }
     }
 }

@@ -14,9 +14,11 @@ namespace eCard.Models
     
     public partial class ServiceFeeFormula
     {
-        public System.Guid ID { get; set; }
+        public string ClientCode { get; set; }
+        public string AirFareFlag { get; set; }
+        public string ServiceFeeFlag { get; set; }
+        public string OtherFeeFlag { get; set; }
         public Nullable<decimal> Divide { get; set; }
         public Nullable<decimal> Multiply { get; set; }
-        public string ClientCode { get; set; }
     }
 }

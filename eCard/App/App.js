@@ -168,15 +168,40 @@ app.factory('Excel', function ($window) {
                 _otherFee: vm.Form.Others
             }
         }).then(function (data) {
-            vm.Form.AdminFee = data.data.adminFee;
+            if (data.data.adminFee !== 0) {
+                vm.Form.AdminFee = data.data.adminFee;
+
+                $("#ManualComp").hide();
+                $("#AutoComp").show();
+            }
 
             vm.totalAmount = data.data.total;
 
             if (data.data.error !== "") {
                 ErrorMessage(data.data.error);
+
+                $("#ManualComp").show();
+                $("#AutoComp").hide();
             }
         });
     };
+
+    $scope.ComputeTotal = function () {
+        vm.totalAmount = 0;
+
+        $http({
+            method: "POST",
+            url: "/Home/ComputeTotal",
+            data: {
+                amount: vm.Form.Amount,
+                serviceFee: vm.Form.BCDFee,
+                otherFee: vm.Form.Others,
+                adminFee: vm.Form.AdminFee
+            }
+        }).then(function (data) {
+            vm.totalAmount = data.data;
+        });
+    }
 
     $scope.SaveMotoRequest = function (value) {
         var error = "";

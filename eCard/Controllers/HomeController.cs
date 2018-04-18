@@ -60,6 +60,28 @@ namespace eCard.Controllers
             return Json(new { error = serverResponse, declined });
         }
 
+        [HttpPost]
+        public JsonResult ComputeTotal(double? amount, double? serviceFee, double? otherFee, double? adminFee)
+        {
+           double? total = 0;
+
+            if (amount == null)
+                amount = 0;
+
+            if (serviceFee == null)
+                serviceFee = 0;
+
+            if (otherFee == null)
+                otherFee = 0;
+
+            if (adminFee == null)
+                adminFee = 0;
+
+            total = amount + serviceFee + otherFee + adminFee;
+
+            return Json(string.Format("{0:0.00}", total));
+        }
+
         //===========VOIDED MOTO===========
         [HttpPost]
         public JsonResult GetVoidedPerUser()
@@ -96,7 +118,7 @@ namespace eCard.Controllers
         [HttpPost]
         public JsonResult ComputeAdminFee(string _clientCode, double? _airFare, double? _serviceFee, double? _otherFee)
         {
-            double adminFee = AdminFeeFormula.GetAdminFee(_clientCode, _airFare, _serviceFee, _otherFee, out string serverResponse);
+            double adminFee = AdminFeeFormula.GetAdminFeeFromDB(_clientCode, _airFare, _serviceFee, _otherFee, out string serverResponse);
 
             if (_airFare == null)
                 _airFare = 0;

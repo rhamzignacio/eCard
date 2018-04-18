@@ -18,31 +18,45 @@ namespace eCard.Services
 
                 using (var db = new eCardEntities())
                 {
-                    var approved = from a in db.v_MotoRequest
-                                   where a.Date >= start && a.Date <= end
-                                   select new ApprovedReportModel
-                                   {
-                                       ID = a.ID,
-                                       Date = a.Date,
-                                       FirstName = a.FirstName,
-                                       LastName = a.LastName,
-                                       ClientCode = a.ClientCode,
-                                       Company = a.Company,
-                                       PaxName = a.PaxName,
-                                       RecordLocator = a.RecordLocator,
-                                       Currency = a.Currency,
-                                       Amount = a.Amount,
-                                       Others = a.Others,
-                                       BCDFee = a.BCDFee,
-                                       AdminFee = a.AdminFee,
-                                       Total = a.Total,
-                                       OptionTime = a.OptionTime,
-                                       ApprovalCode = a.ApprovalCode,
-                                       Remarks = a.Remarks,
-                                       ApprovedDate = a.ApprovedDate
-                                   };
+                    var qDB = new QuickipediaEntities();
 
-                    return approved.ToList();
+                    var moto = db.v_MotoRequest.Where(r => r.ApprovedDate >= start && r.ApprovedDate <= end);
+
+                    var motoClientCode = moto.Select(r => r.ClientCode);
+
+                    var quicki = qDB.ClientProfile.Where(r => motoClientCode.Contains(r.ClientCode)).ToList();
+
+                    var join = from a in moto
+                               join c in quicki on a.ClientCode equals c.ClientCode
+                               join u in db.UserAccount on a.RequestedBy equals u.ID
+                               join usr in db.UserAccount on a.ApprovedBy equals usr.ID into qUsr
+                               from ap in qUsr.DefaultIfEmpty()
+                               orderby a.Date ascending
+                               select new ApprovedReportModel
+                               {
+                                   ID = a.ID,
+                                   Date = a.Date,
+                                   FirstName = a.FirstName,
+                                   LastName = a.LastName,
+                                   ClientCode = a.ClientCode,
+                                   Company = a.Company,
+                                   PaxName = a.PaxName,
+                                   RecordLocator = a.RecordLocator,
+                                   Currency = a.Currency,
+                                   Amount = a.Amount,
+                                   Others = a.Others,
+                                   BCDFee = a.BCDFee,
+                                   AdminFee = a.AdminFee,
+                                   Total = a.Total,
+                                   OptionTime = a.OptionTime,
+                                   ApprovalCode = a.ApprovalCode,
+                                   Remarks = a.Remarks,
+                                   ApprovedDate = a.ApprovedDate,
+                                   ApprovedBy = ap.ID,
+                                   ShowApprovedBy = ap.FirstName + " " + ap.LastName
+                               };
+
+                    return join.ToList();
                 }
             }
             catch (Exception error)
@@ -63,7 +77,7 @@ namespace eCard.Services
                 {
                     var qDB = new QuickipediaEntities();
 
-                    var moto = db.vw_Approved.Where(r => r.Date >= start && r.Date <= end && r.Status == "A").ToList();
+                    var moto = db.vw_Approved.Where(r => r.ApprovedDate >= start && r.ApprovedDate <= end && r.Status == "A").ToList();
 
                     var motoClientCode = moto.Select(r => r.ClientCode);
 
@@ -72,6 +86,8 @@ namespace eCard.Services
                     var join = from a in moto
                                join c in quicki on a.ClientCode equals c.ClientCode
                                join u in db.UserAccount on a.RequestedBy equals u.ID
+                               join usr in db.UserAccount   on a.ApprovedBy equals usr.ID into qUsr
+                               from ap in qUsr.DefaultIfEmpty()
                                orderby a.Date ascending
                                select new ApprovedReportModel
                                {
@@ -93,7 +109,9 @@ namespace eCard.Services
                                    OptionTime = a.OptionTime,
                                    ApprovalCode = a.ApprovalCode,
                                    Remarks = a.Remarks,
-                                   ApprovedDate = a.ApprovedDate
+                                   ApprovedDate = a.ApprovedDate,
+                                   ApprovedBy =  ap.ID,
+                                   ShowApprovedBy = ap.FirstName + " " + ap.LastName
                                };
 
                     return join.ToList();
@@ -252,8 +270,7 @@ namespace eCard.Services
 
                     if (_status == "P")
                     {
-                        moto = db.MotoRequest.Where(r => (r.Status == "P" || r.Status == "F") && r.RequestedBy == UniversalService.CurrentUser.ID
-                            && r.Date > date).ToList();
+                        moto = db.MotoRequest.Where(r => (r.Status == "P" || r.Status == "F") && r.RequestedBy == UniversalService.CurrentUser.ID).ToList();
                     }
                     else
                     {
@@ -377,7 +394,12 @@ namespace eCard.Services
                             moto.DeclinedReason = _request.DeclinedReason;
 
                             if (_request.Status == "A")
+                            {
                                 moto.ApprovedDate = DateTime.Now;
+
+                                moto.ApprovedBy = UniversalService.CurrentUser.ID;
+
+                            }
 
                             db.Entry(moto).State = EntityState.Modified;
 

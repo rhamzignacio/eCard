@@ -12,20 +12,15 @@ namespace eCard.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ClientProfile
+    public partial class EcardAdminFee
     {
-        public System.Guid ID { get; set; }
         public string ClientCode { get; set; }
-        public string ClientType { get; set; }
-        public string ClientName { get; set; }
-        public string Address { get; set; }
-        public string Biller { get; set; }
-        public string AccountOfficer { get; set; }
+        public string AirFare { get; set; }
+        public string ServiceFee { get; set; }
+        public string Others { get; set; }
+        public Nullable<decimal> Divide { get; set; }
+        public Nullable<decimal> Multiply { get; set; }
         public Nullable<System.Guid> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<System.Guid> BillerID { get; set; }
-        public Nullable<System.DateTime> ContractStartDate { get; set; }
-        public Nullable<System.DateTime> ContractEndDate { get; set; }
-        public string GlobalCustomerNo { get; set; }
     }
 }

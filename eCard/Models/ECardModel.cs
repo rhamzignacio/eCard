@@ -52,6 +52,8 @@ namespace eCard.Models
                     return "";
             }
         }
+        public Guid? ApprovedBy { get; set; }
+        public string ShowApprovedBy { get; set; }
     }
 
     public class MotoRequestModel

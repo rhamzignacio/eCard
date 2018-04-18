@@ -27,7 +27,6 @@ namespace eCard.Models
     
         public virtual DbSet<EmailSender> EmailSender { get; set; }
         public virtual DbSet<MotoRequest> MotoRequest { get; set; }
-        public virtual DbSet<ServiceFeeFormula> ServiceFeeFormula { get; set; }
         public virtual DbSet<UserAccount> UserAccount { get; set; }
         public virtual DbSet<v_MotoRequest> v_MotoRequest { get; set; }
         public virtual DbSet<vw_Approved> vw_Approved { get; set; }
@@ -35,5 +34,6 @@ namespace eCard.Models
         public virtual DbSet<vw_FORAPPROVAL> vw_FORAPPROVAL { get; set; }
         public virtual DbSet<vw_Void> vw_Void { get; set; }
         public virtual DbSet<vw_Declined> vw_Declined { get; set; }
+        public virtual DbSet<ServiceFeeFormula> ServiceFeeFormula { get; set; }
     }
 }

@@ -26,5 +26,6 @@ namespace eCard.Models
         }
     
         public virtual DbSet<ClientProfile> ClientProfile { get; set; }
+        public virtual DbSet<EcardAdminFee> EcardAdminFee { get; set; }
     }
 }

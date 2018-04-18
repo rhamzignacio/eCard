@@ -37,15 +37,18 @@
           <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
           <Property Name="ApprovedDate" Type="datetime" />
           <Property Name="DeclinedVoidedReason" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovedBy" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="ServiceFeeFormula">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClientCode" />
           </Key>
-          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Divide" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="Multiply" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="ClientCode" Type="varchar" MaxLength="20" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AirFareFlag" Type="varchar" MaxLength="1" />
+          <Property Name="ServiceFeeFlag" Type="varchar" MaxLength="1" />
+          <Property Name="OtherFeeFlag" Type="varchar" MaxLength="1" />
+          <Property Name="Divide" Type="decimal" Precision="18" Scale="8" />
+          <Property Name="Multiply" Type="decimal" Precision="18" Scale="8" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -80,7 +83,7 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
           <Property Name="ClientName" Type="varchar" MaxLength="250" />
           <Property Name="Company" Type="varchar" MaxLength="50" />
           <Property Name="PaxName" Type="varchar" MaxLength="300" />
-          <Property Name="RecordLocator" Type="varchar" MaxLength="10" />
+          <Property Name="RecordLocator" Type="varchar" MaxLength="300" />
           <Property Name="Currency" Type="varchar" MaxLength="3" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Others" Type="decimal" Precision="18" Scale="2" />
@@ -91,6 +94,7 @@ warning 6002: The table/view 'eCard.dbo.v_MotoRequest' does not have a primary k
           <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
           <Property Name="Remarks" Type="varchar(max)" />
           <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="ApprovedBy" Type="uniqueidentifier" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
           <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
           <Property Name="ApprovedDate" Type="datetime" />
@@ -122,6 +126,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Approved' does not have a primary key
           <Property Name="ApprovalCode" Type="varchar" MaxLength="300" />
           <Property Name="Remarks" Type="varchar(max)" />
           <Property Name="Invoice" Type="varchar" MaxLength="300" />
+          <Property Name="ApprovedBy" Type="uniqueidentifier" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
           <Property Name="DeclinedReason" Type="varchar" MaxLength="500" />
           <Property Name="ApprovedDate" Type="datetime" />
@@ -277,6 +282,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
     [v_MotoRequest].[ApprovalCode] AS [ApprovalCode], 
     [v_MotoRequest].[Remarks] AS [Remarks], 
     [v_MotoRequest].[Invoice] AS [Invoice], 
+    [v_MotoRequest].[ApprovedBy] AS [ApprovedBy], 
     [v_MotoRequest].[Status] AS [Status], 
     [v_MotoRequest].[DeclinedReason] AS [DeclinedReason], 
     [v_MotoRequest].[ApprovedDate] AS [ApprovedDate]
@@ -304,6 +310,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
     [vw_Approved].[ApprovalCode] AS [ApprovalCode], 
     [vw_Approved].[Remarks] AS [Remarks], 
     [vw_Approved].[Invoice] AS [Invoice], 
+    [vw_Approved].[ApprovedBy] AS [ApprovedBy], 
     [vw_Approved].[Status] AS [Status], 
     [vw_Approved].[DeclinedReason] AS [DeclinedReason], 
     [vw_Approved].[ApprovedDate] AS [ApprovedDate]
@@ -425,7 +432,6 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
         <EntityContainer Name="eCardEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EmailSender" EntityType="eCardModel.EmailSender" />
           <EntitySet Name="MotoRequest" EntityType="eCardModel.MotoRequest" />
-          <EntitySet Name="ServiceFeeFormula" EntityType="eCardModel.ServiceFeeFormula" />
           <EntitySet Name="UserAccount" EntityType="eCardModel.UserAccount" />
           <EntitySet Name="v_MotoRequest" EntityType="eCardModel.v_MotoRequest" />
           <EntitySet Name="vw_Approved" EntityType="eCardModel.vw_Approved" />
@@ -433,6 +439,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <EntitySet Name="vw_FORAPPROVAL" EntityType="eCardModel.vw_FORAPPROVAL" />
           <EntitySet Name="vw_Void" EntityType="eCardModel.vw_Void" />
           <EntitySet Name="vw_Declined" EntityType="eCardModel.vw_Declined" />
+          <EntitySet Name="ServiceFeeFormula" EntityType="eCardModel.ServiceFeeFormula" />
         </EntityContainer>
         <EntityType Name="EmailSender">
           <Key>
@@ -466,15 +473,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
           <Property Name="DeclinedVoidedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ServiceFeeFormula">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Divide" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="Multiply" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="ClientCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedBy" Type="Guid" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -507,7 +506,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <Property Name="ClientName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PaxName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="RecordLocator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RecordLocator" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Currency" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Others" Type="Decimal" Precision="18" Scale="2" />
@@ -521,6 +520,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedBy" Type="Guid" />
         </EntityType>
         <EntityType Name="vw_Approved">
           <Key>
@@ -550,6 +550,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedBy" Type="Guid" />
         </EntityType>
         <EntityType Name="vw_Canceled">
           <Key>
@@ -667,6 +668,17 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <Property Name="DeclinedReason" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ServiceFeeFormula">
+          <Key>
+            <PropertyRef Name="ClientCode" />
+          </Key>
+          <Property Name="ClientCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AirFareFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceFeeFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="OtherFeeFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Divide" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="Multiply" Type="Decimal" Precision="18" Scale="8" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -684,6 +696,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <EntitySetMapping Name="MotoRequest">
             <EntityTypeMapping TypeName="eCardModel.MotoRequest">
               <MappingFragment StoreEntitySet="MotoRequest">
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
                 <ScalarProperty Name="DeclinedVoidedReason" ColumnName="DeclinedVoidedReason" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
@@ -704,16 +717,6 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
                 <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceFeeFormula">
-            <EntityTypeMapping TypeName="eCardModel.ServiceFeeFormula">
-              <MappingFragment StoreEntitySet="ServiceFeeFormula">
-                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
-                <ScalarProperty Name="Multiply" ColumnName="Multiply" />
-                <ScalarProperty Name="Divide" ColumnName="Divide" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -739,6 +742,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <EntitySetMapping Name="v_MotoRequest">
             <EntityTypeMapping TypeName="eCardModel.v_MotoRequest">
               <MappingFragment StoreEntitySet="v_MotoRequest">
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -768,6 +772,7 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
           <EntitySetMapping Name="vw_Approved">
             <EntityTypeMapping TypeName="eCardModel.vw_Approved">
               <MappingFragment StoreEntitySet="vw_Approved">
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="DeclinedReason" ColumnName="DeclinedReason" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -907,6 +912,18 @@ warning 6002: The table/view 'eCard.dbo.vw_Void' does not have a primary key def
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceFeeFormula">
+            <EntityTypeMapping TypeName="eCardModel.ServiceFeeFormula">
+              <MappingFragment StoreEntitySet="ServiceFeeFormula">
+                <ScalarProperty Name="Multiply" ColumnName="Multiply" />
+                <ScalarProperty Name="Divide" ColumnName="Divide" />
+                <ScalarProperty Name="OtherFeeFlag" ColumnName="OtherFeeFlag" />
+                <ScalarProperty Name="ServiceFeeFlag" ColumnName="ServiceFeeFlag" />
+                <ScalarProperty Name="AirFareFlag" ColumnName="AirFareFlag" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

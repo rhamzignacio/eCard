@@ -225,6 +225,9 @@
     <Compile Include="Models\ClientProfile.cs">
       <DependentUpon>QuickipediaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EcardAdminFee.cs">
+      <DependentUpon>QuickipediaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\eCardEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

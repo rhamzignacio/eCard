@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuickipediaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuickipediaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ClientProfile">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,12 +21,26 @@
           <Property Name="BillerID" Type="uniqueidentifier" />
           <Property Name="ContractStartDate" Type="date" />
           <Property Name="ContractEndDate" Type="date" />
+          <Property Name="GlobalCustomerNo" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="EcardAdminFee">
+          <Key>
+            <PropertyRef Name="ClientCode" />
+          </Key>
+          <Property Name="ClientCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AirFare" Type="varchar" MaxLength="1" />
+          <Property Name="ServiceFee" Type="varchar" MaxLength="1" />
+          <Property Name="Others" Type="varchar" MaxLength="1" />
+          <Property Name="Divide" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="Multiply" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityContainer Name="QuickipediaModelStoreContainer">
           <EntitySet Name="ClientProfile" EntityType="Self.ClientProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EcardAdminFee" EntityType="Self.EcardAdminFee" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuickipediaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -46,10 +60,25 @@
           <Property Name="BillerID" Type="Guid" />
           <Property Name="ContractStartDate" Type="DateTime" Precision="0" />
           <Property Name="ContractEndDate" Type="DateTime" Precision="0" />
+          <Property Name="GlobalCustomerNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="QuickipediaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ClientProfile" EntityType="Self.ClientProfile" />
+          <EntitySet Name="EcardAdminFee" EntityType="QuickipediaModel.EcardAdminFee" />
         </EntityContainer>
+        <EntityType Name="EcardAdminFee">
+          <Key>
+            <PropertyRef Name="ClientCode" />
+          </Key>
+          <Property Name="ClientCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AirFare" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceFee" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Others" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Divide" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="Multiply" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -59,6 +88,7 @@
           <EntitySetMapping Name="ClientProfile">
             <EntityTypeMapping TypeName="QuickipediaModel.ClientProfile">
               <MappingFragment StoreEntitySet="ClientProfile">
+                <ScalarProperty Name="GlobalCustomerNo" ColumnName="GlobalCustomerNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
                 <ScalarProperty Name="ClientType" ColumnName="ClientType" />
@@ -71,6 +101,20 @@
                 <ScalarProperty Name="BillerID" ColumnName="BillerID" />
                 <ScalarProperty Name="ContractStartDate" ColumnName="ContractStartDate" />
                 <ScalarProperty Name="ContractEndDate" ColumnName="ContractEndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EcardAdminFee">
+            <EntityTypeMapping TypeName="QuickipediaModel.EcardAdminFee">
+              <MappingFragment StoreEntitySet="EcardAdminFee">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Multiply" ColumnName="Multiply" />
+                <ScalarProperty Name="Divide" ColumnName="Divide" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="ServiceFee" ColumnName="ServiceFee" />
+                <ScalarProperty Name="AirFare" ColumnName="AirFare" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

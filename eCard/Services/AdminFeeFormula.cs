@@ -2,11 +2,76 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using eCard.Models;
 
 namespace eCard.Services
 {
     public class AdminFeeFormula
     {
+        public static double GetAdminFeeFromDB(string _clientCode, double? airFare, double? serviceFee,
+            double? otherFee, out string message)
+        {
+            try
+            {
+                message = "";
+
+                double _airFare, _serviceFee, _others;
+
+                if (airFare == null)
+                    _airFare = 0;
+                else
+                    _airFare = double.Parse(airFare.ToString());
+
+                if (serviceFee == null)
+                    _serviceFee = 0;
+                else
+                    _serviceFee = double.Parse(serviceFee.ToString());
+
+                if (otherFee == null)
+                    _others = 0;
+                else
+                    _others = double.Parse(otherFee.ToString());
+
+                using (var db = new QuickipediaEntities())
+                {
+                    var admFormula = db.EcardAdminFee.FirstOrDefault(r => r.ClientCode == _clientCode);
+
+                    if (admFormula != null)
+                    {
+                        double total = 0;
+
+                        if (admFormula.AirFare == "Y")
+                            total += _airFare;
+
+                        if (admFormula.ServiceFee == "Y")
+                            total += _serviceFee;
+
+                        if (admFormula.Others == "Y")
+                            total += _others;
+
+                        if (admFormula.Divide > 0)
+                            total = total / double.Parse(admFormula.Divide.ToString());
+
+                        if (admFormula.Multiply > 0)
+                            total = total * double.Parse(admFormula.Multiply.ToString());
+
+                        return total;
+                    }
+                    else
+                    {
+                        message = "Admin Fee Profile not Found (You need to compute admin fee manually)";
+
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+
+                return 0;
+            }
+        }
         public static double GetAdminFee(string _clientCode, double? airFare, double? serviceFee,
             double? others, out string message)
         {
@@ -146,7 +211,7 @@ namespace eCard.Services
 
                 else
                 {
-                    message = "Admin Fee Profile Found";
+                    message = "No Admin Fee Profile Found";
                     return 0;
                 }
             }

@@ -82,7 +82,7 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label>Client Name</label>
+                        <label>Client Name <span style="font-size:20pt; color:red;">*</span></label>
                         <select class="form-control select2_single" ng-model="vm.Form.ClientCode" style="width:100%"
                                 ng-options="item.ID as item.Value for item in vm.ClientDropDown" ng-change="ComputeAdminFee()"></select>
                     </div>
@@ -93,17 +93,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Passenger Name <span style="font-size:8pt">(LastName/FirstName)</span></label>
+                        <label>
+                            Passenger Name
+                            <span style="font-size:8pt">(LastName/FirstName)</span>
+                            <span style="font-size:20pt; color:red;">*</span>
+                        </label>
                         <input class="form-control" type="text" ng-model="vm.Form.PaxName">
                     </div>
 
                     <div class="form-group">
-                        <label>Record Locator / Reference</label>
+                        <label>Record Locator / Reference <span style="font-size:20pt; color:red;">*</span></label>
                         <input class="form-control" type="text" ng-model="vm.Form.RecordLocator">
                     </div>
 
                     <div class="form-group">
-                        <label>Currency</label><br />
+                        <label>Currency <span style="font-size:20pt; color:red;">*</span></label><br />
                         <input type="radio" value="PHP" ng-model="vm.Form.Currency" />PHP
                         <input type="radio" value="USD" ng-model="vm.Form.Currency" />USD
                     </div>
@@ -118,7 +122,10 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label>Amount <span style="font-size:8pt">(Fare + Taxes + IPP)</span></label>
+                        <label>Amount 
+                            <span style="font-size:8pt">(Fare + Taxes + IPP)</span> 
+                            <span style="font-size:20pt; color:red;">*</span>
+                        </label>
                         <input class="form-control" type="number" ng-model="vm.Form.Amount" ng-change="ComputeAdminFee()">
                     </div>
 
@@ -136,12 +143,16 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Admin Fee</label>
-                        <input class="form-control" type="number" value="{{vm.Form.AdminFee}}">
+                        <label>
+                            Admin Fee
+                            <span style="font-size:8pt; color:red; display:none" id="ManualComp">(Manual Compute Needed)</span>
+                            <span style="font-size:8pt; color:green; display:none" id="AutoComp">(Auto Compute)</span>
+                        </label>
+                        <input class="form-control" type="number" ng-model="vm.Form.AdminFee" value="{{vm.Form.AdminFee}}" data-ng-keyup="ComputeTotal()">
                     </div>
 
                     <div class="form-group">
-                        <label>Total</label>
+                        <label>Total <span style="font-size:8pt; color:green;">(Auto Compute)</span></label>
                         <input class="form-control" type="number"
                                value="{{vm.totalAmount}}" disabled="disabled">
                     </div>
@@ -180,7 +191,7 @@
                     </tr>
 
                     <tr>
-                        <td>All Moto Request</td>
+                        <td>All Moto Request via Approved Date</td>
                         <td>Extracts all Moto Request by date range</td>
                         <td>
                             <button id="allMotoBtn" class="btn btn-default btn-sm" data-target="#allReportModal" data-toggle="modal">
@@ -190,7 +201,7 @@
                     </tr>
 
                     <tr>
-                        <td>Approved Moto Request</td>
+                        <td>Approved Moto Request via Approved Date</td>
                         <td>Extracts all Approved Moto Request by date range</td>
                         <td>
                             <button id="approvedMotoBtn" class="btn btn-default btn-sm" data-target="#approvedReportModal" data-toggle="modal">
@@ -292,7 +303,7 @@
                         <td>{{dec.PaxName}}</td>
                         <td>{{dec.RecordLocator}}</td>
                         <td>{{dec.Currency}} {{dec.Total | number: 2}}</td>
-                        <td>{{dec.Reason}}</td>
+                        <td>{{dec.DeclinedReason}}</td>
                     </tr>
                 </table>
             </div>
@@ -367,6 +378,8 @@
                         <th>Approval Code</th>
                         <th>Remarks</th>
                         <th>Requested By</th>
+                        <th>Approved Date</th>
+                        <th>Approved By</th>
                     </tr>
 
                     <tr ng-repeat="app in vm.AllMotoReport">
@@ -378,7 +391,7 @@
                         <td>{{app.RecordLocator}}</td>
                         <td>{{app.Currency}}</td>
                         <td>{{app.Amount}}</td>
-                        <td>{{app.Other}}</td>
+                        <td>{{app.Others}}</td>
                         <td>{{app.BCDFee}}</td>
                         <td>{{app.AdminFee}}</td>
                         <td>{{app.Total}}</td>
@@ -386,6 +399,8 @@
                         <td>{{app.ApprovalCode}}</td>
                         <td>{{app.Remarks}}</td>
                         <td>{{app.FirstName}} {{app.LastName}}</td>
+                        <td>{{app.ShowApprovedDate}}</td>
+                        <td>{{app.ShowApprovedBy}}</td>
                     </tr>
                 </table>
 
@@ -407,6 +422,8 @@
                         <th>Approval Code</th>
                         <th>Remarks</th>
                         <th>Requested By</th>
+                        <th>Approved Date</th>
+                        <th>Approved By</th>
                     </tr>
 
                     <tr ng-repeat="app in vm.ApprovedReport">
@@ -418,7 +435,7 @@
                         <td>{{app.RecordLocator}}</td>
                         <td>{{app.Currency}}</td>
                         <td>{{app.Amount}}</td>
-                        <td>{{app.Other}}</td>
+                        <td>{{app.Others}}</td>
                         <td>{{app.BCDFee}}</td>
                         <td>{{app.AdminFee}}</td>
                         <td>{{app.Total}}</td>
@@ -426,6 +443,8 @@
                         <td>{{app.ApprovalCode}}</td>
                         <td>{{app.Remarks}}</td>
                         <td>{{app.FirstName}} {{app.LastName}}</td>
+                        <td>{{app.ShowApprovedDate}}</td>
+                        <td>{{app.ShowApprovedBy}}</td>
                     </tr>
                 </table>
                 <!--//APPROVED REPORT TABLE-->
@@ -484,7 +503,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 2.0</a>
+                            <a href="#">version 2.2</a>
                         </li>
                     </ul>
                 </div>
@@ -492,6 +511,8 @@
         </div>
     </footer>
     <!--/FOOTER-->
+
+
 
     <div class="portfolio-modal modal fade" id="viewModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
