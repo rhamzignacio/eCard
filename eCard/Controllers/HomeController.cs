@@ -210,5 +210,13 @@ namespace eCard.Controllers
 
             return Json(serverResponse);
         }
+
+        [HttpPost]
+        public JsonResult Search(string search)
+        {
+            var SearchItems =  ECardService.Search(search, out string error);
+
+            return Json(new { SearchItems, error });
+        }
     }
-}
+} 

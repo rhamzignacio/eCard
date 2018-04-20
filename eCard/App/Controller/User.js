@@ -34,7 +34,7 @@
             url: "/User/GetAll",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.error != "") {
+            if (data.data.error !== "") {
                 ErrorMessage(data.data.error);
             }
             else {
@@ -58,7 +58,7 @@
     $scope.LockUnlock = function () {
         var message = "";
 
-        if (vm.Lock.Status == "Y") {
+        if (vm.Lock.Status === "Y") {
             vm.Lock.Status = "N";
 
             message = "User sucessfully locked";
@@ -74,7 +74,7 @@
             url: "/User/Save",
             data: { user: vm.Lock }
         }).then(function (data) {
-            if (data.data != "") {
+            if (data.data !== "") {
                 ErrorMessage(data.data);
             }
             else {

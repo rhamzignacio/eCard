@@ -192,5 +192,8 @@ namespace eCard.Models
 
         public Guid? RequestedBy { get; set; }
         public string ShowRequestedBy { get; set; }
+
+        public Guid? ApprovedBy { get; set; }
+        public string ShowApprovedBy { get; set; }
     }
 }

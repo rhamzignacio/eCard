@@ -69,10 +69,7 @@ namespace eCard.Services
                 }
 
             }
-            catch(Exception error)
-            {
-
-            }
+            catch{}
         }
     }
 }

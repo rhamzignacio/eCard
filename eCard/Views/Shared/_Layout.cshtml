@@ -26,11 +26,15 @@
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">e-Card</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
+                
                 <i class="fa fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <input class="form-control" type="text" placeholder="Search Moto..." ng-keydown="Search($event)"
+                               ng-model="vm.Search"/>
+                    </li>
                     <li class="nav-item" ng-show="vm.CurrentUser.Type == 'USR'">
                         <a class="nav-link js-scroll-trigger" href="#services" id="RequestMenu">Request</a>
                     </li>
@@ -259,6 +263,7 @@
                         <td>{{req.PaxName}}</td>
                         <td>{{req.RecordLocator}}</td>
                         <td>{{req.Currency}} {{req.Total | number: 2}} <span ng-show="req.Status == 'F'"> VOID</span></td>
+
                     </tr>
 
                 </table>
@@ -503,7 +508,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 2.2</a>
+                            <a href="#">version 3.0</a>
                         </li>
                     </ul>
                 </div>
@@ -512,6 +517,53 @@
     </footer>
     <!--/FOOTER-->
 
+    <!--SEARCH MODAL-->
+    <div class="portfolio-modal modal fade" id="SearchModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr"><div class="rl"></div></div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="modal-body">
+                            <h2>Moto Request</h2>
+
+                            <table style="width:100%; font-size: 12px;">
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Client Name</th>
+                                    <th>Passenger Name</th>
+                                    <th>Record Locator</th>
+                                    <th>Amount</th>
+                                    <th>Requested By</th>
+                                    <th>Status</th>
+                                </tr>
+
+                                <tr ng-repeat="s in vm.SearchItems" style="border-bottom:1px solid">
+                                    <td>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal" ng-click="ViewMoto(s)"
+                                                title="View Moto Request">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td>{{s.ShowDate}}</td>
+                                    <td>{{s.ClientName}}</td>
+                                    <td>{{s.PaxName}}</td>
+                                    <td>{{s.RecordLocator}}</td>
+                                    <td>{{s.Amount}}</td>
+                                    <td>{{s.ShowRequestedBy}}</td>
+                                    <td>{{s.ShowStatus}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="portfolio-modal modal fade" id="viewModal" tabindex="-1" role="dialog" aria-hidden="true">

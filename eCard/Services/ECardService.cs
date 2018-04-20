@@ -10,6 +10,78 @@ namespace eCard.Services
 {
     public class ECardService
     {
+        public static List<MotoRequestModel> Search(string search, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new eCardEntities())
+                {
+                    var qDB = new QuickipediaEntities();
+
+                    var moto = db.v_MotoRequest.Where(r=>r.RecordLocator.ToLower().Contains(search.ToLower())
+                     || r.Remarks.ToLower().Contains(search.ToLower()) || r.PaxName.ToLower().Contains(search.ToLower())).ToList();
+
+                    var motoClientCode = moto.Select(r => r.ClientCode);
+
+                    var quicki = qDB.ClientProfile.Where(r => motoClientCode.Contains(r.ClientCode)).ToList();
+
+                    var join = from a in moto
+                               join c in quicki on a.ClientCode equals c.ClientCode
+                               join u in db.UserAccount on a.RequestedBy equals u.ID
+                               join usr in db.UserAccount on a.ApprovedBy equals usr.ID into qUsr
+                               from ap in qUsr.DefaultIfEmpty()
+                               orderby a.Date ascending
+                               select new MotoRequestModel
+                               {
+                                   ID = a.ID,
+                                   Date = a.Date,
+                                   ClientCode = a.ClientCode,
+                                   Company = a.Company,
+                                   PaxName = a.PaxName,
+                                   RecordLocator = a.RecordLocator,
+                                   Currency = a.Currency,
+                                   Amount = a.Amount,
+                                   Others = a.Others,
+                                   BCDFee = a.BCDFee,
+                                   AdminFee = a.AdminFee,
+                                   Total = a.Total,
+                                   OptionTime = a.OptionTime,
+                                   ApprovalCode = a.ApprovalCode,
+                                   Remarks = a.Remarks,
+                                   ApprovedDate = a.ApprovedDate,
+                                   ApprovedBy = ap.ID,
+                                   ShowApprovedBy = ap.FirstName + " " + ap.LastName,
+                                   Status = a.Status,
+                                   ClientName = c.ClientName,
+                                   RequestedBy = a.RequestedBy,
+                                   ShowRequestedBy = u.FirstName + " " + u.LastName,
+                                   DeclinedReason = a.DeclinedReason
+                               };
+
+                    var val = join.ToList();
+
+
+                    if (val.Count() == 0)
+                    {
+                        message = "No record found . . .";
+
+                        return null;
+                    }
+                    else
+                    {
+                        return val;
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
         public static List<ApprovedReportModel> GetAllMotoReport(DateTime start, DateTime end, out string message)
         {
             try
@@ -20,7 +92,7 @@ namespace eCard.Services
                 {
                     var qDB = new QuickipediaEntities();
 
-                    var moto = db.v_MotoRequest.Where(r => r.ApprovedDate >= start && r.ApprovedDate <= end);
+                    var moto = db.v_MotoRequest.Where(r => r.ApprovedDate >= start && r.ApprovedDate <= end).ToList();
 
                     var motoClientCode = moto.Select(r => r.ClientCode);
 
@@ -53,7 +125,8 @@ namespace eCard.Services
                                    Remarks = a.Remarks,
                                    ApprovedDate = a.ApprovedDate,
                                    ApprovedBy = ap.ID,
-                                   ShowApprovedBy = ap.FirstName + " " + ap.LastName
+                                   ShowApprovedBy = ap.FirstName + " " + ap.LastName,
+                                   ClientName = c.ClientName
                                };
 
                     return join.ToList();

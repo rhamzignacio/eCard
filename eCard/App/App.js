@@ -201,7 +201,7 @@ app.factory('Excel', function ($window) {
         }).then(function (data) {
             vm.totalAmount = data.data;
         });
-    }
+    };
 
     $scope.SaveMotoRequest = function (value) {
         var error = "";
@@ -561,6 +561,27 @@ app.factory('Excel', function ($window) {
                     vm.Pass = {};
                 }
             });
+        }
+    };
+
+    $scope.Search = function (keyEvent) {
+        if (keyEvent.which === 13) {
+            if (vm.Search !== "" && vm.Search !== null) {
+                $http({
+                    method: "POST",
+                    url: "/Home/Search",
+                    data: { search: vm.Search }
+                }).then(function (data) {
+                    if (data.data.error !== "") {
+                        ErrorMessage(data.data.error);
+                    }
+                    else {
+                        vm.SearchItems = data.data.SearchItems;
+
+                        $("#SearchModal").modal('show');
+                    }
+                });
+            }
         }
     };
 }]);
