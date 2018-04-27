@@ -16,12 +16,16 @@ namespace eCard.Services
             {
                 message = "";
 
+                var lowerSearch = search.ToLower();
+
                 using (var db = new eCardEntities())
                 {
                     var qDB = new QuickipediaEntities();
 
-                    var moto = db.v_MotoRequest.Where(r=>r.RecordLocator.ToLower().Contains(search.ToLower())
-                     || r.Remarks.ToLower().Contains(search.ToLower()) || r.PaxName.ToLower().Contains(search.ToLower())).ToList();
+                    var moto = db.v_MotoRequest.Where(r=>r.RecordLocator.ToLower().Contains(lowerSearch)
+                     || r.Remarks.ToLower().Contains(lowerSearch) || r.PaxName.ToLower().Contains(lowerSearch)
+                     || r.LogID.ToString().ToLower().Contains(lowerSearch)
+                     ).ToList();
 
                     var motoClientCode = moto.Select(r => r.ClientCode);
 
