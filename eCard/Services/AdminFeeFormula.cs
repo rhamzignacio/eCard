@@ -8,8 +8,7 @@ namespace eCard.Services
 {
     public class AdminFeeFormula
     {
-        public static double GetAdminFeeFromDB(string _clientCode, double? airFare, double? serviceFee,
-            double? otherFee, out string message)
+        public static double GetAdminFeeFromDB(MotoRequestModel _moto, out string message)
         {
             try
             {
@@ -17,43 +16,70 @@ namespace eCard.Services
 
                 double _airFare, _serviceFee, _others;
 
-                if (airFare == null)
+                if (_moto.Amount == null)
                     _airFare = 0;
                 else
-                    _airFare = double.Parse(airFare.ToString());
+                    _airFare = double.Parse(_moto.Amount.ToString());
 
-                if (serviceFee == null)
+                if (_moto.BCDFee == null)
                     _serviceFee = 0;
                 else
-                    _serviceFee = double.Parse(serviceFee.ToString());
+                    _serviceFee = double.Parse(_moto.BCDFee.ToString());
 
-                if (otherFee == null)
+                if (_moto.Others == null)
                     _others = 0;
                 else
-                    _others = double.Parse(otherFee.ToString());
+                    _others = double.Parse(_moto.Others.ToString());
+
+                if (_moto.Currency == "" || _moto.Currency == null)
+                {
+                    message = "Currency is required to auto compute admin fee";
+
+                    return 0;
+                }
 
                 using (var db = new QuickipediaEntities())
                 {
-                    var admFormula = db.EcardAdminFee.FirstOrDefault(r => r.ClientCode == _clientCode);
+                    var admFormula = db.EcardAdminFee.FirstOrDefault(r => r.ClientCode == _moto.ClientCode);
 
                     if (admFormula != null)
                     {
                         double total = 0;
 
-                        if (admFormula.AirFare == "Y")
-                            total += _airFare;
+                        if (_moto.Currency == "PHP")
+                        {
+                            if (admFormula.AirFareFlag)
+                                total += _airFare;
 
-                        if (admFormula.ServiceFee == "Y")
-                            total += _serviceFee;
+                            if (admFormula.ServiceFeeFlag)
+                                total += _serviceFee;
 
-                        if (admFormula.Others == "Y")
-                            total += _others;
+                            if (admFormula.OtherFeeFlag)
+                                total += _others;
 
-                        if (admFormula.Divide > 0)
-                            total = total / double.Parse(admFormula.Divide.ToString());
+                            if (admFormula.Divide > 0)
+                                total = total / double.Parse(admFormula.Divide.ToString());
 
-                        if (admFormula.Multiply > 0)
-                            total = total * double.Parse(admFormula.Multiply.ToString());
+                            if (admFormula.Multiply > 0)
+                                total = total * double.Parse(admFormula.Multiply.ToString());
+                        }
+                        else
+                        {
+                            if (admFormula.AirFareUSD)
+                                total += _airFare;
+
+                            if (admFormula.ServiceFeeUSD)
+                                total += _serviceFee;
+
+                            if (admFormula.OthersUSD)
+                                total += _others;
+
+                            if (admFormula.DivideUSD > 0)
+                                total = total / double.Parse(admFormula.DivideUSD.ToString());
+
+                            if (admFormula.MultiplyUSD > 0)
+                                total = total * double.Parse(admFormula.MultiplyUSD.ToString());
+                        }
 
                         return total;
                     }

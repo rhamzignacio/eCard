@@ -162,10 +162,7 @@ app.factory('Excel', function ($window) {
             method: "POST",
             url: "/Home/ComputeAdminFee",
             data: {
-                _clientCode: vm.Form.ClientCode,
-                _airFare: vm.Form.Amount,
-                _serviceFee: vm.Form.BCDFee,
-                _otherFee: vm.Form.Others
+                moto: vm.Form
             }
         }).then(function (data) {
             if (data.data.adminFee !== 0) {
@@ -196,7 +193,7 @@ app.factory('Excel', function ($window) {
                 amount: vm.Form.Amount,
                 serviceFee: vm.Form.BCDFee,
                 otherFee: vm.Form.Others,
-                adminFee: vm.Form.AdminFee
+                adminFee: vm.Form.AdminFee,
             }
         }).then(function (data) {
             vm.totalAmount = data.data;
@@ -334,7 +331,7 @@ app.factory('Excel', function ($window) {
         });
     };
         
-    setInterval($scope.InitPendingMoto, 2000);
+    setInterval($scope.InitPendingMoto, 5000);
 
     $scope.ReFile = function (value) {
         vm.Form = value;
@@ -496,7 +493,7 @@ app.factory('Excel', function ($window) {
         });
     };
 
-    setInterval($scope.InitDeclined, 2000);
+    setInterval($scope.InitDeclined, 5000);
     //=========END OF DECLINED MOTO==========
 
     //=========APPROVED MOTO===============
@@ -515,7 +512,7 @@ app.factory('Excel', function ($window) {
         });
     };
 
-    setInterval($scope.InitApproved, 2000);
+    setInterval($scope.InitApproved, 5000);
     //=========END OF APPROVED MOTO==========
 
     //=========VOID MOTO=========
@@ -534,7 +531,7 @@ app.factory('Excel', function ($window) {
         });
     };
 
-    setInterval($scope.initVoid, 2000);
+    setInterval($scope.initVoid, 5000);
     //=========END VOID==========
 
     //========CHANGE PASSWORD========

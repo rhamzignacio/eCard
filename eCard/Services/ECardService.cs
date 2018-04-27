@@ -57,7 +57,8 @@ namespace eCard.Services
                                    ClientName = c.ClientName,
                                    RequestedBy = a.RequestedBy,
                                    ShowRequestedBy = u.FirstName + " " + u.LastName,
-                                   DeclinedReason = a.DeclinedReason
+                                   DeclinedReason = a.DeclinedReason,
+                                   LogID = a.LogID
                                };
 
                     var val = join.ToList();
@@ -126,7 +127,8 @@ namespace eCard.Services
                                    ApprovedDate = a.ApprovedDate,
                                    ApprovedBy = ap.ID,
                                    ShowApprovedBy = ap.FirstName + " " + ap.LastName,
-                                   ClientName = c.ClientName
+                                   ClientName = c.ClientName,
+                                   LogID = a.LogID
                                };
 
                     return join.ToList();
@@ -159,7 +161,7 @@ namespace eCard.Services
                     var join = from a in moto
                                join c in quicki on a.ClientCode equals c.ClientCode
                                join u in db.UserAccount on a.RequestedBy equals u.ID
-                               join usr in db.UserAccount   on a.ApprovedBy equals usr.ID into qUsr
+                               join usr in db.UserAccount on a.ApprovedBy equals usr.ID into qUsr
                                from ap in qUsr.DefaultIfEmpty()
                                orderby a.Date ascending
                                select new ApprovedReportModel
@@ -183,7 +185,7 @@ namespace eCard.Services
                                    ApprovalCode = a.ApprovalCode,
                                    Remarks = a.Remarks,
                                    ApprovedDate = a.ApprovedDate,
-                                   ApprovedBy =  ap.ID,
+                                   ApprovedBy = ap.ID,
                                    ShowApprovedBy = ap.FirstName + " " + ap.LastName
                                };
 
@@ -242,7 +244,8 @@ namespace eCard.Services
                                    RequestedBy = m.RequestedBy,
                                    ShowRequestedBy = u.FirstName + " " + u.LastName,
                                    DeclinedReason = m.DeclinedReason,
-                                   ApprovedDate = m.ApprovedDate
+                                   ApprovedDate = m.ApprovedDate,
+                                   LogID = m.LogID
                                };
 
                     return join.ToList();
@@ -277,7 +280,7 @@ namespace eCard.Services
                         else
                         {
                             moto = db.MotoRequest.Where(r => r.Status == _status 
-                                && r.Date > date).ToList();
+                                && r.ApprovedDate >= date).ToList();
                         }
 
 
@@ -312,7 +315,8 @@ namespace eCard.Services
                                        RequestedBy = m.RequestedBy,
                                        ShowRequestedBy = u.FirstName + " " + u.LastName,
                                        DeclinedReason = m.DeclinedReason,
-                                       ApprovedDate = m.ApprovedDate
+                                       ApprovedDate = m.ApprovedDate,
+                                       LogID = m.LogID
                                    };
 
                         return join.ToList();
@@ -382,7 +386,8 @@ namespace eCard.Services
                                    RequestedBy = m.RequestedBy,
                                    ShowRequestedBy = u.FirstName + " " + u.LastName,
                                    DeclinedReason = m.DeclinedReason,
-                                   ApprovedDate = m.ApprovedDate
+                                   ApprovedDate = m.ApprovedDate,
+                                   LogID = m.LogID
                                };
 
                     return join.ToList();
@@ -427,7 +432,8 @@ namespace eCard.Services
                             Remarks = _request.Remarks,
                             Invoice = _request.Invoice,
                             Status = _request.Status,
-                            DeclinedReason = _request.DeclinedReason
+                            DeclinedReason = _request.DeclinedReason,
+                            ApprovedBy = Guid.Empty
                         };
 
                         db.Entry(newMoto).State = EntityState.Added;
@@ -466,13 +472,9 @@ namespace eCard.Services
 
                             moto.DeclinedReason = _request.DeclinedReason;
 
-                            if (_request.Status == "A")
-                            {
-                                moto.ApprovedDate = DateTime.Now;
+                            moto.ApprovedDate = DateTime.Now;
 
-                                moto.ApprovedBy = UniversalService.CurrentUser.ID;
-
-                            }
+                            moto.ApprovedBy = UniversalService.CurrentUser.ID;
 
                             db.Entry(moto).State = EntityState.Modified;
 

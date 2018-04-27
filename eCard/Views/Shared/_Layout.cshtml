@@ -112,8 +112,8 @@
 
                     <div class="form-group">
                         <label>Currency <span style="font-size:20pt; color:red;">*</span></label><br />
-                        <input type="radio" value="PHP" ng-model="vm.Form.Currency" />PHP
-                        <input type="radio" value="USD" ng-model="vm.Form.Currency" />USD
+                        <input type="radio" value="PHP" ng-model="vm.Form.Currency" ng-click="ComputeAdminFee()" />PHP
+                        <input type="radio" value="USD" ng-model="vm.Form.Currency" ng-click="ComputeAdminFee()"/>USD
                     </div>
 
                     <div class="form-group">
@@ -258,7 +258,8 @@
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>
-                        <td>{{req.ShowDate}}</td>
+                        <td>{{req.ShowDate}}
+                        </td>
                         <td>{{req.ClientName}}</td>
                         <td>{{req.PaxName}}</td>
                         <td>{{req.RecordLocator}}</td>
@@ -508,7 +509,7 @@
                 <div class="col-md-3">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="#">version 3.0</a>
+                            <a href="#">version 3.3</a>
                         </li>
                     </ul>
                 </div>
@@ -533,6 +534,7 @@
                             <table style="width:100%; font-size: 12px;">
                                 <tr>
                                     <th></th>
+                                    <th>Log ID</th>
                                     <th>Date</th>
                                     <th>Client Name</th>
                                     <th>Passenger Name</th>
@@ -549,6 +551,7 @@
                                             <i class="fa fa-eye"></i>
                                         </button>
                                     </td>
+                                    <td>{{s.ShowLogID}}</td>
                                     <td>{{s.ShowDate}}</td>
                                     <td>{{s.ClientName}}</td>
                                     <td>{{s.PaxName}}</td>
@@ -580,6 +583,8 @@
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h2>Moto Request</h2>
+
+                                <label>Log ID:</label><span class="modalRequest">{{vm.ViewModal.ShowLogID}}</span><br/>
 
                                 <label>Requested By: </label> <span class="modalRequest">{{vm.ViewModal.ShowRequestedBy}}</span><br />
 
@@ -657,6 +662,7 @@
 
                                 <table id="duplicateTable" style="width:100%; font-size:12px;">
                                     <tr>
+                                        <th>Log ID</th>
                                         <th>Client Name</th>
                                         <th>Passenger Name</th>
                                         <th>Amount</th>
@@ -665,7 +671,9 @@
                                     </tr>
 
                                     <tr ng-repeat="dup in vm.Duplicate">
-                                        <td>{{dup.ClientName}}</td>
+                                        <td>{{dup.ShowLogID}}</td>
+                                        <td>{{dup.ClientName}}
+                                        </td>
                                         <td>{{dup.PaxName}}</td>
                                         <td>{{dup.Currency}} {{dup.Amount | number: 2}}</td>
                                         <td>{{dup.ShowRequestedBy}}</td>

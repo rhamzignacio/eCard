@@ -38,5 +38,6 @@ namespace eCard.Models
         public string DeclinedReason { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public Nullable<System.Guid> ApprovedBy { get; set; }
+        public decimal LogID { get; set; }
     }
 }

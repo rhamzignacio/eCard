@@ -20,6 +20,7 @@ namespace eCard.Controllers
         {
             return View();
         }
+
         //==========MAIN=========
         [HttpPost]
         public JsonResult GetCurrentUser()
@@ -116,20 +117,22 @@ namespace eCard.Controllers
 
         //===========MOTO REQUEST==============
         [HttpPost]
-        public JsonResult ComputeAdminFee(string _clientCode, double? _airFare, double? _serviceFee, double? _otherFee)
+        public JsonResult ComputeAdminFee(MotoRequestModel moto)
         {
-            double adminFee = AdminFeeFormula.GetAdminFeeFromDB(_clientCode, _airFare, _serviceFee, _otherFee, out string serverResponse);
+            double adminFee = AdminFeeFormula.GetAdminFeeFromDB(moto, out string serverResponse);
 
-            if (_airFare == null)
-                _airFare = 0;
+            if (moto.Amount == null)
+                moto.Amount = 0;
 
-            if (_serviceFee == null)
-                _serviceFee = 0;
+            if (moto.BCDFee == null)
+                moto.BCDFee = 0;
 
-            if (_otherFee == null)
-                _otherFee = 0;
+            if (moto.Others == null)
+                moto.Others = 0;
 
-            double? total = adminFee + _airFare + _serviceFee + _otherFee;
+            double? total = double.Parse(moto.Amount.ToString()) + 
+                double.Parse(moto.BCDFee.ToString()) +
+                double.Parse(moto.Others.ToString()) + adminFee;
 
             return Json(new { total = String.Format("{0:0.00}", total), adminFee = String.Format("{0:0.00}",adminFee),
                 error = serverResponse});

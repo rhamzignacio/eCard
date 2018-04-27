@@ -22,5 +22,13 @@ namespace eCard.Models
         public Nullable<decimal> Multiply { get; set; }
         public Nullable<System.Guid> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public bool AirFareFlag { get; set; }
+        public bool ServiceFeeFlag { get; set; }
+        public bool OtherFeeFlag { get; set; }
+        public bool AirFareUSD { get; set; }
+        public bool ServiceFeeUSD { get; set; }
+        public bool OthersUSD { get; set; }
+        public Nullable<decimal> DivideUSD { get; set; }
+        public Nullable<decimal> MultiplyUSD { get; set; }
     }
 }

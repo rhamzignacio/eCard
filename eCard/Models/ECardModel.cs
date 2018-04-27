@@ -13,6 +13,21 @@ namespace eCard.Models
     {
         public Guid ID { get; set; }
         public DateTime? Date { get; set; }
+        public decimal LogID { get; set; }
+        public string ShowLogID
+        {
+            get
+            {
+                string ret = LogID.ToString();
+
+                while (LogID.ToString().Length <= 5)
+                {
+                    ret = "0" + ret;
+                }
+
+                return ret;
+            }
+        }
 
         public string ShowDate
         {
@@ -60,6 +75,21 @@ namespace eCard.Models
     {
         public Guid ID { get; set; }
         public DateTime Date { get; set; }
+        public decimal LogID { get; set; }
+        public string ShowLogID
+        {
+            get
+            {
+                string ret = LogID.ToString();
+
+                while (ret.Length <= 5)
+                {
+                    ret = "0" + ret;
+                }
+
+                return ret;
+            }
+        }
         public string ShowDate
         {
             get

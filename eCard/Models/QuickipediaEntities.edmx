@@ -35,6 +35,14 @@
           <Property Name="Multiply" Type="decimal" Precision="18" Scale="6" />
           <Property Name="ModifiedBy" Type="uniqueidentifier" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="AirFareFlag" Type="bit" Nullable="false" />
+          <Property Name="ServiceFeeFlag" Type="bit" Nullable="false" />
+          <Property Name="OtherFeeFlag" Type="bit" Nullable="false" />
+          <Property Name="AirFareUSD" Type="bit" Nullable="false" />
+          <Property Name="ServiceFeeUSD" Type="bit" Nullable="false" />
+          <Property Name="OthersUSD" Type="bit" Nullable="false" />
+          <Property Name="DivideUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="MultiplyUSD" Type="decimal" Precision="18" Scale="6" />
         </EntityType>
         <EntityContainer Name="QuickipediaModelStoreContainer">
           <EntitySet Name="ClientProfile" EntityType="Self.ClientProfile" Schema="dbo" store:Type="Tables" />
@@ -78,6 +86,14 @@
           <Property Name="Multiply" Type="Decimal" Precision="18" Scale="6" />
           <Property Name="ModifiedBy" Type="Guid" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="AirFareFlag" Type="Boolean" Nullable="false" />
+          <Property Name="ServiceFeeFlag" Type="Boolean" Nullable="false" />
+          <Property Name="OtherFeeFlag" Type="Boolean" Nullable="false" />
+          <Property Name="AirFareUSD" Type="Boolean" Nullable="false" />
+          <Property Name="ServiceFeeUSD" Type="Boolean" Nullable="false" />
+          <Property Name="OthersUSD" Type="Boolean" Nullable="false" />
+          <Property Name="DivideUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="MultiplyUSD" Type="Decimal" Precision="18" Scale="6" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -107,6 +123,14 @@
           <EntitySetMapping Name="EcardAdminFee">
             <EntityTypeMapping TypeName="QuickipediaModel.EcardAdminFee">
               <MappingFragment StoreEntitySet="EcardAdminFee">
+                <ScalarProperty Name="MultiplyUSD" ColumnName="MultiplyUSD" />
+                <ScalarProperty Name="DivideUSD" ColumnName="DivideUSD" />
+                <ScalarProperty Name="OthersUSD" ColumnName="OthersUSD" />
+                <ScalarProperty Name="ServiceFeeUSD" ColumnName="ServiceFeeUSD" />
+                <ScalarProperty Name="AirFareUSD" ColumnName="AirFareUSD" />
+                <ScalarProperty Name="OtherFeeFlag" ColumnName="OtherFeeFlag" />
+                <ScalarProperty Name="ServiceFeeFlag" ColumnName="ServiceFeeFlag" />
+                <ScalarProperty Name="AirFareFlag" ColumnName="AirFareFlag" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Multiply" ColumnName="Multiply" />
